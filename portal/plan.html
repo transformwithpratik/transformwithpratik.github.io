@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Plan — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/portal.css">
+</head>
+<body>
+
+<div class="portal-shell">
+  <aside class="portal-sidebar" id="portal-sidebar-mount"></aside>
+
+  <main class="portal-main">
+    <div class="portal-header">
+      <div>
+        <div class="eyebrow">// YOUR PROGRAM</div>
+        <h1>My <span class="yellow">plan.</span></h1>
+      </div>
+      <a href="#" id="downloadPdf" class="btn btn-primary" style="display:none;">Download PDF →</a>
+    </div>
+
+    <div id="planContent">
+      <div class="empty-state">Loading...</div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/portal.js"></script>
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 100));
+  const ok = await Portal.init('plan');
+  if (!ok) return;
+
+  const plan = Portal.currentPlan;
+  const el = document.getElementById('planContent');
+
+  if (!plan) {
+    el.innerHTML = `
+      <div class="log-card" style="text-align:center; padding:4rem 2rem;">
+        <div style="font-size:3rem; margin-bottom:1rem;">⏳</div>
+        <h3 style="font-family:var(--display); font-size:1.8rem; margin-bottom:1rem;">Plan coming soon</h3>
+        <p style="color:var(--gray-light);">Pratik is preparing your personalized plan. Check back shortly, or message him on WhatsApp if you've been waiting.</p>
+      </div>`;
+    return;
+  }
+
+  // PDF link
+  if (plan.pdf_url) {
+    try {
+      const url = await FileStore.getUrl('client-plans', plan.pdf_url);
+      const btn = document.getElementById('downloadPdf');
+      btn.href = url;
+      btn.target = '_blank';
+      btn.style.display = 'inline-flex';
+    } catch (e) { console.warn('PDF link failed', e); }
+  }
+
+  // Render plan
+  el.innerHTML = `
+    <div class="plan-summary" style="margin-bottom:2rem;">
+      ${plan.daily_calories ? `<div class="plan-stat"><div class="lbl">Calories</div><div class="val">${plan.daily_calories}</div><div class="unit">kcal/day</div></div>` : ''}
+      ${plan.protein_g ? `<div class="plan-stat"><div class="lbl">Protein</div><div class="val">${plan.protein_g}g</div></div>` : ''}
+      ${plan.carbs_g ? `<div class="plan-stat"><div class="lbl">Carbs</div><div class="val">${plan.carbs_g}g</div></div>` : ''}
+      ${plan.fat_g ? `<div class="plan-stat"><div class="lbl">Fat</div><div class="val">${plan.fat_g}g</div></div>` : ''}
+      ${plan.steps_target ? `<div class="plan-stat"><div class="lbl">Steps</div><div class="val">${plan.steps_target}</div></div>` : ''}
+    </div>
+
+    ${plan.workout_split ? `
+      <div class="plan-section">
+        <h4>Workout Split</h4>
+        <pre>${plan.workout_split}</pre>
+      </div>` : ''}
+
+    ${plan.diet_overview ? `
+      <div class="plan-section">
+        <h4>Diet Overview</h4>
+        <pre>${plan.diet_overview}</pre>
+      </div>` : ''}
+
+    ${plan.supplements ? `
+      <div class="plan-section">
+        <h4>Supplements</h4>
+        <pre>${plan.supplements}</pre>
+      </div>` : ''}
+  `;
+})();
+</script>
+
+</body>
+</html>

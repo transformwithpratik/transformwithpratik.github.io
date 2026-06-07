@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My History — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/portal.css">
+</head>
+<body>
+
+<div class="portal-shell">
+  <aside class="portal-sidebar" id="portal-sidebar-mount"></aside>
+
+  <main class="portal-main">
+    <div class="portal-header">
+      <div>
+        <div class="eyebrow">// TRACK YOUR JOURNEY</div>
+        <h1>My <span class="yellow">history.</span></h1>
+      </div>
+    </div>
+
+    <div class="tabs-bar">
+      <button class="tab-btn active" data-tab="daily">📝 Daily Logs</button>
+      <button class="tab-btn" data-tab="weekly">⚖ Weekly Check-ins</button>
+    </div>
+
+    <div id="dailyTab">
+      <div class="log-history" id="dailyTable"><div class="empty-state">Loading...</div></div>
+    </div>
+
+    <div id="weeklyTab" style="display:none;">
+      <div class="log-history" id="weeklyTable"><div class="empty-state">Loading...</div></div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/portal.js"></script>
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 100));
+  const ok = await Portal.init('history');
+  if (!ok) return;
+
+  // Daily
+  const { data: daily } = await DB.listDailyLogs(Portal.currentUser.id, 100);
+  const dailyEl = document.getElementById('dailyTable');
+  if (!daily || daily.length === 0) {
+    dailyEl.innerHTML = '<div class="empty-state">No daily logs yet.</div>';
+  } else {
+    dailyEl.innerHTML = `
+      <table>
+        <thead><tr>
+          <th>Date</th><th>Cal</th><th>P</th><th>C</th><th>F</th><th>Steps</th><th>Workout</th><th>Notes</th>
+        </tr></thead>
+        <tbody>
+          ${daily.map(d => `
+            <tr>
+              <td>${Portal.fmtDate(d.log_date)}</td>
+              <td>${d.calories || '-'}</td>
+              <td>${d.protein_g || '-'}</td>
+              <td>${d.carbs_g || '-'}</td>
+              <td>${d.fat_g || '-'}</td>
+              <td>${d.steps || '-'}</td>
+              <td>${d.workout_done ? '✓' : '✗'}</td>
+              <td style="max-width:250px; overflow:hidden; text-overflow:ellipsis;">${d.notes || d.workout_notes || d.diet_notes || '-'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  // Weekly
+  const { data: weekly } = await DB.listWeeklyLogs(Portal.currentUser.id, 100);
+  const weeklyEl = document.getElementById('weeklyTable');
+  if (!weekly || weekly.length === 0) {
+    weeklyEl.innerHTML = '<div class="empty-state">No weekly check-ins yet.</div>';
+  } else {
+    weeklyEl.innerHTML = `
+      <table>
+        <thead><tr>
+          <th>Date</th><th>Weight</th><th>Waist</th><th>Chest</th><th>Hips</th><th>Notes</th>
+        </tr></thead>
+        <tbody>
+          ${weekly.map(w => `
+            <tr>
+              <td>${Portal.fmtDate(w.log_date)}</td>
+              <td>${w.weight || '-'} kg</td>
+              <td>${w.waist_cm || '-'}</td>
+              <td>${w.chest_cm || '-'}</td>
+              <td>${w.hips_cm || '-'}</td>
+              <td style="max-width:300px;">${w.notes || '-'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`;
+  }
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('dailyTab').style.display = btn.dataset.tab === 'daily' ? 'block' : 'none';
+      document.getElementById('weeklyTab').style.display = btn.dataset.tab === 'weekly' ? 'block' : 'none';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

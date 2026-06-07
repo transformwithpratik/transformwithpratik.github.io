@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Check-in — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/portal.css">
+</head>
+<body>
+
+<div class="portal-shell">
+  <aside class="portal-sidebar" id="portal-sidebar-mount"></aside>
+
+  <main class="portal-main">
+    <div class="portal-header">
+      <div>
+        <div class="eyebrow">// WEEKLY CHECK-IN</div>
+        <h1>Weekly <span class="yellow">progress.</span></h1>
+      </div>
+    </div>
+
+    <form id="weeklyForm" class="log-card">
+      <h3 style="font-family:var(--display); font-size:1.5rem; margin-bottom:1rem;">Weight & Measurements</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Weight (kg)</label>
+          <input type="number" step="0.1" name="weight" required>
+        </div>
+        <div class="form-group">
+          <label>Waist (cm) — optional</label>
+          <input type="number" step="0.1" name="waist_cm">
+        </div>
+        <div class="form-group">
+          <label>Chest (cm) — optional</label>
+          <input type="number" step="0.1" name="chest_cm">
+        </div>
+        <div class="form-group">
+          <label>Hips (cm) — optional</label>
+          <input type="number" step="0.1" name="hips_cm">
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--display); font-size:1.5rem; margin: 2rem 0 1rem;">Progress Photos</h3>
+      <p style="color:var(--gray-light); margin-bottom:1.5rem; font-size:0.9rem;">Same time of day, same lighting, same poses (front, side, back). Only you and Pratik can see these.</p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:1rem;">
+        <div>
+          <label style="display:block; font-family:var(--mono); font-size:0.75rem; color:var(--yellow); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Front</label>
+          <label class="upload-zone" for="photo_front">
+            <div class="icon">📷</div>
+            <div class="text" id="text_front">Tap to upload</div>
+            <input type="file" id="photo_front" accept="image/*" data-slot="front">
+          </label>
+        </div>
+        <div>
+          <label style="display:block; font-family:var(--mono); font-size:0.75rem; color:var(--yellow); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Side</label>
+          <label class="upload-zone" for="photo_side">
+            <div class="icon">📷</div>
+            <div class="text" id="text_side">Tap to upload</div>
+            <input type="file" id="photo_side" accept="image/*" data-slot="side">
+          </label>
+        </div>
+        <div>
+          <label style="display:block; font-family:var(--mono); font-size:0.75rem; color:var(--yellow); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Back</label>
+          <label class="upload-zone" for="photo_back">
+            <div class="icon">📷</div>
+            <div class="text" id="text_back">Tap to upload</div>
+            <input type="file" id="photo_back" accept="image/*" data-slot="back">
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group full" style="margin-top:2rem;">
+        <label>How was this week?</label>
+        <textarea name="notes" placeholder="How you felt, what went well, what was hard, any wins to celebrate..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary form-submit">Submit Check-in <span class="arrow">→</span></button>
+    </form>
+
+    <!-- Past check-ins -->
+    <section style="margin-top:3rem;">
+      <h3 style="font-family:var(--display); font-size:1.75rem; margin-bottom:1rem;">Past check-ins</h3>
+      <div class="log-history" id="weeklyHistory">
+        <div class="empty-state">Loading...</div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/portal.js"></script>
+<script>
+const uploaded = { front: null, side: null, back: null };
+
+(async () => {
+  await new Promise(r => setTimeout(r, 100));
+  const ok = await Portal.init('weekly');
+  if (!ok) return;
+
+  // Photo upload handlers
+  ['front','side','back'].forEach(slot => {
+    document.getElementById('photo_' + slot).addEventListener('change', async e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      document.getElementById('text_' + slot).textContent = 'Uploading...';
+      try {
+        const path = await FileStore.uploadProgressPhoto(file, slot);
+        uploaded[slot] = path;
+        document.getElementById('text_' + slot).textContent = '✓ ' + file.name.slice(0, 20);
+      } catch (err) {
+        document.getElementById('text_' + slot).textContent = 'Upload failed';
+        Portal.toast('Upload failed: ' + err.message, 'error');
+      }
+    });
+  });
+
+  // Submit
+  document.getElementById('weeklyForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.innerHTML = 'Saving...';
+
+    const fd = new FormData(e.target);
+    const { error } = await DB.addWeeklyLog({
+      client_id: Portal.currentUser.id,
+      log_date: Portal.todayISO(),
+      weight: parseFloat(fd.get('weight')) || null,
+      waist_cm: parseFloat(fd.get('waist_cm')) || null,
+      chest_cm: parseFloat(fd.get('chest_cm')) || null,
+      hips_cm: parseFloat(fd.get('hips_cm')) || null,
+      photo_front: uploaded.front,
+      photo_side: uploaded.side,
+      photo_back: uploaded.back,
+      notes: fd.get('notes') || null
+    });
+
+    btn.disabled = false; btn.innerHTML = 'Submit Check-in →';
+
+    if (error) {
+      Portal.toast('Save failed: ' + error.message, 'error');
+    } else {
+      Portal.toast('✓ Check-in submitted');
+      e.target.reset();
+      uploaded.front = uploaded.side = uploaded.back = null;
+      ['front','side','back'].forEach(s => {
+        document.getElementById('text_' + s).textContent = 'Tap to upload';
+      });
+      await loadHistory();
+    }
+  });
+
+  await loadHistory();
+})();
+
+async function loadHistory() {
+  const { data } = await DB.listWeeklyLogs(Portal.currentUser.id, 20);
+  const el = document.getElementById('weeklyHistory');
+
+  if (!data || data.length === 0) {
+    el.innerHTML = '<div class="empty-state">No check-ins yet. Submit your first one above.</div>';
+    return;
+  }
+
+  el.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Date</th><th>Weight</th><th>Waist</th><th>Chest</th><th>Hips</th><th>Notes</th>
+      </tr></thead>
+      <tbody>
+        ${data.map(w => `
+          <tr>
+            <td>${Portal.fmtDate(w.log_date)}</td>
+            <td>${w.weight || '-'} kg</td>
+            <td>${w.waist_cm || '-'}</td>
+            <td>${w.chest_cm || '-'}</td>
+            <td>${w.hips_cm || '-'}</td>
+            <td style="max-width:300px;">${w.notes || '-'}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal — Sign Up</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/portal.css">
+</head>
+<body>
+
+<div class="admin-login">
+  <form class="login-card" id="signupForm" style="max-width:480px;">
+    <h2>Join the<br><span class="yellow">program.</span></h2>
+    <p style="color:var(--gray-light); margin: 0.5rem 0 2rem; font-family:var(--mono); font-size:0.85rem;">// CREATE YOUR CLIENT ACCOUNT</p>
+
+    <div class="login-error" id="signupError"></div>
+
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="fullName" required>
+    </div>
+    <div class="form-group">
+      <label>Phone (WhatsApp)</label>
+      <input type="tel" id="phone" required placeholder="+91 9999999999">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" required>
+    </div>
+    <div class="form-group">
+      <label>Password (min 6 chars)</label>
+      <input type="password" id="password" required minlength="6">
+    </div>
+    <button type="submit" class="btn btn-primary form-submit" id="submitBtn">Create Account <span class="arrow">→</span></button>
+
+    <p style="margin-top:1.5rem; font-family:var(--mono); font-size:0.8rem; color:var(--gray-light); text-align:center;">
+      Already have an account? <a href="login.html" style="color:var(--yellow);">Sign in →</a>
+    </p>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script>
+document.getElementById('signupForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const err = document.getElementById('signupError');
+  err.classList.remove('show');
+  btn.disabled = true;
+  btn.innerHTML = 'Creating...';
+
+  if (!supa) {
+    err.textContent = 'Portal not configured. Contact Pratik.';
+    err.classList.add('show');
+    btn.disabled = false;
+    btn.innerHTML = 'Create Account →';
+    return;
+  }
+
+  const { data, error } = await Auth.signUp({
+    fullName: document.getElementById('fullName').value,
+    phone: document.getElementById('phone').value,
+    email: document.getElementById('email').value,
+    password: document.getElementById('password').value
+  });
+
+  if (error) {
+    err.textContent = error.message;
+    err.classList.add('show');
+    btn.disabled = false;
+    btn.innerHTML = 'Create Account →';
+    return;
+  }
+
+  // Supabase may require email confirmation depending on project settings
+  if (data.user && !data.session) {
+    err.style.background = 'rgba(255,212,0,0.1)';
+    err.style.borderColor = 'var(--yellow)';
+    err.style.color = 'var(--yellow)';
+    err.textContent = 'Check your email to confirm. Then sign in.';
+    err.classList.add('show');
+    btn.innerHTML = 'Account Created';
+    return;
+  }
+
+  // Auto signed in — go to dashboard
+  window.location.href = 'dashboard.html';
+});
+</script>
+
+</body>
+</html>

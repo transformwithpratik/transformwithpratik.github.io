@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Files — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/portal.css">
+</head>
+<body>
+
+<div class="portal-shell">
+  <aside class="portal-sidebar" id="portal-sidebar-mount"></aside>
+
+  <main class="portal-main">
+    <div class="portal-header">
+      <div>
+        <div class="eyebrow">// DOWNLOADS</div>
+        <h1>Files & <span class="yellow">PDFs.</span></h1>
+      </div>
+    </div>
+
+    <div id="filesList">
+      <div class="empty-state">Loading...</div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/portal.js"></script>
+<script>
+(async () => {
+  await new Promise(r => setTimeout(r, 100));
+  const ok = await Portal.init('files');
+  if (!ok) return;
+
+  const { data: files } = await DB.listClientFiles(Portal.currentUser.id);
+  const el = document.getElementById('filesList');
+
+  if (!files || files.length === 0) {
+    el.innerHTML = `
+      <div class="log-card" style="text-align:center; padding:3rem 2rem;">
+        <div style="font-size:3rem; margin-bottom:1rem;">📁</div>
+        <h3 style="font-family:var(--display); font-size:1.5rem; margin-bottom:0.5rem;">No files yet</h3>
+        <p style="color:var(--gray-light);">PDFs, meal plans, and other downloads from Pratik will appear here.</p>
+      </div>`;
+    return;
+  }
+
+  // Render each file with signed URL
+  const cards = await Promise.all(files.map(async f => {
+    let url = '#';
+    try {
+      url = await FileStore.getUrl('client-plans', f.file_url);
+    } catch (e) { console.warn('URL fail', e); }
+
+    return `
+      <div class="file-card">
+        <div class="file-icon">📄</div>
+        <div class="file-meta">
+          <h4>${f.title}</h4>
+          <p>${f.description || ''} · Uploaded ${Portal.fmtDate(f.uploaded_at)}</p>
+        </div>
+        <a href="${url}" target="_blank" class="btn btn-primary btn-sm">Download</a>
+      </div>`;
+  }));
+
+  el.innerHTML = cards.join('');
+})();
+</script>
+
+</body>
+</html>

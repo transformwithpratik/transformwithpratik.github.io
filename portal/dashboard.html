@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/portal.css">
+</head>
+<body>
+
+<div class="portal-shell">
+  <aside class="portal-sidebar" id="portal-sidebar-mount"></aside>
+
+  <main class="portal-main">
+    <div class="portal-header">
+      <div>
+        <div class="eyebrow" id="todayEyebrow"></div>
+        <h1>Hey <span class="yellow" id="firstName">there</span>.</h1>
+      </div>
+      <a href="log.html" class="btn btn-primary">Log Today →</a>
+    </div>
+
+    <!-- Plan targets -->
+    <section id="planSection">
+      <h3 style="font-family:var(--display); font-size:1.75rem; margin-bottom:1rem;">Your daily targets</h3>
+      <div class="plan-summary" id="planSummary">
+        <div class="empty-state">No plan assigned yet. Pratik will set one up for you soon.</div>
+      </div>
+    </section>
+
+    <!-- Today's log preview -->
+    <section style="margin-top:3rem;">
+      <h3 style="font-family:var(--display); font-size:1.75rem; margin-bottom:1rem;">Today's log</h3>
+      <div class="log-card" id="todayLogCard">
+        <div class="empty-state">Loading...</div>
+      </div>
+    </section>
+
+    <!-- Quick actions -->
+    <section style="margin-top:3rem;">
+      <h3 style="font-family:var(--display); font-size:1.75rem; margin-bottom:1rem;">Quick actions</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+        <a href="log.html" class="log-card" style="text-decoration:none; cursor:pointer; padding:1.5rem;">
+          <div style="font-family:var(--display); font-size:2rem; color:var(--yellow);">📝</div>
+          <div style="font-family:var(--heading); margin-top:0.5rem;">Log Today</div>
+          <div style="font-family:var(--mono); font-size:0.75rem; color:var(--gray-light); margin-top:0.25rem; text-transform:uppercase; letter-spacing:0.1em;">Food, training, steps</div>
+        </a>
+        <a href="weekly.html" class="log-card" style="text-decoration:none; cursor:pointer; padding:1.5rem;">
+          <div style="font-family:var(--display); font-size:2rem; color:var(--yellow);">⚖</div>
+          <div style="font-family:var(--heading); margin-top:0.5rem;">Weekly Check-in</div>
+          <div style="font-family:var(--mono); font-size:0.75rem; color:var(--gray-light); margin-top:0.25rem; text-transform:uppercase; letter-spacing:0.1em;">Weight + photos</div>
+        </a>
+        <a href="plan.html" class="log-card" style="text-decoration:none; cursor:pointer; padding:1.5rem;">
+          <div style="font-family:var(--display); font-size:2rem; color:var(--yellow);">📋</div>
+          <div style="font-family:var(--heading); margin-top:0.5rem;">View My Plan</div>
+          <div style="font-family:var(--mono); font-size:0.75rem; color:var(--gray-light); margin-top:0.25rem; text-transform:uppercase; letter-spacing:0.1em;">Workout + diet</div>
+        </a>
+        <a href="files.html" class="log-card" style="text-decoration:none; cursor:pointer; padding:1.5rem;">
+          <div style="font-family:var(--display); font-size:2rem; color:var(--yellow);">📁</div>
+          <div style="font-family:var(--heading); margin-top:0.5rem;">Files & PDFs</div>
+          <div style="font-family:var(--mono); font-size:0.75rem; color:var(--gray-light); margin-top:0.25rem; text-transform:uppercase; letter-spacing:0.1em;">Downloads from Pratik</div>
+        </a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/portal.js"></script>
+<script>
+(async () => {
+  // Small delay so initSupabase fires
+  await new Promise(r => setTimeout(r, 100));
+  const ok = await Portal.init('dashboard');
+  if (!ok) return;
+
+  // Header
+  document.getElementById('firstName').textContent = (Portal.currentProfile.full_name || 'there').split(' ')[0];
+  document.getElementById('todayEyebrow').textContent =
+    new Date().toLocaleDateString('en-IN', { weekday: 'long', day:'numeric', month:'long' }).toUpperCase();
+
+  // Plan summary
+  const plan = Portal.currentPlan;
+  if (plan) {
+    const cards = [
+      { lbl: 'Calories', val: plan.daily_calories, unit: 'kcal' },
+      { lbl: 'Protein',  val: plan.protein_g,      unit: 'g' },
+      { lbl: 'Carbs',    val: plan.carbs_g,        unit: 'g' },
+      { lbl: 'Fat',      val: plan.fat_g,          unit: 'g' },
+      { lbl: 'Steps',    val: plan.steps_target,   unit: '/day' }
+    ].filter(c => c.val);
+
+    document.getElementById('planSummary').innerHTML = cards.map(c => `
+      <div class="plan-stat">
+        <div class="lbl">${c.lbl}</div>
+        <div class="val">${c.val}</div>
+        <div class="unit">${c.unit}</div>
+      </div>
+    `).join('');
+  }
+
+  // Today's log
+  const today = Portal.todayISO();
+  const { data: log } = await DB.getDailyLog(Portal.currentUser.id, today);
+  const card = document.getElementById('todayLogCard');
+
+  if (!log) {
+    card.innerHTML = `
+      <div class="log-card-header">
+        <h3>Not logged yet</h3>
+        <span class="date">${Portal.fmtDate(today)}</span>
+      </div>
+      <p style="color:var(--gray-light); margin-bottom:1rem;">Take 30 seconds to log your food, training, and steps for today.</p>
+      <a href="log.html" class="btn btn-primary">Log Now →</a>`;
+  } else {
+    card.innerHTML = `
+      <div class="log-card-header">
+        <h3>✓ Logged today</h3>
+        <span class="date">${Portal.fmtDate(today)}</span>
+      </div>
+      <div class="plan-summary">
+        ${log.calories ? `<div class="plan-stat"><div class="lbl">Cal</div><div class="val">${log.calories}</div></div>` : ''}
+        ${log.protein_g ? `<div class="plan-stat"><div class="lbl">Protein</div><div class="val">${log.protein_g}g</div></div>` : ''}
+        ${log.steps ? `<div class="plan-stat"><div class="lbl">Steps</div><div class="val">${log.steps}</div></div>` : ''}
+        <div class="plan-stat"><div class="lbl">Workout</div><div class="val">${log.workout_done ? '✓' : '✗'}</div></div>
+      </div>
+      <a href="log.html" style="display:inline-block; margin-top:1rem; color:var(--yellow); font-family:var(--mono); font-size:0.85rem;">Edit today's log →</a>`;
+  }
+})();
+</script>
+
+</body>
+</html>

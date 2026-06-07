@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calorie Calculator — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-container">
+    <a href="../index.html" class="logo"><span class="logo-mark">GFP</span>GETFITWITHPRATIK</a>
+    <button class="menu-toggle">☰</button>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="transformations.html">Transformations</a></li>
+      <li><a href="calculator.html" class="active">Calorie Calc</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="../portal/login.html">Client Login</a></li>
+      <li><a href="book.html" class="nav-cta">Book a Session →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="form-page">
+  <div class="container">
+    <div class="form-header">
+      <h1>Maintenance <span class="yellow">Calorie</span><br>Calculator</h1>
+      <p>Find out how many calories you actually need to eat to maintain — or change — your current weight. Based on the Mifflin-St Jeor equation.</p>
+    </div>
+
+    <div class="calc-grid">
+      <form class="form-card" id="calcForm">
+        <div class="form-group">
+          <label>Sex</label>
+          <div class="radio-cards">
+            <div class="radio-card"><input type="radio" name="sex" id="sm" value="male" checked><label for="sm">Male</label></div>
+            <div class="radio-card"><input type="radio" name="sex" id="sf" value="female"><label for="sf">Female</label></div>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Age (years)</label>
+            <input type="number" name="age" id="age" value="28" min="14" max="100">
+          </div>
+          <div class="form-group">
+            <label>Height (cm)</label>
+            <input type="number" name="height" id="height" value="175" min="100" max="250">
+          </div>
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="number" name="weight" id="weight" value="75" step="0.1" min="30" max="300">
+          </div>
+          <div class="form-group">
+            <label>Body Fat % (optional)</label>
+            <input type="number" name="bf" id="bf" placeholder="e.g. 20" min="3" max="60">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Activity Level</label>
+          <select name="activity" id="activity">
+            <option value="1.2">Sedentary (desk job, no exercise)</option>
+            <option value="1.375">Lightly active (1-3 workouts/week)</option>
+            <option value="1.55" selected>Moderately active (3-5 workouts/week)</option>
+            <option value="1.725">Very active (6-7 workouts/week)</option>
+            <option value="1.9">Athlete (2x daily training)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Goal</label>
+          <div class="radio-cards">
+            <div class="radio-card"><input type="radio" name="goal" id="gl" value="-500"><label for="gl">Lose Fat</label></div>
+            <div class="radio-card"><input type="radio" name="goal" id="gm" value="0" checked><label for="gm">Maintain</label></div>
+            <div class="radio-card"><input type="radio" name="goal" id="gg" value="300"><label for="gg">Gain Muscle</label></div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary form-submit" onclick="calculate()">Calculate My Numbers <span class="arrow">→</span></button>
+      </form>
+
+      <div class="calc-results">
+        <h3>// YOUR DAILY TARGET</h3>
+        <div class="calc-result-num" id="calories">2,340</div>
+        <div class="calc-result-unit">CALORIES PER DAY</div>
+
+        <div class="calc-breakdown">
+          <div class="calc-row"><span>BMR (basal rate)</span><span class="val" id="bmr">1,650</span></div>
+          <div class="calc-row"><span>TDEE (maintenance)</span><span class="val" id="tdee">2,340</span></div>
+          <div class="calc-row"><span>Adjustment</span><span class="val" id="adj">+0</span></div>
+        </div>
+
+        <div style="margin-top:1.5rem; font-family:var(--mono); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em;">// SUGGESTED MACROS</div>
+
+        <div class="macros">
+          <div class="macro">
+            <div class="macro-num" id="protein">175g</div>
+            <div class="macro-lbl">Protein</div>
+          </div>
+          <div class="macro">
+            <div class="macro-num" id="carbs">260g</div>
+            <div class="macro-lbl">Carbs</div>
+          </div>
+          <div class="macro">
+            <div class="macro-num" id="fat">75g</div>
+            <div class="macro-lbl">Fat</div>
+          </div>
+        </div>
+
+        <div style="margin-top:2rem; padding-top:1.5rem; border-top:2px solid var(--black); font-size:0.85rem;">
+          <strong>Want a personalized plan?</strong><br>
+          <a href="book.html" style="color:var(--black); text-decoration:underline; font-weight:700;">Book a free strategy call →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-bottom" style="padding-top:0; border:none;">
+    <div>© 2026 GetFitWithPratik</div>
+    <div><a href="../index.html">← Back to Home</a></div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+function calculate() {
+  const sex = document.querySelector('input[name="sex"]:checked').value;
+  const age = +document.getElementById('age').value;
+  const height = +document.getElementById('height').value;
+  const weight = +document.getElementById('weight').value;
+  const bf = +document.getElementById('bf').value;
+  const activity = +document.getElementById('activity').value;
+  const goal = +document.querySelector('input[name="goal"]:checked').value;
+
+  if (!age || !height || !weight) return;
+
+  // BMR — use Katch-McArdle if BF given, else Mifflin-St Jeor
+  let bmr;
+  if (bf > 0) {
+    const lbm = weight * (1 - bf / 100);
+    bmr = 370 + (21.6 * lbm);
+  } else {
+    bmr = sex === 'male'
+      ? (10 * weight) + (6.25 * height) - (5 * age) + 5
+      : (10 * weight) + (6.25 * height) - (5 * age) - 161;
+  }
+
+  const tdee = bmr * activity;
+  const target = tdee + goal;
+
+  // Macros: 2g/kg protein, 25% fat, rest carbs
+  const protein = Math.round(weight * 2);
+  const fatCal = target * 0.25;
+  const fat = Math.round(fatCal / 9);
+  const carbs = Math.round((target - (protein * 4) - (fat * 9)) / 4);
+
+  const fmt = n => Math.round(n).toLocaleString();
+
+  document.getElementById('bmr').textContent = fmt(bmr);
+  document.getElementById('tdee').textContent = fmt(tdee);
+  document.getElementById('adj').textContent = (goal >= 0 ? '+' : '') + fmt(goal);
+  document.getElementById('calories').textContent = fmt(target);
+  document.getElementById('protein').textContent = protein + 'g';
+  document.getElementById('carbs').textContent = Math.max(0, carbs) + 'g';
+  document.getElementById('fat').textContent = fat + 'g';
+}
+
+calculate();
+['age','height','weight','bf','activity'].forEach(id => {
+  document.getElementById(id).addEventListener('input', calculate);
+});
+document.querySelectorAll('input[name="sex"], input[name="goal"]').forEach(el => {
+  el.addEventListener('change', calculate);
+});
+</script>
+
+</body>
+</html>

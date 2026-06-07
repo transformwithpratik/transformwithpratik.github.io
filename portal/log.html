@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Log — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/portal.css">
+</head>
+<body>
+
+<div class="portal-shell">
+  <aside class="portal-sidebar" id="portal-sidebar-mount"></aside>
+
+  <main class="portal-main">
+    <div class="portal-header">
+      <div>
+        <div class="eyebrow">// DAILY LOG</div>
+        <h1>Log <span class="yellow">today.</span></h1>
+      </div>
+      <input type="date" id="logDate" style="background:var(--black-soft); border:1px solid var(--border); color:var(--white); padding:0.75rem 1rem; font-family:var(--mono);">
+    </div>
+
+    <form id="logForm" class="log-card">
+      <!-- Macros row -->
+      <h3 style="font-family:var(--display); font-size:1.5rem; margin-bottom:1rem;">Macros & Calories</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Calories Eaten <span id="calTarget" style="color:var(--gray-light); font-family:var(--body); text-transform:none; letter-spacing:0;"></span></label>
+          <input type="number" name="calories" placeholder="e.g. 1850">
+        </div>
+        <div class="form-group">
+          <label>Protein (g) <span id="proteinTarget" style="color:var(--gray-light); font-family:var(--body); text-transform:none; letter-spacing:0;"></span></label>
+          <input type="number" name="protein_g" placeholder="e.g. 140">
+        </div>
+        <div class="form-group">
+          <label>Carbs (g) <span id="carbsTarget" style="color:var(--gray-light); font-family:var(--body); text-transform:none; letter-spacing:0;"></span></label>
+          <input type="number" name="carbs_g" placeholder="e.g. 200">
+        </div>
+        <div class="form-group">
+          <label>Fat (g) <span id="fatTarget" style="color:var(--gray-light); font-family:var(--body); text-transform:none; letter-spacing:0;"></span></label>
+          <input type="number" name="fat_g" placeholder="e.g. 60">
+        </div>
+      </div>
+
+      <!-- Steps + workout -->
+      <h3 style="font-family:var(--display); font-size:1.5rem; margin: 2rem 0 1rem;">Activity</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Steps <span id="stepsTarget" style="color:var(--gray-light); font-family:var(--body); text-transform:none; letter-spacing:0;"></span></label>
+          <input type="number" name="steps" placeholder="e.g. 8500">
+        </div>
+        <div class="form-group">
+          <label>Did you train today?</label>
+          <div class="radio-cards">
+            <div class="radio-card">
+              <input type="radio" name="workout_done" id="w1" value="true">
+              <label for="w1">Yes</label>
+            </div>
+            <div class="radio-card">
+              <input type="radio" name="workout_done" id="w2" value="false">
+              <label for="w2">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <h3 style="font-family:var(--display); font-size:1.5rem; margin: 2rem 0 1rem;">Notes</h3>
+      <div class="form-group full">
+        <label>Workout Notes</label>
+        <textarea name="workout_notes" placeholder="What did you train? PRs? How did it feel?"></textarea>
+      </div>
+      <div class="form-group full">
+        <label>Diet Notes</label>
+        <textarea name="diet_notes" placeholder="What you ate today, any cheat meals, what you struggled with..."></textarea>
+      </div>
+      <div class="form-group full">
+        <label>What did you miss / struggle with?</label>
+        <textarea name="missed_items" placeholder="Skipped meals? Couldn't hit protein? Sleep issues?"></textarea>
+      </div>
+
+      <!-- Custom fields (populated based on plan) -->
+      <div id="customFieldsSection" style="display:none;">
+        <h3 style="font-family:var(--display); font-size:1.5rem; margin: 2rem 0 1rem;">Custom Tracking</h3>
+        <div class="form-grid" id="customFieldsGrid"></div>
+      </div>
+
+      <div class="form-group full">
+        <label>General Notes</label>
+        <textarea name="notes" placeholder="Anything else? Mood, sleep, soreness, life stuff..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary form-submit">Save Log <span class="arrow">→</span></button>
+    </form>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/portal.js"></script>
+<script>
+let currentLogDate;
+
+(async () => {
+  await new Promise(r => setTimeout(r, 100));
+  const ok = await Portal.init('log');
+  if (!ok) return;
+
+  // Set date
+  currentLogDate = Portal.todayISO();
+  document.getElementById('logDate').value = currentLogDate;
+
+  // Render targets next to inputs
+  const plan = Portal.currentPlan;
+  if (plan) {
+    if (plan.daily_calories) document.getElementById('calTarget').textContent = `target: ${plan.daily_calories}`;
+    if (plan.protein_g) document.getElementById('proteinTarget').textContent = `target: ${plan.protein_g}g`;
+    if (plan.carbs_g) document.getElementById('carbsTarget').textContent = `target: ${plan.carbs_g}g`;
+    if (plan.fat_g) document.getElementById('fatTarget').textContent = `target: ${plan.fat_g}g`;
+    if (plan.steps_target) document.getElementById('stepsTarget').textContent = `target: ${plan.steps_target}`;
+  }
+
+  // Render custom fields from plan
+  if (plan && plan.custom_log_fields && plan.custom_log_fields.length > 0) {
+    document.getElementById('customFieldsSection').style.display = 'block';
+    document.getElementById('customFieldsGrid').innerHTML = plan.custom_log_fields.map(f => `
+      <div class="form-group">
+        <label>${f.label}</label>
+        <input type="${f.type || 'text'}" name="custom_${f.key}" placeholder="${f.placeholder || ''}">
+      </div>
+    `).join('');
+  }
+
+  // Load existing log if present
+  await loadLog(currentLogDate);
+
+  // Date change reloads
+  document.getElementById('logDate').addEventListener('change', async e => {
+    currentLogDate = e.target.value;
+    await loadLog(currentLogDate);
+  });
+
+  // Submit handler
+  document.getElementById('logForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.innerHTML = 'Saving...';
+
+    const fd = new FormData(e.target);
+    const data = {
+      client_id: Portal.currentUser.id,
+      log_date: currentLogDate,
+      calories: parseInt(fd.get('calories')) || null,
+      protein_g: parseInt(fd.get('protein_g')) || null,
+      carbs_g: parseInt(fd.get('carbs_g')) || null,
+      fat_g: parseInt(fd.get('fat_g')) || null,
+      steps: parseInt(fd.get('steps')) || null,
+      workout_done: fd.get('workout_done') === 'true',
+      workout_notes: fd.get('workout_notes') || null,
+      diet_notes: fd.get('diet_notes') || null,
+      missed_items: fd.get('missed_items') || null,
+      notes: fd.get('notes') || null,
+      custom_data: {}
+    };
+
+    // Pull custom fields
+    if (Portal.currentPlan && Portal.currentPlan.custom_log_fields) {
+      Portal.currentPlan.custom_log_fields.forEach(f => {
+        const v = fd.get(`custom_${f.key}`);
+        if (v) data.custom_data[f.key] = v;
+      });
+    }
+
+    const { error } = await DB.upsertDailyLog(data);
+    btn.disabled = false; btn.innerHTML = 'Save Log →';
+
+    if (error) {
+      Portal.toast('Save failed: ' + error.message, 'error');
+    } else {
+      Portal.toast('✓ Log saved');
+    }
+  });
+})();
+
+async function loadLog(date) {
+  const { data } = await DB.getDailyLog(Portal.currentUser.id, date);
+  const form = document.getElementById('logForm');
+  form.reset();
+
+  if (!data) return;
+
+  form.calories.value = data.calories || '';
+  form.protein_g.value = data.protein_g || '';
+  form.carbs_g.value = data.carbs_g || '';
+  form.fat_g.value = data.fat_g || '';
+  form.steps.value = data.steps || '';
+  form.workout_notes.value = data.workout_notes || '';
+  form.diet_notes.value = data.diet_notes || '';
+  form.missed_items.value = data.missed_items || '';
+  form.notes.value = data.notes || '';
+
+  if (data.workout_done === true) document.getElementById('w1').checked = true;
+  else if (data.workout_done === false) document.getElementById('w2').checked = true;
+
+  if (data.custom_data) {
+    Object.entries(data.custom_data).forEach(([k, v]) => {
+      const input = form.querySelector(`[name="custom_${k}"]`);
+      if (input) input.value = v;
+    });
+  }
+}
+</script>
+
+</body>
+</html>

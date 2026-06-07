@@ -1,0 +1,446 @@
+/* ============================================
+   PORTAL-SPECIFIC STYLES
+   Builds on style.css; only adds portal pieces.
+   ============================================ */
+
+.portal-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.portal-sidebar {
+  background: var(--black-soft);
+  border-right: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.portal-sidebar .logo {
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.portal-user-card {
+  background: var(--black);
+  padding: 1rem;
+  border-left: 3px solid var(--yellow);
+  margin-bottom: 2rem;
+}
+
+.portal-user-card .name {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  color: var(--white);
+}
+
+.portal-user-card .meta {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--yellow);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.portal-nav {
+  list-style: none;
+}
+
+.portal-nav li {
+  margin-bottom: 0.25rem;
+}
+
+.portal-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--gray-light);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.2s;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+}
+
+.portal-nav a:hover {
+  background: rgba(255, 212, 0, 0.05);
+  color: var(--yellow);
+}
+
+.portal-nav a.active {
+  background: var(--yellow);
+  color: var(--black);
+  border-left-color: var(--black);
+}
+
+.portal-main {
+  padding: 2.5rem 3rem;
+  overflow-x: hidden;
+}
+
+.portal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.portal-header h1 {
+  font-family: var(--display);
+  font-size: 3rem;
+  line-height: 0.95;
+}
+
+.portal-header .eyebrow {
+  font-family: var(--mono);
+  color: var(--yellow);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+/* Plan card on dashboard */
+.plan-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.plan-stat {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  position: relative;
+}
+
+.plan-stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--yellow);
+}
+
+.plan-stat .lbl {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--gray-light);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.plan-stat .val {
+  font-family: var(--display);
+  font-size: 2rem;
+  color: var(--yellow);
+  line-height: 1;
+}
+
+.plan-stat .unit {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--gray-light);
+}
+
+/* Log entry card */
+.log-card {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.log-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.log-card-header h3 {
+  font-family: var(--display);
+  font-size: 1.5rem;
+}
+
+.log-card-header .date {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--yellow);
+}
+
+/* Quick log inline */
+.quick-log {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.quick-log .form-group {
+  margin-bottom: 0;
+}
+
+/* Log history */
+.log-history {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.log-history table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.log-history th, .log-history td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.log-history th {
+  background: var(--black);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--yellow);
+}
+
+.log-history tr:hover { background: rgba(255, 212, 0, 0.03); }
+
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: var(--gray-light);
+  font-family: var(--mono);
+  font-size: 0.9rem;
+}
+
+/* Photo grid */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.photo-tile {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--black);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.photo-tile:hover {
+  border-color: var(--yellow);
+  transform: translateY(-3px);
+}
+
+.photo-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-tile .photo-date {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  padding: 1rem 0.75rem 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--yellow);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* File card */
+.file-card {
+  background: var(--black-soft);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s;
+}
+
+.file-card:hover { border-color: var(--yellow); }
+
+.file-card .file-icon {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  color: var(--yellow);
+  margin-right: 1rem;
+}
+
+.file-card .file-meta {
+  flex: 1;
+}
+
+.file-card .file-meta h4 {
+  font-family: var(--heading);
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.file-card .file-meta p {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--gray-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--yellow);
+  color: var(--black);
+  padding: 1rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  border-left: 4px solid var(--black);
+  z-index: 1000;
+  transform: translateY(150%);
+  transition: transform 0.3s ease;
+  font-weight: 700;
+}
+
+.toast.show { transform: translateY(0); }
+
+.toast.error {
+  background: #FF4747;
+  color: white;
+}
+
+/* Photo upload zone */
+.upload-zone {
+  border: 2px dashed var(--border);
+  padding: 2rem;
+  text-align: center;
+  background: var(--black);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: var(--yellow);
+  background: rgba(255, 212, 0, 0.05);
+}
+
+.upload-zone .icon {
+  font-family: var(--display);
+  font-size: 2rem;
+  color: var(--yellow);
+  margin-bottom: 0.5rem;
+}
+
+.upload-zone .text {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--gray-light);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.upload-zone input[type="file"] { display: none; }
+
+/* Tabs inside content */
+.tabs-bar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--gray-light);
+  padding: 1rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+
+.tab-btn.active {
+  color: var(--yellow);
+  border-bottom-color: var(--yellow);
+}
+
+.tab-btn:hover:not(.active) { color: var(--white); }
+
+/* Plan content (markdown-ish) */
+.plan-section {
+  background: var(--black-soft);
+  border-left: 3px solid var(--yellow);
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.plan-section h4 {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  color: var(--yellow);
+  margin-bottom: 1rem;
+}
+
+.plan-section p, .plan-section li {
+  color: var(--white);
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+.plan-section pre {
+  white-space: pre-wrap;
+  font-family: var(--body);
+  font-size: 1rem;
+  color: var(--white);
+  line-height: 1.7;
+}
+
+/* Mobile responsive for portal */
+@media (max-width: 968px) {
+  .portal-shell { grid-template-columns: 1fr; }
+  .portal-sidebar {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .portal-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.25rem; }
+  .portal-main { padding: 1.5rem; }
+  .portal-header h1 { font-size: 2rem; }
+}

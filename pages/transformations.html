@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformations — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-container">
+    <a href="../index.html" class="logo"><span class="logo-mark">GFP</span>GETFITWITHPRATIK</a>
+    <button class="menu-toggle">☰</button>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="transformations.html" class="active">Transformations</a></li>
+      <li><a href="calculator.html">Calorie Calc</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="../portal/login.html">Client Login</a></li>
+      <li><a href="book.html" class="nav-cta">Book a Session →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="form-page">
+  <div class="container">
+    <div class="form-header">
+      <h1>Real people.<br><span class="yellow">Real results.</span></h1>
+      <p>Every transformation here started with one decision and was earned with months of consistent work. No shortcuts, no filters, no fakes.</p>
+    </div>
+
+    <div class="transform-grid" id="allTransforms"></div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="cta-banner-content">
+    <h2>Your photo<br>could be next.</h2>
+    <a href="book.html" class="btn btn-primary">Start Today →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-bottom" style="padding-top:0; border:none;">
+    <div>© 2026 GetFitWithPratik</div>
+    <div><a href="../index.html">← Back to Home</a></div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+const defaults = [
+  { name: 'Rohan K.', meta: '12 weeks · 14kg lost' },
+  { name: 'Priya S.', meta: '16 weeks · 18kg lost' },
+  { name: 'Arjun M.', meta: '24 weeks · 22kg lost' },
+  { name: 'Neha T.', meta: '10 weeks · 9kg lost' },
+  { name: 'Karan V.', meta: '20 weeks · 16kg lost' },
+  { name: 'Anjali R.', meta: '14 weeks · 12kg lost' },
+  { name: 'Vikram P.', meta: '18 weeks · 8kg muscle' },
+  { name: 'Sanya M.', meta: '12 weeks · 7kg lost' },
+  { name: 'Aditya B.', meta: '24 weeks · 25kg lost' },
+  { name: 'Riya J.', meta: '8 weeks · 5kg lost' },
+  { name: 'Manav S.', meta: '16 weeks · 11kg lost' },
+  { name: 'Tanvi K.', meta: '20 weeks · 13kg lost' }
+];
+
+const all = Store.get('transformations', defaults);
+document.getElementById('allTransforms').innerHTML = all.map(t => `
+  <div class="transform-card">
+    <div class="transform-img">
+      <span class="badge">${t.meta || ''}</span>
+      ${t.image ? `<img src="${t.image}" alt="${t.name}">` : (t.name||'?')[0]}
+    </div>
+    <div class="transform-info">
+      <h4>${t.name || 'Anonymous'}</h4>
+      <p>${t.meta || 'Transformation'}</p>
+    </div>
+  </div>
+`).join('');
+</script>
+
+</body>
+</html>

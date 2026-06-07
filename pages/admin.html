@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/portal.css">
+</head>
+<body>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a href="../index.html" class="logo"><span class="logo-mark">GFP</span></a>
+    <div style="font-family:var(--mono); font-size:0.7rem; color:var(--yellow); margin-bottom:2rem; letter-spacing:0.2em;">// ADMIN</div>
+    <ul class="admin-nav">
+      <li><a class="tab-link active" data-tab="dashboard">▦ Overview</a></li>
+      <li><a class="tab-link" data-tab="clients">👥 Clients</a></li>
+      <li><a class="tab-link" data-tab="bookings">📩 Bookings</a></li>
+      <li><a class="tab-link" data-tab="feedback">★ Feedback</a></li>
+      <li><a class="tab-link" data-tab="transformations">📸 Transformations</a></li>
+      <li><a class="tab-link" data-tab="testimonials">💬 Testimonials</a></li>
+      <li><a class="tab-link" data-tab="schedule">⏰ Schedule</a></li>
+      <li><a class="tab-link" data-tab="socials">🔗 Socials</a></li>
+      <li style="margin-top:2rem; border-top:1px solid var(--border); padding-top:1rem;">
+        <a id="logoutBtn">⎋ Logout</a>
+      </li>
+    </ul>
+  </aside>
+
+  <main class="admin-main">
+
+    <div class="tab" id="tab-dashboard">
+      <div class="admin-header">
+        <h1>Overview</h1>
+        <span style="font-family:var(--mono); color:var(--gray-light); font-size:0.85rem;" id="todayDate"></span>
+      </div>
+
+      <div id="configBanner" style="display:none; background:rgba(255,212,0,0.1); border:1px solid var(--yellow); padding:1.25rem 1.5rem; margin-bottom:2rem;">
+        <div style="font-family:var(--mono); font-size:0.75rem; color:var(--yellow); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.5rem;">⚠ Setup incomplete</div>
+        <div id="configBannerMsg" style="font-size:0.95rem;"></div>
+      </div>
+
+      <div class="admin-stats">
+        <div class="admin-stat"><div class="num" id="statClients">0</div><div class="lbl">Active Clients</div></div>
+        <div class="admin-stat"><div class="num" id="statBookings">0</div><div class="lbl">Total Bookings</div></div>
+        <div class="admin-stat"><div class="num" id="statFeedback">0</div><div class="lbl">Feedback Items</div></div>
+        <div class="admin-stat"><div class="num" id="statThisWeek">0</div><div class="lbl">New This Week</div></div>
+      </div>
+
+      <h3 style="font-family:var(--display); font-size:1.5rem; margin-bottom:1rem;">Recent Bookings</h3>
+      <div class="admin-table">
+        <table id="recentBookingsTable">
+          <thead><tr><th>Date</th><th>Name</th><th>Goal</th><th>Phone</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-clients" style="display:none;">
+      <div class="admin-header"><h1>Clients</h1></div>
+
+      <div style="background:rgba(255,212,0,0.05); border-left:3px solid var(--yellow); padding:1rem 1.5rem; margin-bottom:2rem; font-size:0.9rem;">
+        <div style="font-family:var(--mono); color:var(--yellow); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem;">How to onboard a new client</div>
+        <p style="color:var(--gray-light);">Send them to <strong style="color:var(--yellow);">yoursite.com/portal/signup.html</strong> to create their account. Once they sign up, they'll appear here and you can assign their plan.</p>
+      </div>
+
+      <div class="admin-table">
+        <table id="clientsTable">
+          <thead><tr><th>Name</th><th>Phone</th><th>Goal</th><th>Started</th><th>Plan</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-clientDetail" style="display:none;">
+      <div class="admin-header">
+        <div>
+          <a onclick="showTab('clients')" style="cursor:pointer; font-family:var(--mono); font-size:0.85rem; color:var(--yellow); display:inline-block; margin-bottom:0.5rem;">← Back to clients</a>
+          <h1 id="cdName">Client</h1>
+          <div id="cdMeta" style="font-family:var(--mono); color:var(--gray-light); font-size:0.85rem; margin-top:0.5rem;"></div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="exportClientCSV()">Export All as CSV</button>
+      </div>
+
+      <div class="tabs-bar">
+        <button class="tab-btn active" data-cdtab="plan">📋 Plan</button>
+        <button class="tab-btn" data-cdtab="daily">📝 Daily Logs</button>
+        <button class="tab-btn" data-cdtab="weekly">⚖ Weekly</button>
+        <button class="tab-btn" data-cdtab="photos">📸 Photos</button>
+        <button class="tab-btn" data-cdtab="files">📁 Files</button>
+      </div>
+
+      <div id="cdtab-plan">
+        <form id="planForm" class="log-card">
+          <h3 style="font-family:var(--display); font-size:1.5rem; margin-bottom:1rem;">Targets</h3>
+          <div class="form-grid">
+            <div class="form-group"><label>Daily Calories</label><input type="number" name="daily_calories"></div>
+            <div class="form-group"><label>Protein (g)</label><input type="number" name="protein_g"></div>
+            <div class="form-group"><label>Carbs (g)</label><input type="number" name="carbs_g"></div>
+            <div class="form-group"><label>Fat (g)</label><input type="number" name="fat_g"></div>
+            <div class="form-group"><label>Steps Target</label><input type="number" name="steps_target" value="8000"></div>
+          </div>
+
+          <h3 style="font-family:var(--display); font-size:1.5rem; margin: 2rem 0 1rem;">Plan Details</h3>
+          <div class="form-group full">
+            <label>Workout Split</label>
+            <textarea name="workout_split" rows="6" placeholder="Mon: Push&#10;Tue: Pull&#10;Wed: Rest..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Diet Overview</label>
+            <textarea name="diet_overview" rows="6" placeholder="3 meals + 1 snack..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Supplements</label>
+            <textarea name="supplements" rows="4" placeholder="- Whey 1 scoop post-workout..."></textarea>
+          </div>
+
+          <h3 style="font-family:var(--display); font-size:1.5rem; margin: 2rem 0 1rem;">Custom Logging Fields</h3>
+          <p style="color:var(--gray-light); font-size:0.9rem; margin-bottom:1rem;">Extra fields this client tracks daily (water, sleep, etc).</p>
+          <div id="customFieldsList" style="margin-bottom:1rem;"></div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="addCustomField()">+ Add Custom Field</button>
+
+          <h3 style="font-family:var(--display); font-size:1.5rem; margin: 2rem 0 1rem;">Plan PDF (Optional)</h3>
+          <label class="upload-zone">
+            <div class="icon">📄</div>
+            <div class="text" id="pdfUploadText">Tap to upload a plan PDF</div>
+            <input type="file" id="planPdfInput" accept=".pdf">
+          </label>
+
+          <button type="submit" class="btn btn-primary form-submit" style="margin-top:2rem;">Save Plan</button>
+        </form>
+      </div>
+
+      <div id="cdtab-daily" style="display:none;">
+        <div class="log-history" id="cdDailyTable"><div class="empty-state">Loading...</div></div>
+      </div>
+      <div id="cdtab-weekly" style="display:none;">
+        <div class="log-history" id="cdWeeklyTable"><div class="empty-state">Loading...</div></div>
+      </div>
+      <div id="cdtab-photos" style="display:none;">
+        <div class="photo-grid" id="cdPhotos"></div>
+      </div>
+      <div id="cdtab-files" style="display:none;">
+        <div class="log-card" style="margin-bottom:2rem;">
+          <h3 style="font-family:var(--display); font-size:1.5rem; margin-bottom:1rem;">Push a file to this client</h3>
+          <form id="pushFileForm">
+            <div class="form-grid">
+              <div class="form-group"><label>Title</label><input type="text" name="title" required placeholder="Week 4 Meal Plan"></div>
+              <div class="form-group"><label>Description</label><input type="text" name="description" placeholder="Updated macros"></div>
+            </div>
+            <div class="form-group full">
+              <label>File</label>
+              <label class="upload-zone">
+                <div class="icon">📤</div>
+                <div class="text" id="fileUploadText">Tap to choose file</div>
+                <input type="file" id="fileInput" required>
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit">Upload & Share</button>
+          </form>
+        </div>
+        <h3 style="font-family:var(--display); font-size:1.5rem; margin-bottom:1rem;">Shared with client</h3>
+        <div id="cdFiles"></div>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-bookings" style="display:none;">
+      <div class="admin-header">
+        <h1>Bookings</h1>
+        <button class="btn btn-primary btn-sm" onclick="exportCSV('bookings')">Export CSV</button>
+      </div>
+      <div class="admin-table">
+        <table id="bookingsTable">
+          <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Goal</th><th>Plan</th><th>Message</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-feedback" style="display:none;">
+      <div class="admin-header">
+        <h1>Feedback</h1>
+        <button class="btn btn-primary btn-sm" onclick="exportCSV('feedback')">Export CSV</button>
+      </div>
+      <div class="admin-table">
+        <table id="feedbackTable">
+          <thead><tr><th>Date</th><th>Name</th><th>Rating</th><th>Relationship</th><th>Feedback</th><th>Can Share?</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-transformations" style="display:none;">
+      <div class="admin-header"><h1>Transformations</h1></div>
+      <div style="background:rgba(255,212,0,0.05); border-left:3px solid var(--yellow); padding:1rem 1.5rem; margin-bottom:2rem; font-size:0.9rem;">
+        <div style="font-family:var(--mono); color:var(--yellow); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem;">📸 How to add photos</div>
+        <ol style="padding-left:1.25rem; color:var(--gray-light); line-height:1.8;">
+          <li>Upload to <a href="https://imgur.com/upload" target="_blank" style="color:var(--yellow);">imgur.com/upload</a></li>
+          <li>Right-click the uploaded image → "Copy image address"</li>
+          <li>Paste below</li>
+        </ol>
+      </div>
+      <div class="form-card" style="margin-bottom:2rem;">
+        <form id="addTransform">
+          <div class="form-grid">
+            <div class="form-group"><label>Client Name</label><input type="text" name="name" required></div>
+            <div class="form-group"><label>Result / Meta</label><input type="text" name="meta" required placeholder="12 weeks · 14kg lost"></div>
+            <div class="form-group full">
+              <label>Image URL</label>
+              <input type="url" name="image" placeholder="https://i.imgur.com/..." oninput="previewImage(this.value)">
+              <div id="imagePreview" style="margin-top:1rem; display:none;">
+                <img id="imagePreviewImg" style="max-width:200px; max-height:200px; object-fit:cover; border:2px solid var(--yellow);">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary form-submit">Add Transformation</button>
+        </form>
+      </div>
+      <div class="admin-table">
+        <table id="transformsTable">
+          <thead><tr><th>Name</th><th>Meta</th><th>Image</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-testimonials" style="display:none;">
+      <div class="admin-header"><h1>Testimonials</h1></div>
+      <div class="form-card" style="margin-bottom:2rem;">
+        <form id="addTestimonial">
+          <div class="form-grid">
+            <div class="form-group"><label>Name</label><input type="text" name="name" required></div>
+            <div class="form-group"><label>Role</label><input type="text" name="role" required placeholder="Engineer · Lost 14 kg"></div>
+            <div class="form-group full"><label>Quote</label><textarea name="text" required></textarea></div>
+          </div>
+          <button type="submit" class="btn btn-primary form-submit">Add Testimonial</button>
+        </form>
+      </div>
+      <div class="admin-table">
+        <table id="testimonialsTable">
+          <thead><tr><th>Name</th><th>Role</th><th>Quote</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-schedule" style="display:none;">
+      <div class="admin-header">
+        <h1>Schedule</h1>
+        <button class="btn btn-primary btn-sm" onclick="saveSchedule()">Save Changes</button>
+      </div>
+      <div class="schedule-grid" id="scheduleGrid"></div>
+    </div>
+
+    <div class="tab" id="tab-socials" style="display:none;">
+      <div class="admin-header"><h1>Social Media</h1></div>
+      <div class="form-card">
+        <form id="socialsForm">
+          <div class="form-group"><label>Instagram URL</label><input type="url" name="instagram"></div>
+          <div class="form-group"><label>YouTube URL</label><input type="url" name="youtube"></div>
+          <div class="form-group"><label>WhatsApp Link</label><input type="url" name="whatsapp"></div>
+          <div class="form-group"><label>Email</label><input type="email" name="email"></div>
+          <button type="submit" class="btn btn-primary form-submit">Save</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/main.js"></script>
+<script>
+let currentClient = null;
+let currentClientPlan = null;
+let customFields = [];
+let pendingPlanPdf = null;
+
+(async () => {
+  await new Promise(r => setTimeout(r, 100));
+
+  if (supa) {
+    const profile = await Auth.requireAdmin();
+    if (!profile) return;
+  } else {
+    if (sessionStorage.getItem('gfp_admin') !== 'true') {
+      window.location.href = 'admin-login.html';
+      return;
+    }
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    if (supa) await Auth.signOut();
+    sessionStorage.removeItem('gfp_admin');
+    window.location.href = supa ? '../portal/login.html' : 'admin-login.html';
+  });
+
+  document.getElementById('todayDate').textContent =
+    new Date().toLocaleDateString('en-IN', { weekday: 'long', day:'numeric', month:'long', year:'numeric' }).toUpperCase();
+
+  document.querySelectorAll('.tab-link').forEach(a => {
+    a.addEventListener('click', () => showTab(a.dataset.tab));
+  });
+
+  document.querySelectorAll('[data-cdtab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-cdtab]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      ['plan','daily','weekly','photos','files'].forEach(t => {
+        document.getElementById('cdtab-' + t).style.display = t === btn.dataset.cdtab ? 'block' : 'none';
+      });
+    });
+  });
+
+  document.getElementById('planPdfInput').addEventListener('change', e => {
+    pendingPlanPdf = e.target.files[0];
+    document.getElementById('pdfUploadText').textContent = '✓ ' + pendingPlanPdf.name;
+  });
+
+  document.getElementById('planForm').addEventListener('submit', savePlan);
+  document.getElementById('fileInput').addEventListener('change', e => {
+    if (e.target.files[0]) document.getElementById('fileUploadText').textContent = '✓ ' + e.target.files[0].name;
+  });
+  document.getElementById('pushFileForm').addEventListener('submit', pushFile);
+  document.getElementById('addTransform').addEventListener('submit', addTransformation);
+  document.getElementById('addTestimonial').addEventListener('submit', addTestimonial);
+  document.getElementById('socialsForm').addEventListener('submit', saveSocials);
+
+  await renderAll();
+})();
+
+function showTab(tab) {
+  document.querySelectorAll('.tab-link').forEach(x => x.classList.remove('active'));
+  const link = document.querySelector(`[data-tab="${tab}"]`);
+  if (link) link.classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
+  const el = document.getElementById('tab-' + tab);
+  if (el) el.style.display = 'block';
+}
+
+function fmtDate(iso) { return new Date(iso).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }); }
+function toast(msg, type='success') {
+  let t = document.getElementById('toast');
+  if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.className = 'toast ' + (type === 'error' ? 'error' : '');
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+async function renderAll() {
+  await renderDashboard();
+  await renderClients();
+  await renderBookings();
+  await renderFeedback();
+  renderTransforms();
+  renderTestimonials();
+  renderSchedule();
+  loadSocials();
+  checkConfig();
+}
+
+function checkConfig() {
+  const missing = [];
+  if (!supa) missing.push('Supabase backend');
+  if (typeof SUPABASE_CONFIG !== 'undefined' && !SUPABASE_CONFIG.web3formsKey) missing.push('email (Web3Forms)');
+  if (typeof SUPABASE_CONFIG !== 'undefined' && !SUPABASE_CONFIG.googleSheetsUrl) missing.push('Sheets sync');
+  if (missing.length === 0) return;
+  document.getElementById('configBanner').style.display = 'block';
+  document.getElementById('configBannerMsg').innerHTML =
+    `Missing: <strong style="color:var(--yellow);">${missing.join(' · ')}</strong>. See <a href="../SETUP-V2.md" target="_blank" style="color:var(--yellow); text-decoration:underline;">SETUP-V2.md</a>.`;
+}
+
+async function renderDashboard() {
+  if (!supa) return;
+  const [clientsR, bookingsR, feedbackR] = await Promise.all([
+    DB.listClients(), DB.listBookings(), DB.listFeedback()
+  ]);
+  const clients = clientsR.data || [];
+  const bookings = bookingsR.data || [];
+  const feedback = feedbackR.data || [];
+
+  document.getElementById('statClients').textContent = clients.length;
+  document.getElementById('statBookings').textContent = bookings.length;
+  document.getElementById('statFeedback').textContent = feedback.length;
+
+  const week = Date.now() - 7*24*60*60*1000;
+  const recent = [...bookings, ...feedback].filter(x => new Date(x.created_at).getTime() > week).length;
+  document.getElementById('statThisWeek').textContent = recent;
+
+  const tbody = document.querySelector('#recentBookingsTable tbody');
+  tbody.innerHTML = bookings.length === 0
+    ? '<tr><td colspan="4" class="empty-state">No bookings yet.</td></tr>'
+    : bookings.slice(0, 5).map(b => `
+        <tr><td>${fmtDate(b.created_at)}</td><td>${b.name||'-'}</td><td>${b.goal||'-'}</td><td>${b.phone||'-'}</td></tr>
+      `).join('');
+}
+
+async function renderClients() {
+  if (!supa) {
+    document.querySelector('#clientsTable tbody').innerHTML = '<tr><td colspan="6" class="empty-state">Connect Supabase to manage clients.</td></tr>';
+    return;
+  }
+  const { data: clients } = await DB.listClients();
+  const tbody = document.querySelector('#clientsTable tbody');
+
+  if (!clients || clients.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No clients yet. Share your signup link!</td></tr>';
+    return;
+  }
+
+  const rows = await Promise.all(clients.map(async c => {
+    const { data: plan } = await DB.getActivePlan(c.id);
+    return `
+      <tr>
+        <td><strong>${c.full_name || '-'}</strong></td>
+        <td>${c.phone || '-'}</td>
+        <td>${c.goal || '-'}</td>
+        <td>${fmtDate(c.created_at)}</td>
+        <td>${plan ? '✓ Assigned' : '⚠ Not set'}</td>
+        <td><button class="btn btn-primary btn-sm" onclick="openClient('${c.id}')">Manage →</button></td>
+      </tr>`;
+  }));
+  tbody.innerHTML = rows.join('');
+}
+
+async function openClient(id) {
+  if (!supa) return;
+  const { data: client } = await DB.getProfile(id);
+  const { data: plan } = await DB.getActivePlan(id);
+  currentClient = client;
+  currentClientPlan = plan;
+
+  showTab('clientDetail');
+  document.getElementById('cdName').textContent = client.full_name || 'Client';
+  document.getElementById('cdMeta').textContent = `${client.phone || ''} · ${client.role} · Started ${fmtDate(client.created_at)}`;
+
+  document.querySelectorAll('[data-cdtab]').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-cdtab="plan"]').classList.add('active');
+  ['plan','daily','weekly','photos','files'].forEach(t => {
+    document.getElementById('cdtab-' + t).style.display = t === 'plan' ? 'block' : 'none';
+  });
+
+  const form = document.getElementById('planForm');
+  form.reset();
+  if (plan) {
+    ['daily_calories','protein_g','carbs_g','fat_g','steps_target','workout_split','diet_overview','supplements'].forEach(k => {
+      if (form[k]) form[k].value = plan[k] || '';
+    });
+    customFields = plan.custom_log_fields || [];
+  } else {
+    customFields = [];
+  }
+  renderCustomFields();
+
+  pendingPlanPdf = null;
+  document.getElementById('pdfUploadText').textContent =
+    plan && plan.pdf_url ? 'Current PDF on file. Upload new to replace.' : 'Tap to upload a plan PDF';
+
+  loadClientDetail(id);
+}
+
+function renderCustomFields() {
+  document.getElementById('customFieldsList').innerHTML = customFields.map((f, i) => `
+    <div style="display:grid; grid-template-columns: 1fr 1fr 100px auto; gap:0.5rem; margin-bottom:0.5rem; align-items:center;">
+      <input type="text" value="${f.key||''}" placeholder="key" onchange="customFields[${i}].key=this.value" style="padding:0.5rem; background:var(--black); border:1px solid var(--border); color:white;">
+      <input type="text" value="${f.label||''}" placeholder="Label" onchange="customFields[${i}].label=this.value" style="padding:0.5rem; background:var(--black); border:1px solid var(--border); color:white;">
+      <select onchange="customFields[${i}].type=this.value" style="padding:0.5rem; background:var(--black); border:1px solid var(--border); color:white;">
+        <option value="text" ${f.type==='text'?'selected':''}>Text</option>
+        <option value="number" ${f.type==='number'?'selected':''}>Number</option>
+      </select>
+      <button type="button" class="btn btn-sm btn-danger" onclick="customFields.splice(${i},1); renderCustomFields();">×</button>
+    </div>`).join('');
+}
+
+function addCustomField() {
+  customFields.push({ key: '', label: '', type: 'text' });
+  renderCustomFields();
+}
+
+async function savePlan(e) {
+  e.preventDefault();
+  if (!currentClient) return;
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.innerHTML = 'Saving...';
+
+  const fd = new FormData(e.target);
+  let pdfUrl = currentClientPlan?.pdf_url || null;
+
+  if (pendingPlanPdf) {
+    try {
+      pdfUrl = await FileStore.uploadClientPlan(pendingPlanPdf, currentClient.id, 'plan');
+    } catch (err) {
+      toast('PDF upload failed: ' + err.message, 'error');
+      btn.disabled = false; btn.innerHTML = 'Save Plan';
+      return;
+    }
+  }
+
+  const payload = {
+    client_id: currentClient.id,
+    daily_calories: parseInt(fd.get('daily_calories')) || null,
+    protein_g: parseInt(fd.get('protein_g')) || null,
+    carbs_g: parseInt(fd.get('carbs_g')) || null,
+    fat_g: parseInt(fd.get('fat_g')) || null,
+    steps_target: parseInt(fd.get('steps_target')) || 8000,
+    workout_split: fd.get('workout_split') || null,
+    diet_overview: fd.get('diet_overview') || null,
+    supplements: fd.get('supplements') || null,
+    custom_log_fields: customFields.filter(f => f.key && f.label),
+    pdf_url: pdfUrl,
+    is_active: true,
+    updated_at: new Date().toISOString()
+  };
+
+  if (currentClientPlan?.id) payload.id = currentClientPlan.id;
+
+  const { error } = await DB.upsertPlan(payload);
+  btn.disabled = false; btn.innerHTML = 'Save Plan';
+
+  if (error) {
+    toast('Save failed: ' + error.message, 'error');
+  } else {
+    toast('✓ Plan saved');
+    const { data: plan } = await DB.getActivePlan(currentClient.id);
+    currentClientPlan = plan;
+    pendingPlanPdf = null;
+    document.getElementById('pdfUploadText').textContent = 'PDF saved. Upload new to replace.';
+  }
+}
+
+async function loadClientDetail(clientId) {
+  const { data: daily } = await DB.listDailyLogs(clientId, 50);
+  const dailyEl = document.getElementById('cdDailyTable');
+  if (!daily || daily.length === 0) {
+    dailyEl.innerHTML = '<div class="empty-state">No daily logs yet.</div>';
+  } else {
+    dailyEl.innerHTML = `
+      <table>
+        <thead><tr><th>Date</th><th>Cal</th><th>P</th><th>C</th><th>F</th><th>Steps</th><th>Workout</th><th>Notes</th><th>Missed</th></tr></thead>
+        <tbody>${daily.map(d => `
+          <tr>
+            <td>${fmtDate(d.log_date)}</td>
+            <td>${d.calories||'-'}</td><td>${d.protein_g||'-'}</td><td>${d.carbs_g||'-'}</td><td>${d.fat_g||'-'}</td>
+            <td>${d.steps||'-'}</td><td>${d.workout_done?'✓':'✗'}</td>
+            <td style="max-width:200px; overflow:hidden;">${d.workout_notes||d.diet_notes||d.notes||'-'}</td>
+            <td style="max-width:150px;">${d.missed_items||'-'}</td>
+          </tr>
+        `).join('')}</tbody>
+      </table>`;
+  }
+
+  const { data: weekly } = await DB.listWeeklyLogs(clientId, 50);
+  const weeklyEl = document.getElementById('cdWeeklyTable');
+  if (!weekly || weekly.length === 0) {
+    weeklyEl.innerHTML = '<div class="empty-state">No weekly check-ins yet.</div>';
+  } else {
+    weeklyEl.innerHTML = `
+      <table>
+        <thead><tr><th>Date</th><th>Weight</th><th>Waist</th><th>Chest</th><th>Hips</th><th>Notes</th></tr></thead>
+        <tbody>${weekly.map(w => `
+          <tr>
+            <td>${fmtDate(w.log_date)}</td><td>${w.weight||'-'}</td>
+            <td>${w.waist_cm||'-'}</td><td>${w.chest_cm||'-'}</td><td>${w.hips_cm||'-'}</td>
+            <td style="max-width:300px;">${w.notes||'-'}</td>
+          </tr>
+        `).join('')}</tbody>
+      </table>`;
+  }
+
+  // Photos
+  const photosEl = document.getElementById('cdPhotos');
+  const allPhotos = [];
+  if (weekly) {
+    for (const w of weekly) {
+      for (const slot of ['photo_front','photo_side','photo_back']) {
+        if (w[slot]) {
+          try {
+            const url = await FileStore.getUrl('client-photos', w[slot]);
+            allPhotos.push({ url, date: w.log_date, slot: slot.replace('photo_','') });
+          } catch (e) {}
+        }
+      }
+    }
+  }
+  photosEl.innerHTML = allPhotos.length === 0
+    ? '<div class="empty-state">No photos uploaded yet.</div>'
+    : allPhotos.map(p => `
+        <a href="${p.url}" target="_blank" class="photo-tile">
+          <img src="${p.url}" alt="${p.slot}">
+          <div class="photo-date">${fmtDate(p.date)} · ${p.slot}</div>
+        </a>`).join('');
+
+  // Files
+  const { data: files } = await DB.listClientFiles(clientId);
+  const filesEl = document.getElementById('cdFiles');
+  if (!files || files.length === 0) {
+    filesEl.innerHTML = '<div class="empty-state">No files shared yet.</div>';
+  } else {
+    const cards = await Promise.all(files.map(async f => {
+      let url = '#';
+      try { url = await FileStore.getUrl('client-plans', f.file_url); } catch (e) {}
+      return `
+        <div class="file-card">
+          <div class="file-icon">📄</div>
+          <div class="file-meta"><h4>${f.title}</h4><p>${f.description || ''} · ${fmtDate(f.uploaded_at)}</p></div>
+          <a href="${url}" target="_blank" class="btn btn-primary btn-sm">Open</a>
+          <button class="btn btn-sm btn-danger" onclick="deleteClientFile('${f.id}')">×</button>
+        </div>`;
+    }));
+    filesEl.innerHTML = cards.join('');
+  }
+}
+
+async function pushFile(e) {
+  e.preventDefault();
+  if (!currentClient) return;
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.innerHTML = 'Uploading...';
+
+  const fd = new FormData(e.target);
+  const file = document.getElementById('fileInput').files[0];
+  if (!file) { btn.disabled = false; btn.innerHTML = 'Upload & Share'; return; }
+
+  try {
+    const path = await FileStore.uploadClientPlan(file, currentClient.id, fd.get('title'));
+    await DB.addClientFile({
+      client_id: currentClient.id,
+      title: fd.get('title'),
+      description: fd.get('description'),
+      file_url: path,
+      file_type: file.type
+    });
+    toast('✓ File shared');
+    e.target.reset();
+    document.getElementById('fileUploadText').textContent = 'Tap to choose file';
+    loadClientDetail(currentClient.id);
+  } catch (err) {
+    toast('Upload failed: ' + err.message, 'error');
+  }
+  btn.disabled = false; btn.innerHTML = 'Upload & Share';
+}
+
+async function deleteClientFile(id) {
+  if (!confirm('Delete this file?')) return;
+  await DB.deleteClientFile(id);
+  if (currentClient) loadClientDetail(currentClient.id);
+}
+
+async function exportClientCSV() {
+  if (!currentClient) return;
+  const [daily, weekly] = await Promise.all([
+    DB.listDailyLogs(currentClient.id, 1000),
+    DB.listWeeklyLogs(currentClient.id, 1000)
+  ]);
+
+  let csv = `DAILY LOGS — ${currentClient.full_name}\n`;
+  csv += 'Date,Calories,Protein,Carbs,Fat,Steps,Workout,Workout Notes,Diet Notes,Missed,General Notes\n';
+  (daily.data || []).forEach(d => {
+    csv += `${d.log_date},${d.calories||''},${d.protein_g||''},${d.carbs_g||''},${d.fat_g||''},${d.steps||''},${d.workout_done?'Yes':'No'},"${(d.workout_notes||'').replace(/"/g,'""')}","${(d.diet_notes||'').replace(/"/g,'""')}","${(d.missed_items||'').replace(/"/g,'""')}","${(d.notes||'').replace(/"/g,'""')}"\n`;
+  });
+  csv += `\n\nWEEKLY CHECK-INS\nDate,Weight,Waist,Chest,Hips,Notes\n`;
+  (weekly.data || []).forEach(w => {
+    csv += `${w.log_date},${w.weight||''},${w.waist_cm||''},${w.chest_cm||''},${w.hips_cm||''},"${(w.notes||'').replace(/"/g,'""')}"\n`;
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${currentClient.full_name.replace(/\s+/g,'_')}_logs_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function renderBookings() {
+  if (!supa) return;
+  const { data } = await DB.listBookings();
+  const tbody = document.querySelector('#bookingsTable tbody');
+  tbody.innerHTML = !data || data.length === 0
+    ? '<tr><td colspan="7" class="empty-state">No bookings yet.</td></tr>'
+    : data.map(b => `
+        <tr>
+          <td>${fmtDate(b.created_at)}</td><td>${b.name||'-'}</td><td>${b.email||'-'}</td>
+          <td>${b.phone||'-'}</td><td>${b.goal||'-'}</td><td>${b.plan||'-'}</td>
+          <td style="max-width:200px; overflow:hidden;">${b.message||'-'}</td>
+        </tr>`).join('');
+}
+
+async function renderFeedback() {
+  if (!supa) return;
+  const { data } = await DB.listFeedback();
+  const tbody = document.querySelector('#feedbackTable tbody');
+  tbody.innerHTML = !data || data.length === 0
+    ? '<tr><td colspan="6" class="empty-state">No feedback yet.</td></tr>'
+    : data.map(f => `
+        <tr>
+          <td>${fmtDate(f.created_at)}</td><td>${f.name||'-'}</td>
+          <td>${'★'.repeat(f.rating||0)}</td><td>${f.relationship||'-'}</td>
+          <td style="max-width:300px;">${f.feedback||'-'}</td><td>${f.can_share||'-'}</td>
+        </tr>`).join('');
+}
+
+async function exportCSV(key) {
+  let data;
+  if (key === 'bookings') data = (await DB.listBookings()).data;
+  else if (key === 'feedback') data = (await DB.listFeedback()).data;
+  if (!data || data.length === 0) return alert('No data to export.');
+  const keys = [...new Set(data.flatMap(d => Object.keys(d)))].filter(k => k !== 'raw_data');
+  const csv = [
+    keys.join(','),
+    ...data.map(row => keys.map(k => {
+      const v = row[k] ?? '';
+      const s = String(v).replace(/"/g, '""');
+      return /[",\n]/.test(s) ? `"${s}"` : s;
+    }).join(','))
+  ].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `gfp-${key}-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+}
+
+function renderTransforms() {
+  const items = Store.get('transformations', []);
+  const tbody = document.querySelector('#transformsTable tbody');
+  tbody.innerHTML = items.length === 0
+    ? '<tr><td colspan="4" class="empty-state">Add your first transformation above.</td></tr>'
+    : items.map(t => `
+        <tr><td>${t.name}</td><td>${t.meta}</td>
+          <td>${t.image ? `<img src="${t.image}" style="width:50px;height:50px;object-fit:cover;">` : '-'}</td>
+          <td><button class="btn btn-sm btn-danger" onclick="deleteItem('transformations', ${t.id})">×</button></td>
+        </tr>`).join('');
+}
+
+function renderTestimonials() {
+  const items = Store.get('testimonials', []);
+  const tbody = document.querySelector('#testimonialsTable tbody');
+  tbody.innerHTML = items.length === 0
+    ? '<tr><td colspan="4" class="empty-state">Add your first testimonial above.</td></tr>'
+    : items.map(t => `
+        <tr><td>${t.name}</td><td>${t.role}</td>
+          <td style="max-width:400px;">${t.text}</td>
+          <td><button class="btn btn-sm btn-danger" onclick="deleteItem('testimonials', ${t.id})">×</button></td>
+        </tr>`).join('');
+}
+
+function addTransformation(e) {
+  e.preventDefault();
+  const fd = Object.fromEntries(new FormData(e.target));
+  Store.push('transformations', fd);
+  e.target.reset();
+  document.getElementById('imagePreview').style.display = 'none';
+  renderTransforms();
+}
+
+function addTestimonial(e) {
+  e.preventDefault();
+  const fd = Object.fromEntries(new FormData(e.target));
+  Store.push('testimonials', fd);
+  e.target.reset();
+  renderTestimonials();
+}
+
+function deleteItem(key, id) {
+  if (!confirm('Delete?')) return;
+  Store.remove(key, id);
+  if (key === 'transformations') renderTransforms();
+  if (key === 'testimonials') renderTestimonials();
+}
+
+function previewImage(url) {
+  const preview = document.getElementById('imagePreview');
+  const img = document.getElementById('imagePreviewImg');
+  if (!url) { preview.style.display = 'none'; return; }
+  img.onload = () => preview.style.display = 'block';
+  img.onerror = () => preview.style.display = 'none';
+  img.src = url;
+}
+
+function renderSchedule() {
+  const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  const saved = Store.get('schedule', days.map(d => ({
+    day: d, hours: d === 'Sunday' ? 'Closed' : (d === 'Saturday' ? '7 AM – 2 PM' : '6 AM – 9 PM')
+  })));
+  document.getElementById('scheduleGrid').innerHTML = saved.map((s, i) => `
+    <div class="schedule-row">
+      <div class="day">${s.day}</div>
+      <input type="text" data-i="${i}" data-field="hours" value="${s.hours}">
+      <input type="text" data-i="${i}" data-field="note" value="${s.note||''}" placeholder="Notes">
+    </div>`).join('');
+}
+
+function saveSchedule() {
+  const sched = [];
+  document.querySelectorAll('#scheduleGrid .schedule-row').forEach(r => {
+    sched.push({
+      day: r.querySelector('.day').textContent,
+      hours: r.querySelector('[data-field="hours"]').value,
+      note: r.querySelector('[data-field="note"]').value
+    });
+  });
+  Store.set('schedule', sched);
+  toast('✓ Schedule saved');
+}
+
+function loadSocials() {
+  const s = Store.get('socials', {});
+  ['instagram','youtube','whatsapp','email'].forEach(k => {
+    const input = document.querySelector(`#socialsForm [name="${k}"]`);
+    if (input) input.value = s[k] || '';
+  });
+}
+
+function saveSocials(e) {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  Store.set('socials', Object.fromEntries(fd));
+  toast('✓ Socials saved');
+}
+</script>
+
+</body>
+</html>

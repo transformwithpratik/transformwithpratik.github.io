@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="admin-login">
+  <form class="login-card" id="loginForm">
+    <h2>Welcome back,<br><span class="yellow">Pratik.</span></h2>
+    <p style="color:var(--gray-light); margin: 0.5rem 0 2rem; font-family:var(--mono); font-size:0.85rem;">// SIGN IN TO ADMIN</p>
+
+    <div class="login-error" id="loginError">Invalid credentials. Try again.</div>
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="username" required placeholder="admin">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" required placeholder="••••••••">
+    </div>
+    <button type="submit" class="btn btn-primary form-submit">Sign In <span class="arrow">→</span></button>
+
+    <p style="margin-top:1.5rem; font-family:var(--mono); font-size:0.75rem; color:var(--gray-light); text-align:center;">
+      Default: <strong>admin</strong> / <strong>pratik2026</strong><br>
+      <span style="color:var(--yellow);">Change immediately in js/main.js</span>
+    </p>
+  </form>
+</div>
+
+<script>
+// ============================================
+// SIMPLE CLIENT-SIDE AUTH (for static deployment)
+// For real production, replace with proper backend auth.
+// ============================================
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'pratik2026'; // CHANGE THIS
+
+document.getElementById('loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const u = document.getElementById('username').value;
+  const p = document.getElementById('password').value;
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    sessionStorage.setItem('gfp_admin', 'true');
+    window.location.href = 'admin.html';
+  } else {
+    document.getElementById('loginError').classList.add('show');
+  }
+});
+</script>
+
+</body>
+</html>

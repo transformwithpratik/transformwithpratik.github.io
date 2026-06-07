@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-container">
+    <a href="../index.html" class="logo"><span class="logo-mark">GFP</span>GETFITWITHPRATIK</a>
+    <button class="menu-toggle">☰</button>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="transformations.html">Transformations</a></li>
+      <li><a href="calculator.html">Calorie Calc</a></li>
+      <li><a href="feedback.html" class="active">Feedback</a></li>
+      <li><a href="../portal/login.html">Client Login</a></li>
+      <li><a href="book.html" class="nav-cta">Book a Session →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="form-page">
+  <div class="form-container">
+    <div class="form-header">
+      <h1>Drop your<br><span class="yellow">feedback.</span></h1>
+      <p>Whether you're a current client, past client, or just someone who's interacted with my content — I want to hear what you think.</p>
+    </div>
+
+    <div class="form-success">
+      <h3>Got it. Thank you. 🙏</h3>
+      <p>Your honest feedback helps me build a better coaching experience for everyone.</p>
+    </div>
+
+    <form class="form-card" id="feedbackForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" placeholder="Your name (or anonymous)">
+        </div>
+        <div class="form-group">
+          <label>Email (optional)</label>
+          <input type="email" name="email" placeholder="If you want a reply">
+        </div>
+        <div class="form-group full">
+          <label>How would you rate your experience? <span class="req">*</span></label>
+          <div class="radio-cards">
+            <div class="radio-card"><input type="radio" name="rating" id="r1" value="1" required><label for="r1">1 ★</label></div>
+            <div class="radio-card"><input type="radio" name="rating" id="r2" value="2"><label for="r2">2 ★★</label></div>
+            <div class="radio-card"><input type="radio" name="rating" id="r3" value="3"><label for="r3">3 ★★★</label></div>
+            <div class="radio-card"><input type="radio" name="rating" id="r4" value="4"><label for="r4">4 ★★★★</label></div>
+            <div class="radio-card"><input type="radio" name="rating" id="r5" value="5" checked><label for="r5">5 ★★★★★</label></div>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>Your relationship</label>
+          <select name="relationship">
+            <option>Current Client</option>
+            <option>Past Client</option>
+            <option>Follower / Visitor</option>
+            <option>Friend / Family</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Your feedback <span class="req">*</span></label>
+          <textarea name="feedback" required placeholder="What worked, what didn't, what could be better?"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Can I share this as a testimonial?</label>
+          <div class="radio-cards">
+            <div class="radio-card"><input type="radio" name="canShare" id="cs1" value="Yes" checked><label for="cs1">Yes</label></div>
+            <div class="radio-card"><input type="radio" name="canShare" id="cs2" value="No"><label for="cs2">No</label></div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">Submit Feedback <span class="arrow">→</span></button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-bottom" style="padding-top:0; border:none;">
+    <div>© 2026 GetFitWithPratik</div>
+    <div><a href="../index.html">← Back to Home</a></div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/main.js"></script>
+<script>
+document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const origText = btn.innerHTML;
+  btn.disabled = true; btn.innerHTML = 'Submitting...';
+
+  const fd = new FormData(e.target);
+  // Collect any multi-select values
+  const data = {};
+  for (const [k, v] of fd.entries()) {
+    if (data[k]) data[k] = [].concat(data[k], v);
+    else data[k] = v;
+  }
+
+  try { Store.push('feedback', data); } catch (_) {}
+
+  if (typeof supa !== 'undefined' && supa) {
+    try { await DB.submitFeedback(data); } catch (err) { console.warn('Supabase:', err); }
+  }
+
+  if (typeof dualSync === 'function') {
+    try { await dualSync('feedback', data); } catch (err) { console.warn('dualSync:', err); }
+  }
+
+  e.target.reset();
+  btn.innerHTML = '✓ Thanks for your feedback';
+  btn.style.background = '#16a34a';
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.innerHTML = origText;
+    btn.style.background = '';
+  }, 4000);
+});
+</script>
+
+</body>
+</html>

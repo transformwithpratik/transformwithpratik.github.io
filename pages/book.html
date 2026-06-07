@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Session — GetFitWithPratik</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-container">
+    <a href="../index.html" class="logo"><span class="logo-mark">GFP</span>GETFITWITHPRATIK</a>
+    <button class="menu-toggle">☰</button>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="transformations.html">Transformations</a></li>
+      <li><a href="calculator.html">Calorie Calc</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="../portal/login.html">Client Login</a></li>
+      <li><a href="book.html" class="nav-cta active">Book a Session →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="form-page">
+  <div class="form-container">
+    <div class="form-header">
+      <div class="hero-tag" style="display:inline-flex;"><span class="dot"></span> 1-on-1 Strategy Call · Free</div>
+      <h1>Let's get you<br><span class="yellow">started.</span></h1>
+      <p>Fill this out and I'll personally review it within 24 hours. We'll book a free 20-minute strategy call to map out your plan.</p>
+    </div>
+
+    <div class="form-success">
+      <h3>You're in. 🎯</h3>
+      <p>I've got your details. Expect a WhatsApp from me within 24 hours to schedule our call.</p>
+      <p style="margin-top:1.5rem;"><a href="../index.html" class="btn btn-outline" style="border-color:var(--black); color:var(--black);">← Back to Home</a></p>
+    </div>
+
+    <form class="form-card" id="bookingForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Phone (WhatsApp) <span class="req">*</span></label>
+          <input type="tel" name="phone" required placeholder="+91 9999999999">
+        </div>
+        <div class="form-group full">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="email" required placeholder="you@email.com">
+        </div>
+        <div class="form-group">
+          <label>Age</label>
+          <input type="number" name="age" placeholder="28" min="14" max="100">
+        </div>
+        <div class="form-group">
+          <label>Current Weight (kg)</label>
+          <input type="number" name="weight" placeholder="75" step="0.1">
+        </div>
+        <div class="form-group full">
+          <label>Goal <span class="req">*</span></label>
+          <div class="radio-cards">
+            <div class="radio-card"><input type="radio" name="goal" id="g1" value="Fat Loss" required><label for="g1">Fat Loss</label></div>
+            <div class="radio-card"><input type="radio" name="goal" id="g2" value="Muscle Gain"><label for="g2">Muscle Gain</label></div>
+            <div class="radio-card"><input type="radio" name="goal" id="g3" value="Recomposition"><label for="g3">Body Recomp</label></div>
+            <div class="radio-card"><input type="radio" name="goal" id="g4" value="General Fitness"><label for="g4">Get Fit</label></div>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>Training Experience</label>
+          <div class="radio-cards">
+            <div class="radio-card"><input type="radio" name="experience" id="e1" value="Beginner" checked><label for="e1">Beginner</label></div>
+            <div class="radio-card"><input type="radio" name="experience" id="e2" value="Intermediate"><label for="e2">Intermediate</label></div>
+            <div class="radio-card"><input type="radio" name="experience" id="e3" value="Advanced"><label for="e3">Advanced</label></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Workout Location</label>
+          <select name="location">
+            <option>Gym</option>
+            <option>Home</option>
+            <option>Both</option>
+            <option>No preference</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Coaching Plan Interest</label>
+          <select name="plan">
+            <option>1-Month Trial</option>
+            <option>3-Month Standard</option>
+            <option>6-Month Deep Transformation</option>
+            <option>Just exploring</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Tell me about your journey so far</label>
+          <textarea name="message" placeholder="What have you tried? What's worked, what hasn't, what are you hoping to change?"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">Submit & Book My Call <span class="arrow">→</span></button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-bottom" style="padding-top:0; border:none;">
+    <div>© 2026 GetFitWithPratik</div>
+    <div><a href="../index.html">← Back to Home</a></div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/main.js"></script>
+<script>
+// Hook book form: localStorage backup + Supabase + Web3Forms + Sheets
+document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const origText = btn.innerHTML;
+  btn.disabled = true; btn.innerHTML = 'Submitting...';
+
+  const fd = new FormData(e.target);
+  const data = Object.fromEntries(fd);
+
+  // 1. localStorage backup (always works)
+  try { Store.push('bookings', data); } catch (_) {}
+
+  // 2. Supabase (if configured)
+  if (typeof supa !== 'undefined' && supa) {
+    try { await DB.submitBooking(data); } catch (err) { console.warn('Supabase:', err); }
+  }
+
+  // 3. Email + Sheets dual sync
+  if (typeof dualSync === 'function') {
+    try { await dualSync('bookings', data); } catch (err) { console.warn('dualSync:', err); }
+  }
+
+  e.target.reset();
+  btn.innerHTML = '✓ Got it — talk soon';
+  btn.style.background = '#16a34a';
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.innerHTML = origText;
+    btn.style.background = '';
+  }, 4000);
+});
+</script>
+
+</body>
+</html>
