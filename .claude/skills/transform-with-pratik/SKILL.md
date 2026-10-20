@@ -89,6 +89,7 @@ Goal: reach | trust | engagement | leads
 - Tasks: clean metadata (title, description, OG/Twitter cards, JSON-LD), refresh look & feel, deploy to Vercel, Google Sign-In, fix calculator page, add client tools (e.g. TDEE/macro calculator, protein planner, progress tracker, enquiry/application form).
 - SEO: one primary keyword per page, fast mobile load, embed reels/YouTube, link from Instagram bio.
 - Repo conventions: keep a `CLAUDE.md` at repo root pointing to this skill.
+- Personal apps: `apps/lean-bulk-daily/` — Pratik's installable daily checklist PWA (local storage only, no sign-in yet; Google sign-in could reuse the Supabase setup later). Self-contained; don't link it from the main nav unless asked.
 - Status: _audit done (see docs/workstreams/ws3-website.md); next: brand decision, Supabase safety check, calculator fix_
 
 ### WS4 — YouTube launch
@@ -113,3 +114,4 @@ _Add decisions as `YYYY-MM-DD — WSx — decision`._
 - 2026-10-20 — v0.1 created: brand snapshot, 5 workstreams, script template.
 - 2026-10-20 — v0.2: added working rules (capture corrections in memory + this file, commit to GitHub), recorded website repo layout.
 - 2026-10-20 — v0.3: created 5 workstream docs in docs/workstreams/ with initial context and kickoff prompts; recorded website audit and brand-name question.
+- 2026-10-21 — v0.4: deployed Lean Bulk Daily PWA to apps/lean-bulk-daily/.
