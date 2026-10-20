@@ -50,7 +50,8 @@ description: Shared brand context and workstream playbooks for Transform with Pr
 ## 2. Workstreams
 
 Each workstream runs in its own chat/session. Before starting, read this file and
-the workstream's status doc; after finishing, update the status line here.
+the workstream's doc in `docs/workstreams/` (scope, open questions, kickoff
+prompt, log); after finishing, update that doc and the status line here.
 
 ### WS1 — Client onboarding
 - Assets: intake Google Form, onboarding doc, diet-plan template, check-in sheet, welcome message.
@@ -88,7 +89,7 @@ Goal: reach | trust | engagement | leads
 - Tasks: clean metadata (title, description, OG/Twitter cards, JSON-LD), refresh look & feel, deploy to Vercel, Google Sign-In, fix calculator page, add client tools (e.g. TDEE/macro calculator, protein planner, progress tracker, enquiry/application form).
 - SEO: one primary keyword per page, fast mobile load, embed reels/YouTube, link from Instagram bio.
 - Repo conventions: keep a `CLAUDE.md` at repo root pointing to this skill.
-- Status: _not started_
+- Status: _audit done (see docs/workstreams/ws3-website.md); next: brand decision, Supabase safety check, calculator fix_
 
 ### WS4 — YouTube launch
 - Decide: channel name (consistent with IG handle decision), positioning, format mix (long-form explainers + Shorts repurposed from reels), upload cadence, thumbnail style.
@@ -102,6 +103,7 @@ Goal: reach | trust | engagement | leads
 _Add decisions as `YYYY-MM-DD — WSx — decision`._
 
 ## 4. Open questions
+- Brand name: site says "GetFitWithPratik", Project says "Transform with Pratik" — which one?
 - New Instagram/YouTube handle?
 - Coaching plan tiers and pricing?
 - Which qualifications/certifications to display (exact names)?
@@ -110,3 +112,4 @@ _Add decisions as `YYYY-MM-DD — WSx — decision`._
 ## Changelog
 - 2026-10-20 — v0.1 created: brand snapshot, 5 workstreams, script template.
 - 2026-10-20 — v0.2: added working rules (capture corrections in memory + this file, commit to GitHub), recorded website repo layout.
+- 2026-10-20 — v0.3: created 5 workstream docs in docs/workstreams/ with initial context and kickoff prompts; recorded website audit and brand-name question.
