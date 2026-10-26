@@ -252,6 +252,49 @@ textarea{min-height:80px;font-size:13px;font-family:ui-monospace,Menlo,monospace
 .burst i:nth-child(4n){background:var(--hero2)}
 @keyframes burst{to{transform:rotate(var(--a)) translateX(var(--d)) scale(.2);opacity:0}}
 
+/* Meals (plate photos) */
+.meals{margin-top:16px;display:grid;gap:10px;padding:14px;border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow)}
+.snapbig{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border-radius:16px;border:2px dashed color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 7%,transparent);text-align:left;cursor:pointer;transition:transform .15s,background .2s}
+.snapbig:active{transform:scale(.98)}
+.cam{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#FFFFFF;flex:none}
+.cam svg,.fab svg.c{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.snapbig b{display:block;font-size:15px}
+.snapbig small{color:var(--muted);font-size:13px}
+.meal{display:flex;align-items:center;gap:12px;padding:8px;border-radius:14px;background:var(--surface2);cursor:pointer;animation:itemIn .4s both;text-align:left;width:100%}
+.meal img,.meal .noimg{width:52px;height:52px;border-radius:12px;object-fit:cover;flex:none;background:var(--line);display:grid;place-items:center;color:var(--muted)}
+.meal .mb{flex:1;min-width:0}
+.meal .mt{font-weight:700;display:block}
+.meal .mm{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;display:block}
+.meal .mk{font-family:var(--display);font-weight:800;font-size:17px;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.meal .mk small{display:block;font-family:var(--body);font-weight:600;font-size:11px;color:var(--muted)}
+.chip.photo{background:color-mix(in srgb,var(--hero2) 16%,transparent)}
+.snapimg{position:relative;border-radius:18px;overflow:hidden;background:var(--surface2)}
+.snapimg img{display:block;width:100%;max-height:230px;object-fit:cover;transition:filter .4s}
+.snapimg .scan{position:absolute;inset:0;opacity:0;pointer-events:none;background:linear-gradient(180deg,transparent 0,color-mix(in srgb,var(--sun) 50%,transparent) 46%,#FFFFFF 50%,color-mix(in srgb,var(--sun) 50%,transparent) 54%,transparent 100%) no-repeat 0 -60%/100% 35%}
+.snapimg.loading .scan{opacity:1;animation:scan 1.5s ease-in-out infinite alternate}
+.snapimg.loading img{filter:saturate(.6) brightness(.8)}
+@keyframes scan{from{background-position:0 -60%}to{background-position:0 160%}}
+.snapstatus{font-size:14px;font-weight:600;min-height:20px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.snapstatus.err{color:var(--accent)}
+.snapstatus .dots i{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:var(--accent);animation:beat 1s infinite}
+.snapstatus .dots i:nth-child(2){animation-delay:.15s}.snapstatus .dots i:nth-child(3){animation-delay:.3s}
+.snapnote{font-size:13px;color:var(--muted);margin:0}
+.frows{display:grid;gap:8px}
+.frow{display:grid;grid-template-columns:1fr auto;gap:6px;padding:10px;border-radius:14px;background:var(--surface2);animation:itemIn .35s both}
+.frow .top2{display:grid;grid-template-columns:1.4fr 1fr;gap:6px;min-width:0}
+.frow .fm{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.frow .fm label{font-size:11px;gap:2px}
+.frow input{padding:8px 9px;background:var(--surface);min-width:0}
+.frow .x{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:var(--accent);font-size:20px;background:var(--surface)}
+.snaptot{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;padding:10px;border-radius:14px;background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#FFFFFF}
+.snaptot b{display:block;font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums}
+.snaptot small{font-size:11px;font-weight:600;opacity:.92}
+.linkbtn{color:var(--accent);font-weight:700;padding:4px 0;justify-self:start}
+.fab.small{width:48px;height:48px;border-radius:16px;right:max(23px,calc(env(safe-area-inset-right,0px) + 23px));bottom:calc(152px + env(safe-area-inset-bottom,0px));background:var(--surface);color:var(--accent);box-shadow:var(--shadow)}
+.fab.small svg{width:22px;height:22px}
+.keyrow{display:flex;gap:6px}
+.keyrow input{flex:1;min-width:0}
+
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media (max-width:380px){.hero{grid-template-columns:1fr;justify-items:center}.hstats{width:100%}.custom{grid-template-columns:1fr 1fr}.custom input:first-child{grid-column:1/-1}}
 </style>
@@ -275,6 +318,8 @@ textarea{min-height:80px;font-size:13px;font-family:ui-monospace,Menlo,monospace
       <div class="hstats">
         <div class="hrow"><div class="lab"><span>Calories</span><span id="kcalVal">0</span></div><div class="hbar"><i id="kcalBar"></i></div></div>
         <div class="hrow"><div class="lab"><span>Protein</span><span id="protVal">0</span></div><div class="hbar"><i id="protBar"></i></div></div>
+        <div class="hrow"><div class="lab"><span>Carbs</span><span id="carbVal">0</span></div><div class="hbar"><i id="carbBar"></i></div></div>
+        <div class="hrow"><div class="lab"><span>Fat</span><span id="fatVal">0</span></div><div class="hbar"><i id="fatBar"></i></div></div>
         <div class="waterrow">
           <div class="hrow"><div class="lab"><span>Water</span><span id="waterVal">0</span></div><div class="hbar"><i id="waterBar"></i></div></div>
           <button class="wbtn" id="waterAdd" type="button" aria-label="Add 250 ml water">+250</button>
@@ -283,6 +328,11 @@ textarea{min-height:80px;font-size:13px;font-family:ui-monospace,Menlo,monospace
       <div class="goalstrip" id="goalStrip"></div>
     </div>
     <div class="nextup" id="nextUp"></div>
+    <section class="meals" aria-label="Meals logged by photo">
+      <div class="ch"><span class="eyebrow">Plates logged today</span><span id="mealSum" class="num"></span></div>
+      <label class="snapbig" for="snapFile" tabindex="0" id="snapBig"><span class="cam"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg></span><span><b>Snap a plate</b><small>Take a photo, add portions if you like, and get the macros.</small></span></label>
+      <div id="mealList" style="display:grid;gap:8px"></div>
+    </section>
     <div id="list"></div>
   </section>
 
@@ -320,6 +370,20 @@ textarea{min-height:80px;font-size:13px;font-family:ui-monospace,Menlo,monospace
         <label for="sProt">Protein (g)<input id="sProt" type="number" inputmode="numeric"></label>
         <label for="sWater">Water (ml)<input id="sWater" type="number" inputmode="numeric"></label>
       </div>
+      <div class="grid2">
+        <label for="sCarbs">Carbs (g)<input id="sCarbs" type="number" inputmode="numeric"></label>
+        <label for="sFat">Fat (g)<input id="sFat" type="number" inputmode="numeric"></label>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Plate photos (AI)</h3>
+      <p class="hint">Your plate photos go to the AI you pick here so it can estimate the macros. A Gemini key is free: open <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>, tap <b>Create API key</b> and paste it below. The key is saved only on this phone and is never included in backups.</p>
+      <div class="grid2">
+        <label for="sProvider">AI service<select id="sProvider"><option value="gemini">Google Gemini</option><option value="claude">Anthropic Claude</option></select></label>
+        <label for="sModel">Model<input id="sModel" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+      </div>
+      <label for="sKey">API key<span class="keyrow"><input id="sKey" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste your key"><button class="btn ghost sm" type="button" id="keyShow">Show</button></span></label>
+      <p class="hint" id="keyState"></p>
     </div>
     <div class="card" id="remindCard"></div>
     <div class="card">
@@ -340,7 +404,9 @@ textarea{min-height:80px;font-size:13px;font-family:ui-monospace,Menlo,monospace
   </section>
 </div>
 
-<button class="fab" id="fab" type="button" aria-label="Add item"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+<button class="fab small" id="fab" type="button" aria-label="Add checklist item"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+<label class="fab" id="snapFab" for="snapFile" tabindex="0" role="button" aria-label="Snap a plate"><svg class="c" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg></label>
+<input type="file" id="snapFile" accept="image/*" hidden>
 
 <nav class="tabbar" aria-label="Sections">
   <div class="tabs" role="tablist">
@@ -366,12 +432,38 @@ textarea{min-height:80px;font-size:13px;font-family:ui-monospace,Menlo,monospace
     <label for="fProt">Protein g<input id="fProt" type="number" min="0" inputmode="numeric" placeholder="0"></label>
     <label for="fWater">Water ml<input id="fWater" type="number" min="0" inputmode="numeric" placeholder="0"></label>
   </div>
+  <div class="grid2">
+    <label for="fCarbs">Carbs g<input id="fCarbs" type="number" min="0" inputmode="numeric" placeholder="0"></label>
+    <label for="fFat">Fat g<input id="fFat" type="number" min="0" inputmode="numeric" placeholder="0"></label>
+  </div>
   <label class="switch" for="fRemind"><input type="checkbox" id="fRemind"><span class="sw"></span>Remind me at this time</label>
   <div class="sheet-actions">
     <button type="button" class="btn ghost danger" id="fDelete">Delete</button>
     <span class="sp"></span>
     <button type="button" class="btn ghost" id="fCancel">Cancel</button>
     <button type="submit" class="btn">Save</button>
+  </div>
+</form>
+
+<form class="sheet" id="snapSheet" aria-labelledby="snapTitle" novalidate>
+  <div class="grab"></div>
+  <h3 id="snapTitle">Log a plate</h3>
+  <div class="snapimg" id="snapImgWrap"><img id="snapImg" alt="Your plate"><div class="scan"></div></div>
+  <div class="grid2">
+    <label for="smMeal">Meal<select id="smMeal"><option>Breakfast</option><option>Mid-morning snack</option><option>Lunch</option><option>Evening snack</option><option>Pre-gym</option><option>Post-gym</option><option>Dinner</option><option>Late snack</option></select></label>
+    <label for="smReplace">Ticks off<select id="smReplace"></select></label>
+  </div>
+  <label for="smNotes">Portions and details (optional)<textarea id="smNotes" placeholder="e.g. 4 rotis with 1 tsp ghee, 1 bowl rajma, 100 g paneer, ate half the rice" style="font-family:var(--body);font-size:16px;min-height:64px"></textarea></label>
+  <div class="snapstatus" id="snapStatus" role="status" aria-live="polite"></div>
+  <div class="frows" id="snapRows"></div>
+  <button type="button" class="linkbtn" id="snapAddRow" hidden>+ Add a food</button>
+  <div class="snaptot" id="snapTot" hidden></div>
+  <div class="sheet-actions">
+    <button type="button" class="btn ghost danger" id="snapDelete" hidden>Delete</button>
+    <span class="sp"></span>
+    <button type="button" class="btn ghost" id="snapCancel">Cancel</button>
+    <button type="button" class="btn ghost" id="snapCalc">Calculate macros</button>
+    <button type="submit" class="btn" id="snapSave" hidden>Add to today</button>
   </div>
 </form>
 
@@ -444,14 +536,18 @@ const DEFAULTS = [
   I('curd','night','22:45','Set curd'),
   I('sleep','night','23:00','Sleep','7–8 hours. Muscle and hair grow overnight.',0,0,0,true)
 ];
+const CF = {raisins:[15,0], oats:[70,20], snack:[30,8], lunch:[95,22], chaas:[8,5], banana:[55,8], whey:[3,2], dinner:[80,28]};
+DEFAULTS.forEach(it => { const v = CF[it.id] || [0, 0]; it.carbs = v[0]; it.fat = v[1]; });
 const QUICK = [
-  {label:'Haldi milk + almonds', kcal:250, protein:8},
-  {label:'Whey in milk', kcal:250, protein:30},
-  {label:'Paneer 100 g', kcal:265, protein:18},
-  {label:'Extra roti', kcal:100, protein:3},
-  {label:'Banana shake', kcal:300, protein:10}
+  {label:'Haldi milk + almonds', kcal:250, protein:8, carbs:18, fat:14},
+  {label:'Whey in milk', kcal:250, protein:30, carbs:15, fat:8},
+  {label:'Paneer 100 g', kcal:265, protein:18, carbs:4, fat:20},
+  {label:'Extra roti', kcal:100, protein:3, carbs:18, fat:2},
+  {label:'Banana shake', kcal:300, protein:10, carbs:50, fat:7}
 ];
-const DEF_SETTINGS = {name:'', start:65.5, goal:74, kcal:2900, protein:140, water:3500, notify:false};
+const DEF_SETTINGS = {name:'', start:65.5, goal:74, kcal:2900, protein:140, carbs:400, fat:75, water:3500, notify:false,
+  aiProvider:'gemini', aiKey:'', aiModel:'', macroCheck:true, macroTime:'22:00'};
+const DEF_MODEL = {gemini:'gemini-3.6-flash', claude:'claude-haiku-5-5'};
 const fresh = () => ({v:1, settings:{...DEF_SETTINGS}, items:DEFAULTS.map(x => ({...x})), days:{}, weights:[]});
 
 let S;
@@ -459,21 +555,38 @@ try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) { S = null; }
 if (!S || !Array.isArray(S.items)) S = fresh();
 S.settings = {...DEF_SETTINGS, ...S.settings};
 S.days = S.days || {}; S.weights = S.weights || [];
-const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+S.items.forEach(it => { if (it.carbs == null) { const v = CF[it.id] || [0, 0]; it.carbs = v[0]; it.fat = v[1]; } });
+function pruneThumbs(days) {
+  const cut = Date.now() - days * 864e5;
+  for (const [k, d] of Object.entries(S.days)) if (dateMs(k) < cut) (d.meals || []).forEach(m => { delete m.thumb; });
+}
+pruneThumbs(30);
+const save = () => {
+  const write = () => localStorage.setItem(KEY, JSON.stringify(S));
+  try { write(); return true; } catch (e) {
+    try { pruneThumbs(3); write(); return true; } catch (e2) { return false; }
+  }
+};
 
-const emptyDay = () => ({done:{}, water:0, extras:[], notified:{}});
+const emptyDay = () => ({done:{}, water:0, extras:[], meals:[], notified:{}});
 const dayRO = k => S.days[k] || emptyDay();
 const day = (k = today()) => {
   const d = S.days[k] || (S.days[k] = emptyDay());
-  d.done = d.done || {}; d.extras = d.extras || []; d.notified = d.notified || {}; d.water = d.water || 0;
+  d.done = d.done || {}; d.extras = d.extras || []; d.meals = d.meals || []; d.notified = d.notified || {}; d.water = d.water || 0;
   return d;
 };
+const replacedSet = d => new Set((d.meals || []).map(m => m.replaces).filter(Boolean));
 function totals(k = today()) {
-  const d = dayRO(k); let kcal = 0, p = 0, w = d.water || 0, done = 0;
-  for (const it of S.items) if (d.done && d.done[it.id]) { done++; kcal += +it.kcal || 0; p += +it.protein || 0; w += +it.water || 0; }
-  for (const e of d.extras || []) { kcal += +e.kcal || 0; p += +e.protein || 0; }
+  const d = dayRO(k), rep = replacedSet(d);
+  let kcal = 0, p = 0, c = 0, f = 0, w = d.water || 0, done = 0;
+  for (const it of S.items) if (d.done && d.done[it.id]) {
+    done++; w += +it.water || 0;
+    if (rep.has(it.id)) continue;
+    kcal += +it.kcal || 0; p += +it.protein || 0; c += +it.carbs || 0; f += +it.fat || 0;
+  }
+  for (const e of [...(d.extras || []), ...(d.meals || [])]) { kcal += +e.kcal || 0; p += +e.protein || 0; c += +e.carbs || 0; f += +e.fat || 0; }
   const total = S.items.length;
-  return {kcal, p, w, done, total, pct: total ? done / total : 0};
+  return {kcal, p, c, f, w, done, total, pct: total ? done / total : 0};
 }
 const latestWeight = () => { const ws = [...S.weights].sort((a, b) => a.date.localeCompare(b.date)); return ws.length ? ws[ws.length-1].kg : S.settings.start; };
 const blockOf = id => BLOCKS.find(b => b.id === id) || BLOCKS[0];
@@ -493,10 +606,10 @@ function renderHeader() {
 }
 
 /* ---------- Today ---------- */
-function itemHTML(it, d, nm) {
+function itemHTML(it, d, nm, rep) {
   const done = !!d.done[it.id];
   const due = !done && toMin(it.time) <= nm;
-  const chips = [
+  const chips = rep && rep.has(it.id) ? '<span class="chip photo">Logged by photo</span>' : [
     it.kcal ? `<span class="chip">${fmt(it.kcal)} kcal</span>` : '',
     it.protein ? `<span class="chip">${fmt(it.protein)} g protein</span>` : '',
     it.water ? `<span class="chip wat">${fmt(it.water)} ml water</span>` : ''
@@ -511,7 +624,7 @@ function itemHTML(it, d, nm) {
   </li>`;
 }
 function renderList() {
-  const d = dayRO(today()), nm = nowMin();
+  const d = dayRO(today()), nm = nowMin(), rep = replacedSet(d);
   let h = '';
   for (const b of BLOCKS) {
     const its = S.items.filter(i => i.block === b.id).sort((a, c) => a.time.localeCompare(c.time));
@@ -520,7 +633,7 @@ function renderList() {
     h += `<section class="block" data-block="${b.id}" style="--c:${b.c}">
       <span class="bdot"></span>
       <header class="bh"><h2>${esc(b.name)}</h2><span class="btime">${esc(its[0].time)}</span><span class="bcount${dn === its.length ? ' full' : ''}" data-count>${dn}/${its.length}</span></header>
-      <ul>${its.map(it => itemHTML(it, d, nm)).join('')}</ul></section>`;
+      <ul>${its.map(it => itemHTML(it, d, nm, rep)).join('')}</ul></section>`;
   }
   if (!S.items.length) h = '<p class="empty">Your list is empty. Tap + to add your first item, or restore the default plan in Settings.</p>';
   h += '<div class="night" id="nightCard"></div>';
@@ -557,7 +670,10 @@ function updateHero() {
   $('#ringCount').textContent = `${t.done} of ${t.total} done`;
   setBar('kcal', t.kcal, s.kcal, 'kcal');
   setBar('prot', t.p, s.protein, 'g');
+  setBar('carb', t.c, s.carbs, 'g');
+  setBar('fat', t.f, s.fat, 'g');
   setBar('water', t.w, s.water, 'ml');
+  renderMeals();
   const cur = latestWeight(), span = s.goal - s.start;
   const pg = span ? Math.max(0, Math.min(1, (cur - s.start) / span)) : 0;
   const left = Math.max(0, s.goal - cur);
@@ -683,6 +799,10 @@ function renderSettings() {
   const s = S.settings;
   $('#sName').value = s.name; $('#sStart').value = s.start; $('#sGoal').value = s.goal;
   $('#sKcal').value = s.kcal; $('#sProt').value = s.protein; $('#sWater').value = s.water;
+  $('#sCarbs').value = s.carbs; $('#sFat').value = s.fat;
+  $('#sProvider').value = s.aiProvider; $('#sModel').value = s.aiModel; $('#sModel').placeholder = DEF_MODEL[s.aiProvider] || '';
+  if (document.activeElement !== $('#sKey')) $('#sKey').value = s.aiKey;
+  $('#keyState').textContent = s.aiKey ? `Key saved on this phone (ends in …${s.aiKey.trim().slice(-4)}).` : 'No key yet. Without one you can still log plates by typing the foods in.';
   $('#installCard').innerHTML = isStandalone()
     ? '<h3>Installed</h3><p class="hint">You’re running the Home Screen app. Your data stays on this phone.</p>'
     : '<h3>Install on your iPhone</h3><p class="hint">Open this app’s link in <b>Safari</b>, tap the <b>Share</b> button, then <b>Add to Home Screen</b>. Notifications only work from the installed app (iOS 16.4 or later).</p>';
@@ -695,7 +815,10 @@ function renderSettings() {
     <div class="btnrow">
       ${on ? '<button class="btn ghost" id="notifyOff" type="button">Turn off</button><button class="btn ghost" id="notifyTest" type="button">Send a test</button>' : '<button class="btn" id="notifyOn" type="button">Turn on notifications</button>'}
       <button class="btn ghost" id="icsBtn" type="button">Add reminders to Calendar</button>
-    </div>`;
+    </div>
+    <label class="switch" for="mcOn"><input type="checkbox" id="mcOn"${s.macroCheck ? ' checked' : ''}><span class="sw"></span>End-of-day macro check</label>
+    <label for="mcTime">Check my macros at<input id="mcTime" type="time" value="${esc(s.macroTime)}"></label>
+    <p class="hint">At this time you get what’s left of your calories, protein, carbs and fat, plus foods that close the gap.</p>`;
 }
 
 /* ---------- Notifications ---------- */
@@ -732,6 +855,15 @@ function checkReminders() {
       toast(it.title, body);
     }
   }
+  if (S.settings.macroCheck && !d.notified.__macro) {
+    const tm = toMin(S.settings.macroTime);
+    if (nm >= tm && nm - tm <= 90) {
+      d.notified.__macro = 1; fired = true;
+      const m = macroMessage();
+      if (S.settings.notify) sendNotification(m.title, m.body);
+      toast(m.title, m.body);
+    }
+  }
   if (fired) save();
 }
 async function enableNotify() {
@@ -752,6 +884,8 @@ function buildICS() {
       `SUMMARY:${icsEsc(it.title)}`, `DESCRIPTION:${icsEsc((it.note ? it.note + ' – ' : '') + nudge(it))}`,
       'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${icsEsc(it.title)}`, 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT');
   }
+  if (S.settings.macroCheck) L.push('BEGIN:VEVENT', `UID:macrocheck-${ds}@leanbulkdaily`, `DTSTAMP:${stamp}`, `DTSTART:${ds}T${S.settings.macroTime.replace(':', '')}00`, 'DURATION:PT10M', 'RRULE:FREQ=DAILY',
+    'SUMMARY:Macro check', `DESCRIPTION:${icsEsc('Open Bulk Daily and finish today’s calories and protein.')}`, 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Macro check', 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT');
   L.push('END:VCALENDAR');
   return L.join('\r\n');
 }
@@ -786,11 +920,12 @@ function openSheet(id) {
   $('#sheetTitle').textContent = editing ? 'Edit item' : 'Add item';
   $('#fTitle').value = it.title; $('#fBlock').value = it.block; $('#fTime').value = it.time; $('#fNote').value = it.note || '';
   $('#fKcal').value = it.kcal || ''; $('#fProt').value = it.protein || ''; $('#fWater').value = it.water || ''; $('#fRemind').checked = !!it.remind;
+  $('#fCarbs').value = it.carbs || ''; $('#fFat').value = it.fat || '';
   $('#fDelete').hidden = !editing;
   $('#scrim').classList.add('open'); $('#sheet').classList.add('open');
   setTimeout(() => { if (!editing) $('#fTitle').focus(); }, 350);
 }
-function closeSheet() { $('#scrim').classList.remove('open'); $('#sheet').classList.remove('open'); editing = null; }
+function closeSheet() { $('#scrim').classList.remove('open'); $('#sheet').classList.remove('open'); $('#snapSheet').classList.remove('open'); editing = null; snap.busy = false; }
 $('#scrim').addEventListener('click', closeSheet);
 $('#fCancel').addEventListener('click', closeSheet);
 $('#sheet').addEventListener('submit', e => {
@@ -798,7 +933,8 @@ $('#sheet').addEventListener('submit', e => {
   const title = $('#fTitle').value.trim();
   if (!title) { $('#fTitle').focus(); toast('Add a title', 'Say what to do, e.g. “Hamstring stretch”.'); return; }
   const data = {title, block:$('#fBlock').value, time:$('#fTime').value || '09:00', note:$('#fNote').value.trim(),
-    kcal:Math.max(0, +$('#fKcal').value || 0), protein:Math.max(0, +$('#fProt').value || 0), water:Math.max(0, +$('#fWater').value || 0), remind:$('#fRemind').checked};
+    kcal:Math.max(0, +$('#fKcal').value || 0), protein:Math.max(0, +$('#fProt').value || 0), water:Math.max(0, +$('#fWater').value || 0), remind:$('#fRemind').checked,
+    carbs:Math.max(0, +$('#fCarbs').value || 0), fat:Math.max(0, +$('#fFat').value || 0)};
   if (editing) Object.assign(editing, data); else S.items.push({id:uid(), ...data});
   const wasEdit = !!editing;
   save(); closeSheet(); renderList(); updateHero(); renderSettings();
@@ -811,6 +947,266 @@ function delItem(id) {
   save(); renderList(); updateHero(); renderSettings();
   toast('Deleted', gone.title, () => { S.items.splice(idx, 0, gone); save(); renderList(); updateHero(); renderSettings(); });
 }
+
+/* ---------- Plate photos ---------- */
+const CAMSVG = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg>';
+const snap = {busy:false, b64:null, thumb:null, rows:[], editId:null, analyzed:false};
+const r0 = n => Math.round(+n || 0);
+const r1 = n => Math.round((+n || 0) * 10) / 10;
+const sumRows = rows => rows.reduce((a, r) => ({kcal:a.kcal + (+r.kcal || 0), protein:a.protein + (+r.protein || 0), carbs:a.carbs + (+r.carbs || 0), fat:a.fat + (+r.fat || 0)}), {kcal:0, protein:0, carbs:0, fat:0});
+const tstr = ms => { const d = new Date(ms); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+function guessMeal(m) {
+  if (m < 300) return 'Late snack'; if (m < 630) return 'Breakfast'; if (m < 750) return 'Mid-morning snack';
+  if (m < 930) return 'Lunch'; if (m < 1080) return 'Evening snack'; if (m < 1260) return 'Post-gym';
+  if (m < 1380) return 'Dinner'; return 'Late snack';
+}
+const foodItems = () => S.items.filter(i => (+i.kcal || 0) > 0).sort((a, b) => a.time.localeCompare(b.time));
+function replaceOptions(selected) {
+  const rep = replacedSet(dayRO(today()));
+  return '<option value="">Nothing, it’s extra food</option>' + foodItems().map(i =>
+    `<option value="${esc(i.id)}"${i.id === selected ? ' selected' : ''}${rep.has(i.id) && i.id !== selected ? ' disabled' : ''}>${esc(i.title)} · ${esc(i.time)}</option>`).join('');
+}
+function guessReplace() {
+  const d = dayRO(today()), rep = replacedSet(d), nm = nowMin();
+  let best = '', bd = 151;
+  for (const i of foodItems()) {
+    if (d.done[i.id] || rep.has(i.id)) continue;
+    const dist = Math.abs(toMin(i.time) - nm);
+    if (dist < bd) { bd = dist; best = i.id; }
+  }
+  return best;
+}
+async function processFile(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image(); img.src = url; await img.decode();
+    const w = img.naturalWidth, h = img.naturalHeight;
+    const s = Math.min(1, 1024 / Math.max(w, h));
+    const c = document.createElement('canvas'); c.width = Math.round(w * s); c.height = Math.round(h * s);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    const full = c.toDataURL('image/jpeg', 0.82);
+    const side = Math.min(w, h), t = document.createElement('canvas'); t.width = t.height = 144;
+    t.getContext('2d').drawImage(img, (w - side) / 2, (h - side) / 2, side, side, 0, 0, 144, 144);
+    return {full, thumb: t.toDataURL('image/jpeg', 0.7)};
+  } finally { URL.revokeObjectURL(url); }
+}
+function setSnapStatus(html, err) { const el = $('#snapStatus'); el.innerHTML = html; el.classList.toggle('err', !!err); }
+function renderSnapRows() {
+  $('#snapRows').innerHTML = snap.rows.map((r, i) => `<div class="frow" data-i="${i}" style="animation-delay:${i * 60}ms">
+    <div class="top2"><input data-k="name" value="${esc(r.name)}" aria-label="Food" placeholder="Food"><input data-k="qty" value="${esc(r.qty)}" aria-label="Portion" placeholder="Portion"></div>
+    <button type="button" class="x" data-rdel="${i}" aria-label="Remove ${esc(r.name)}">×</button>
+    <div class="fm">
+      <label>kcal<input data-k="kcal" type="number" inputmode="decimal" min="0" value="${r0(r.kcal)}"></label>
+      <label>Protein g<input data-k="protein" type="number" inputmode="decimal" min="0" step="0.1" value="${r1(r.protein)}"></label>
+      <label>Carbs g<input data-k="carbs" type="number" inputmode="decimal" min="0" step="0.1" value="${r1(r.carbs)}"></label>
+      <label>Fat g<input data-k="fat" type="number" inputmode="decimal" min="0" step="0.1" value="${r1(r.fat)}"></label>
+    </div></div>`).join('');
+  const show = snap.analyzed || snap.rows.length > 0;
+  $('#snapAddRow').hidden = !show; $('#snapSave').hidden = !show;
+  renderSnapTot();
+}
+function renderSnapTot() {
+  const t = sumRows(snap.rows), el = $('#snapTot');
+  el.hidden = !snap.rows.length;
+  el.innerHTML = `<div><b>${fmt(t.kcal)}</b><small>kcal</small></div><div><b>${r1(t.protein)}</b><small>protein g</small></div><div><b>${r1(t.carbs)}</b><small>carbs g</small></div><div><b>${r1(t.fat)}</b><small>fat g</small></div>`;
+}
+function noKeyStatus() {
+  setSnapStatus('<span>Add your free Gemini key to calculate macros automatically. You can also type the foods in yourself.</span><button type="button" class="linkbtn" data-go="settings">Open Settings</button>', true);
+  snap.analyzed = true; if (!snap.rows.length) snap.rows.push({name:'', qty:'', kcal:0, protein:0, carbs:0, fat:0});
+  renderSnapRows();
+}
+function openSnapSheet() { $('#scrim').classList.add('open'); $('#snapSheet').classList.add('open'); }
+function openSnapNew(full) {
+  Object.assign(snap, {busy:false, rows:[], editId:null, analyzed:false});
+  $('#snapTitle').textContent = 'Log a plate';
+  $('#snapImgWrap').hidden = false; $('#snapImg').src = full;
+  $('#smMeal').value = guessMeal(nowMin());
+  const g = guessReplace(); $('#smReplace').innerHTML = replaceOptions(g); $('#smReplace').value = g;
+  $('#smNotes').value = '';
+  $('#snapCalc').hidden = false; $('#snapCalc').disabled = false; $('#snapCalc').textContent = 'Calculate macros';
+  $('#snapSave').textContent = 'Add to today'; $('#snapDelete').hidden = true;
+  setSnapStatus(S.settings.aiKey ? '<span class="snapnote">Add portions above for a better estimate, then tap Calculate.</span>' : '');
+  renderSnapRows();
+  if (!S.settings.aiKey) noKeyStatus();
+  openSnapSheet();
+}
+function openSnapEdit(id) {
+  const m = day().meals.find(x => x.id === id); if (!m) return;
+  Object.assign(snap, {busy:false, b64:null, thumb:m.thumb || null, rows:m.items.map(r => ({...r})), editId:id, analyzed:true});
+  $('#snapTitle').textContent = 'Edit plate';
+  $('#snapImgWrap').hidden = !m.thumb; if (m.thumb) $('#snapImg').src = m.thumb;
+  $('#smMeal').value = m.label;
+  $('#smReplace').innerHTML = replaceOptions(m.replaces || ''); $('#smReplace').value = m.replaces || '';
+  $('#smNotes').value = m.note || '';
+  $('#snapCalc').hidden = true; $('#snapSave').textContent = 'Save'; $('#snapDelete').hidden = false;
+  setSnapStatus(`<span class="snapnote">Logged at ${tstr(m.at)}. Adjust any number below.</span>`);
+  renderSnapRows(); openSnapSheet();
+}
+
+const PROMPT = `You estimate nutrition from meal photos for a vegetarian in India who is trying to gain muscle.
+Look at the photo and identify each distinct food or drink. Estimate the portion (in household units like rotis, katori/bowl, cups, pieces, tsp) and its weight in grams, then estimate calories, protein, carbohydrate and fat for that portion as served.
+Use Indian food composition values (IFCT 2017) and typical home recipes. Reference points: plain roti about 100 kcal, 3 g protein, 18 g carbs; 1 tsp ghee 45 kcal and 5 g fat; 1 katori (150 g) cooked dal about 150 kcal, 9 g protein; 100 g paneer about 265 kcal, 18 g protein, 20 g fat; 1 cup cooked rice (150 g) about 200 kcal, 4 g protein; 50 g dry soya chunks about 170 kcal, 26 g protein.
+Account for visible oil, ghee or butter. If the person gives quantities, use them instead of your visual guess. If something is uncertain, choose the most likely option and say so briefly in notes.
+Reply with JSON only, no markdown, in exactly this shape:
+{"items":[{"name":"","quantity":"","grams":0,"kcal":0,"protein_g":0,"carbs_g":0,"fat_g":0}],"confidence":"low|medium|high","notes":""}
+If there is no food in the photo, return {"items":[],"confidence":"low","notes":"<what you see instead>"}.`;
+
+function apiErr(status, msg) {
+  msg = String(msg || '');
+  if (/api key not valid|invalid.*key|API_KEY_INVALID/i.test(msg) || status === 401) return 'Your API key isn’t valid. Check it in Settings.';
+  if (status === 403) return 'The API key was refused. Make sure the Gemini API is enabled for it, then try again.';
+  if (status === 404) return 'That AI model wasn’t found. Clear the model name in Settings to use the default.';
+  if (status === 429) return 'You’ve hit the AI’s rate or free-quota limit. Wait a minute and try again.';
+  if (status >= 500) return 'The AI service is busy right now. Try again in a moment.';
+  return `The AI service returned an error (${status}). ${msg.slice(0, 140)}`;
+}
+async function postJSON(url, headers, body) {
+  let r;
+  try { r = await fetch(url, {method:'POST', headers:{'Content-Type':'application/json', ...headers}, body:JSON.stringify(body)}); }
+  catch (e) { throw new Error(isPWA() ? 'Couldn’t reach the AI service. Check your internet connection and try again.' : 'Photo analysis works in the installed app, not in this preview. You can still type the foods in.'); }
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) { const err = new Error(apiErr(r.status, j && j.error && j.error.message)); err.status = r.status; throw err; }
+  return j;
+}
+async function callGemini(model, key, text, b64) {
+  const j = await postJSON(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {'x-goog-api-key':key},
+    {contents:[{role:'user', parts:[{inline_data:{mime_type:'image/jpeg', data:b64}}, {text}]}], generationConfig:{responseMimeType:'application/json', temperature:0.2}});
+  const parts = (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || [];
+  const out = parts.filter(p => !p.thought).map(p => p.text || '').join('');
+  if (!out) throw new Error(j.promptFeedback && j.promptFeedback.blockReason ? 'The AI wouldn’t read this photo. Try another shot.' : 'The AI sent back an empty answer. Try again.');
+  return out;
+}
+async function callClaude(model, key, text, b64) {
+  const j = await postJSON('https://api.anthropic.com/v1/messages', {'x-api-key':key, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true'},
+    {model, max_tokens:1500, messages:[{role:'user', content:[{type:'image', source:{type:'base64', media_type:'image/jpeg', data:b64}}, {type:'text', text}]}]});
+  const out = (j.content || []).filter(c => c.type === 'text').map(c => c.text).join('');
+  if (!out) throw new Error('The AI sent back an empty answer. Try again.');
+  return out;
+}
+function parseResult(raw) {
+  const a = raw.indexOf('{'), b = raw.lastIndexOf('}');
+  if (a < 0 || b < a) throw new Error('Couldn’t read the AI’s answer. Try again.');
+  let j; try { j = JSON.parse(raw.slice(a, b + 1)); } catch (e) { throw new Error('Couldn’t read the AI’s answer. Try again.'); }
+  const items = (j.items || j.foods || []).map(x => {
+    const g = r0(x.grams), q = String(x.quantity || x.portion || '');
+    return {name:String(x.name || 'Food').slice(0, 60), qty:(g && !/\d\s*g\b/i.test(q) ? (q ? `${q} · ${g} g` : `${g} g`) : q).slice(0, 60),
+      kcal:r0(x.kcal ?? x.calories), protein:r1(x.protein_g ?? x.protein), carbs:r1(x.carbs_g ?? x.carbs), fat:r1(x.fat_g ?? x.fat)};
+  });
+  if (!items.length) throw new Error(j.notes ? `No food found: ${String(j.notes).slice(0, 120)}` : 'No food found in this photo. Try a clearer shot from above.');
+  return {items, confidence:String(j.confidence || 'medium').toLowerCase(), notes:String(j.notes || '')};
+}
+async function callAI(b64, notes) {
+  const s = S.settings, prov = s.aiProvider === 'claude' ? 'claude' : 'gemini';
+  const model = (s.aiModel || '').trim() || DEF_MODEL[prov], key = s.aiKey.trim();
+  const text = PROMPT + (notes ? `\n\nThe person says: "${notes.slice(0, 400)}". Trust these quantities over the photo.` : '\n\nThe person gave no extra details.');
+  if (prov === 'claude') return parseResult(await callClaude(model, key, text, b64));
+  try { return parseResult(await callGemini(model, key, text, b64)); }
+  catch (e) {
+    if (e.status === 404 && model !== 'gemini-flash-latest') return parseResult(await callGemini('gemini-flash-latest', key, text, b64));
+    throw e;
+  }
+}
+const SNAP_MSGS = ['Looking at your plate', 'Counting rotis and katoris', 'Estimating portions', 'Working out the macros'];
+async function analyze() {
+  if (snap.busy || !snap.b64) return;
+  if (!S.settings.aiKey.trim()) { noKeyStatus(); return; }
+  snap.busy = true;
+  const btn = $('#snapCalc'); btn.disabled = true;
+  $('#snapImgWrap').classList.add('loading');
+  let mi = 0;
+  const say = () => setSnapStatus(`<span>${SNAP_MSGS[mi++ % SNAP_MSGS.length]}</span><span class="dots"><i></i><i></i><i></i></span>`);
+  say(); const iv = setInterval(say, 1800);
+  try {
+    const res = await callAI(snap.b64, $('#smNotes').value.trim());
+    if (!$('#snapSheet').classList.contains('open')) return;
+    snap.rows = res.items; snap.analyzed = true;
+    const conf = {high:'High', medium:'Medium', low:'Low'}[res.confidence] || 'Medium';
+    setSnapStatus(`<span>Found ${res.items.length} food${res.items.length > 1 ? 's' : ''}</span><span class="chip">${conf} confidence</span>${res.notes ? `<p class="snapnote" style="flex-basis:100%">${esc(res.notes)}</p>` : ''}<p class="snapnote" style="flex-basis:100%">Check the numbers and fix anything that looks off before saving.</p>`);
+    renderSnapRows();
+    burst($('#snapTot'), 16, 40);
+  } catch (e) {
+    setSnapStatus(`<span>${esc(e.message)}</span>`, true);
+    snap.analyzed = true; renderSnapRows();
+  } finally {
+    clearInterval(iv); snap.busy = false; btn.disabled = false; btn.textContent = 'Recalculate';
+    $('#snapImgWrap').classList.remove('loading');
+  }
+}
+function renderMeals() {
+  const meals = dayRO(today()).meals || [];
+  const t = sumRows(meals);
+  $('#mealSum').textContent = meals.length ? `${meals.length} · ${fmt(t.kcal)} kcal` : '';
+  $('#mealList').innerHTML = meals.map((m, i) => `<button class="meal" type="button" data-meal="${esc(m.id)}" style="animation-delay:${i * 50}ms">
+    ${m.thumb ? `<img src="${esc(m.thumb)}" alt="">` : `<span class="noimg">${CAMSVG}</span>`}
+    <span class="mb"><span class="mt">${esc(m.label)}</span><span class="mm">${tstr(m.at)} · ${r1(m.protein)} g protein · ${r1(m.carbs)} g carbs · ${r1(m.fat)} g fat</span><span class="mm">${esc(m.items.map(x => x.name).filter(Boolean).join(', '))}</span></span>
+    <span class="mk">${fmt(m.kcal)}<small>kcal</small></span></button>`).join('');
+}
+function delMeal(id) {
+  const d = day(), idx = d.meals.findIndex(m => m.id === id); if (idx < 0) return;
+  const [gone] = d.meals.splice(idx, 1);
+  save(); renderList(); updateHero();
+  toast('Plate deleted', gone.label, () => { day().meals.splice(idx, 0, gone); save(); renderList(); updateHero(); });
+}
+function macroGap() {
+  const t = totals(), s = S.settings;
+  return {t, kcal:s.kcal - t.kcal, p:s.protein - t.p, c:s.carbs - t.c, f:s.fat - t.f};
+}
+function suggestFoods(g) {
+  if (g.kcal > 900) return 'That’s too much to eat tonight. Add a roti to each meal tomorrow instead.';
+  let k = g.kcal, p = g.p; const used = new Set(), out = [];
+  while (out.length < 2 && (p > 10 || k > 150)) {
+    const pool = QUICK.filter(q => !used.has(q.label));
+    if (!pool.length) break;
+    const pick = p > 10 ? pool.sort((a, b) => b.protein - a.protein)[0] : pool.sort((a, b) => Math.abs(a.kcal - k) - Math.abs(b.kcal - k))[0];
+    used.add(pick.label); out.push(pick.label.toLowerCase()); k -= pick.kcal; p -= pick.protein;
+  }
+  return out.length ? `Try ${out.join(' + ')}.` : '';
+}
+function macroMessage() {
+  const g = macroGap();
+  if (g.kcal <= 150 && g.p <= 10) return {title:'Macros on point today', body:`${fmt(g.t.kcal)} kcal · ${fmt(g.t.p)} g protein. Nice work. Sleep well.`};
+  const parts = [];
+  if (g.kcal > 150) parts.push(`${fmt(g.kcal)} kcal`);
+  if (g.p > 10) parts.push(`${fmt(g.p)} g protein`);
+  if (g.c > 30) parts.push(`${fmt(g.c)} g carbs`);
+  if (g.f > 10) parts.push(`${fmt(g.f)} g fat`);
+  return {title:'Finish your macros', body:`Still to go: ${parts.join(' · ')}. ${suggestFoods(g)}`.trim()};
+}
+
+$('#snapFile').addEventListener('change', async e => {
+  const f = e.target.files && e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  try { const {full, thumb} = await processFile(f); snap.b64 = full.split(',')[1]; snap.thumb = thumb; openSnapNew(full); }
+  catch (err) { toast('Couldn’t open that photo', 'Take it again, or pick a JPEG or PNG.'); }
+});
+['#snapBig', '#snapFab'].forEach(s => $(s).addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('#snapFile').click(); } }));
+$('#snapCalc').addEventListener('click', analyze);
+$('#snapCancel').addEventListener('click', closeSheet);
+$('#snapAddRow').addEventListener('click', () => { snap.rows.push({name:'', qty:'', kcal:0, protein:0, carbs:0, fat:0}); renderSnapRows(); const ins = $$('#snapRows .frow input[data-k="name"]'); ins[ins.length - 1].focus(); });
+$('#snapRows').addEventListener('input', e => {
+  const row = e.target.closest('.frow'), k = e.target.dataset.k; if (!row || !k) return;
+  const r = snap.rows[+row.dataset.i];
+  r[k] = (k === 'name' || k === 'qty') ? e.target.value : Math.max(0, +e.target.value || 0);
+  renderSnapTot();
+});
+$('#snapRows').addEventListener('click', e => { const b = e.target.closest('[data-rdel]'); if (b) { snap.rows.splice(+b.dataset.rdel, 1); renderSnapRows(); } });
+$('#snapStatus').addEventListener('click', e => { if (e.target.closest('[data-go="settings"]')) { closeSheet(); showTab('settings'); setTimeout(() => $('#sKey').focus(), 400); } });
+$('#snapDelete').addEventListener('click', () => { const id = snap.editId; closeSheet(); if (id) delMeal(id); });
+$('#snapSheet').addEventListener('submit', e => {
+  e.preventDefault();
+  const rows = snap.rows.filter(r => String(r.name).trim() || +r.kcal).map(r => ({name:String(r.name).trim() || 'Food', qty:String(r.qty || '').trim(), kcal:r0(r.kcal), protein:r1(r.protein), carbs:r1(r.carbs), fat:r1(r.fat)}));
+  if (!rows.length) { setSnapStatus('<span>Add at least one food with its calories.</span>', true); return; }
+  const d = day(), t = sumRows(rows), prev = snap.editId && d.meals.find(m => m.id === snap.editId);
+  const meal = {id:prev ? prev.id : uid(), at:prev ? prev.at : Date.now(), label:$('#smMeal').value, note:$('#smNotes').value.trim(),
+    replaces:$('#smReplace').value || null, items:rows, kcal:r0(t.kcal), protein:r1(t.protein), carbs:r1(t.carbs), fat:r1(t.fat), thumb:prev ? prev.thumb : snap.thumb};
+  if (prev) d.meals[d.meals.indexOf(prev)] = meal; else d.meals.push(meal);
+  if (meal.replaces && !d.done[meal.replaces]) d.done[meal.replaces] = Date.now();
+  const ok = save();
+  closeSheet(); renderList(); updateHero();
+  setTimeout(() => burst($('#snapBig'), 18, 46), 200);
+  toast(ok ? `${meal.label} ${prev ? 'updated' : 'logged'}` : 'Phone storage is full', ok ? `${fmt(meal.kcal)} kcal · ${meal.protein} g protein` : 'Export a backup in Settings, then erase old data.');
+});
+$('#mealList').addEventListener('click', e => { const b = e.target.closest('[data-meal]'); if (b) openSnapEdit(b.dataset.meal); });
 
 /* ---------- Events ---------- */
 $('#list').addEventListener('click', e => {
@@ -847,6 +1243,7 @@ function showTab(name) {
   $$('.tab').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === name));
   $('#tabInd').style.transform = `translateX(${TABS.indexOf(name) * 100}%)`;
   $('#fab').hidden = name !== 'today';
+  $('#snapFab').hidden = name !== 'today';
   $('#editBtn').hidden = name !== 'today';
   if (name === 'progress') renderProgress();
   if (name === 'settings') renderSettings();
@@ -878,6 +1275,15 @@ const bindNum = (id, key) => $(id).addEventListener('change', e => {
   S.settings[key] = v; save(); updateHero(); renderNight(); toast('Saved');
 });
 bindNum('#sStart', 'start'); bindNum('#sGoal', 'goal'); bindNum('#sKcal', 'kcal'); bindNum('#sProt', 'protein'); bindNum('#sWater', 'water');
+bindNum('#sCarbs', 'carbs'); bindNum('#sFat', 'fat');
+$('#sProvider').addEventListener('change', e => { S.settings.aiProvider = e.target.value; S.settings.aiModel = ''; save(); renderSettings(); toast('Saved', e.target.value === 'claude' ? 'Paste an Anthropic API key below.' : 'Paste a Gemini API key below.'); });
+$('#sModel').addEventListener('change', e => { S.settings.aiModel = e.target.value.trim(); save(); toast('Saved', S.settings.aiModel || `Using ${DEF_MODEL[S.settings.aiProvider]}`); });
+$('#sKey').addEventListener('change', e => { S.settings.aiKey = e.target.value.trim(); save(); renderSettings(); toast(S.settings.aiKey ? 'API key saved' : 'API key removed', S.settings.aiKey ? 'Snap a plate to try it.' : ''); });
+$('#keyShow').addEventListener('click', e => { const i = $('#sKey'), show = i.type === 'password'; i.type = show ? 'text' : 'password'; e.currentTarget.textContent = show ? 'Hide' : 'Show'; });
+$('#remindCard').addEventListener('change', e => {
+  if (e.target.id === 'mcOn') { S.settings.macroCheck = e.target.checked; save(); toast(e.target.checked ? 'Macro check on' : 'Macro check off'); }
+  if (e.target.id === 'mcTime' && e.target.value) { S.settings.macroTime = e.target.value; const d = day(); delete d.notified.__macro; save(); toast('Saved', `Macro check at ${e.target.value}`); }
+});
 $('#sName').addEventListener('change', e => { S.settings.name = e.target.value.trim(); save(); renderHeader(); toast('Saved'); });
 
 $('#remindCard').addEventListener('click', e => {
@@ -892,7 +1298,8 @@ $('#remindCard').addEventListener('click', e => {
   }
 });
 $('#exportBtn').addEventListener('click', async () => {
-  const txt = JSON.stringify(S);
+  const out = JSON.parse(JSON.stringify(S)); delete out.settings.aiKey;
+  const txt = JSON.stringify(out);
   let copied = false;
   try { await navigator.clipboard.writeText(txt); copied = true; } catch (e) { $('#importText').value = txt; $('#importText').select(); }
   if (isPWA()) download(`lean-bulk-backup-${today()}.json`, txt, 'application/json');
@@ -902,7 +1309,9 @@ function restore(txt) {
   try {
     const d = JSON.parse(txt);
     if (!d || !Array.isArray(d.items)) throw 0;
-    S = {v:1, settings:{...DEF_SETTINGS, ...d.settings}, items:d.items, days:d.days || {}, weights:d.weights || []};
+    const key = S.settings.aiKey;
+    S = {v:1, settings:{...DEF_SETTINGS, ...d.settings, aiKey:key}, items:d.items, days:d.days || {}, weights:d.weights || []};
+    S.items.forEach(it => { if (it.carbs == null) { const v = CF[it.id] || [0, 0]; it.carbs = v[0]; it.fat = v[1]; } });
     save(); renderAll(); toast('Backup restored', `${S.items.length} items, ${S.weights.length} weigh-ins.`);
   } catch (e) { toast('That backup didn’t work', 'Paste the full text you exported, starting with {.'); }
 }
@@ -918,7 +1327,7 @@ $$('[data-arm]').forEach(b => b.addEventListener('click', () => {
   const w = b.dataset.arm;
   if (w === 'today') { S.days[today()] = emptyDay(); toast('Today’s ticks cleared'); }
   if (w === 'plan') { S.items = DEFAULTS.map(x => ({...x})); toast('Default plan restored'); }
-  if (w === 'all') { const keepNotify = S.settings.notify; S = fresh(); S.settings.notify = keepNotify; toast('Everything erased', 'Fresh start.'); }
+  if (w === 'all') { const {notify, aiProvider, aiKey, aiModel} = S.settings; S = fresh(); Object.assign(S.settings, {notify, aiProvider, aiKey, aiModel}); toast('Everything erased', 'Fresh start. Your API key was kept.'); }
   save(); renderAll();
 }));
 
