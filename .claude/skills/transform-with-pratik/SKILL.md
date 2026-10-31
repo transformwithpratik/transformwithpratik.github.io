@@ -29,7 +29,7 @@ description: Shared brand context and workstream playbooks for Transform with Pr
 |---|---|
 | Owner | Pratik Jain — SWE @ Google, certified fitness coach |
 | Brand | Transform with Pratik |
-| Instagram | @get.fitwithpratik (handle change under consideration) |
+| Instagram | @transform.withpratik (formerly @get.fitwithpratik) |
 | Website | transformwithpratik.github.io → migrating to Vercel |
 | GitHub | github.com/transformwithpratik |
 | Audience | Busy working professionals in India, esp. software engineers |
@@ -81,7 +81,16 @@ Caption (keywords first line):
 CTA:
 Goal: reach | trust | engagement | leads
 ```
-- Status: _not started_
+
+**Editing reels:** follow `references/reel-editing.md` (source footage, house style,
+visuals, transitions, music mix, thumbnail, QA). Key rules:
+- Edit from the original camera files, never from a re-uploaded export.
+- Section changes dip out then in — no overlapping crossfades.
+- Opening moves (e.g. chair turn) at natural speed, not heavily sped up.
+- When reusing text from an old export, copy only the letters + outline — never background.
+- Original/royalty-free music ≈10 dB under the voice, ducked while speaking; final −14 LUFS.
+- Reel cover: 1080×1920 black + yellow, hook on top, face clear, key content inside the centre 3:4.
+- Status: _first reel edited (blood flow, 5 habits) — v4 delivered 2026-11-01_
 
 ### WS3 — Website (Vercel)
 - Repo layout (as of 2026-10-20): `index.html`, `css/`, `js/` (main, portal, supabase-client), `pages/` (calculator, book, transformations, feedback, admin), `portal/` (client login/signup, dashboard, plan, log, weekly, history, files), `supabase/schema.sql`. A Supabase-backed client portal already exists — extend it rather than rebuild.
@@ -102,10 +111,12 @@ Goal: reach | trust | engagement | leads
 
 ## 3. Decisions log
 _Add decisions as `YYYY-MM-DD — WSx — decision`._
+- 2026-10-30 — WS2 — Instagram handle is now @transform.withpratik.
+- 2026-11-01 — WS2 — reel editing playbook adopted (`references/reel-editing.md`).
 
 ## 4. Open questions
 - Brand name: site says "GetFitWithPratik", Project says "Transform with Pratik" — which one?
-- New Instagram/YouTube handle?
+- New YouTube handle? (Instagram decided: @transform.withpratik)
 - Coaching plan tiers and pricing?
 - Which qualifications/certifications to display (exact names)?
 - Google social media policy constraints for workplace content?
@@ -116,3 +127,7 @@ _Add decisions as `YYYY-MM-DD — WSx — decision`._
 - 2026-10-20 — v0.3: created 5 workstream docs in docs/workstreams/ with initial context and kickoff prompts; recorded website audit and brand-name question.
 - 2026-10-21 — v0.4: deployed Lean Bulk Daily PWA to apps/lean-bulk-daily/.
 - 2026-10-26 — v0.5: Lean Bulk Daily adds plate-photo macro estimation (carbs/fat tracking) and an end-of-day macro check reminder.
+- 2026-10-30 — correction — Instagram handle updated to @transform.withpratik in the brand snapshot.
+- 2026-10-31 — correction — reel edits: use the original camera footage (re-uploaded exports go blurry); slow the opening chair turn to natural speed; no overlap between habit transitions (dip out, then in).
+- 2026-11-01 — correction — when rebuilding a sharp intro, transplant only caption letters, never background pixels (fixed broken pixels in the intro).
+- 2026-11-01 — v0.6: added reel editing playbook `references/reel-editing.md` and WS2 editing rules.
