@@ -82,15 +82,17 @@ CTA:
 Goal: reach | trust | engagement | leads
 ```
 
-**Editing reels:** follow `references/reel-editing.md` (source footage, house style,
-visuals, transitions, music mix, thumbnail, QA). Key rules:
+**Editing reels:** follow `references/reel-editing.md` (source footage, takes, house
+style, visuals, transitions, music mix, thumbnail, QA), `references/instagram-reels.md`
+(Instagram specs, safe zones, ranking signals, retention checklist) and reuse the
+3D motion-graphics kit in `scripts/reel3d/`. Key rules:
 - Edit from the original camera files, never from a re-uploaded export.
 - Section changes dip out then in — no overlapping crossfades.
 - Opening moves (e.g. chair turn) at natural speed, not heavily sped up.
 - When reusing text from an old export, copy only the letters + outline — never background.
 - Original/royalty-free music ≈10 dB under the voice, ducked while speaking; final −14 LUFS.
 - Reel cover: 1080×1920 black + yellow, hook on top, face clear, key content inside the centre 3:4.
-- Status: _first reel edited (blood flow, 5 habits) — v4 delivered 2026-11-01_
+- Status: _blood-flow reel v4 delivered; V1 "walk after meals" v1 edited 2026-11-01 (3D graphics, intense music)_
 
 ### WS3 — Website (Vercel)
 - Repo layout (as of 2026-10-20): `index.html`, `css/`, `js/` (main, portal, supabase-client), `pages/` (calculator, book, transformations, feedback, admin), `portal/` (client login/signup, dashboard, plan, log, weekly, history, files), `supabase/schema.sql`. A Supabase-backed client portal already exists — extend it rather than rebuild.
@@ -131,3 +133,4 @@ _Add decisions as `YYYY-MM-DD — WSx — decision`._
 - 2026-10-31 — correction — reel edits: use the original camera footage (re-uploaded exports go blurry); slow the opening chair turn to natural speed; no overlap between habit transitions (dip out, then in).
 - 2026-11-01 — correction — when rebuilding a sharp intro, transplant only caption letters, never background pixels (fixed broken pixels in the intro).
 - 2026-11-01 — v0.6: added reel editing playbook `references/reel-editing.md` and WS2 editing rules.
+- 2026-11-01 — v0.7: added `references/instagram-reels.md` (Instagram editing standards), the 3D motion-graphics + audio kit `scripts/reel3d/`, and take-checking / intense-music notes in the reel playbook (walk-after-meals reel).

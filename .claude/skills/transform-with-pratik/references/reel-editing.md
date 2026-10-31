@@ -20,6 +20,17 @@ Follow this for every reel edit; add new corrections here and in the SKILL.md Ch
 - One raw clip may cover only part of the reel (the blood-flow raw covered just the
   intro); ask for the other takes if the outro also needs the sharp treatment.
 
+## 1b. Takes, pauses and which clip is which
+- Pratik often records the hook, the body and the CTA as separate clips. Before
+  cutting, confirm which clip is which (speech length vs the script is a quick
+  check: a 22-syllable hook can't fit in a 1.6 s clip).
+- Check every take word-by-word. Preferred: AI Producer upload card →
+  transcript. Fallback when no speech-to-text is available: forced alignment of
+  the script (`scripts/reel3d/align/`) + per-region script matching to spot
+  repeats. Keep the last clean take of a repeated line (e.g. "try a 10-minute
+  walk" was said twice in the walk-after-meals body; the second was kept).
+- Cut dead air to ~0.14 s breaths; keep 10–15 ms audio fades at every cut.
+
 ## 2. House style (match it when editing new reels)
 - Canvas 1080×1920, 30 fps. Font: **Inter Display** (ExtraBold for captions/handle,
   Black for hooks). White text with black outline + soft drop shadow; brand yellow
@@ -42,6 +53,13 @@ Follow this for every reel edit; add new corrections here and in the SKILL.md Ch
   the claim the reel makes (low water → thicker blood) and tell Pratik why.
 - Keep the visual's subject in the empty part of the card; text stays readable on top
   (add shadow to extracted text).
+- **3D motion graphics kit:** `scripts/reel3d/` renders original 3D scenes
+  (WebGL in headless Chromium) — Indian thali + glucose graph, curiosity "?",
+  walker/runner/seated mannequins, x-ray muscle + glucose, hologram body, 3D ✓/✗,
+  timer ring, pace gauge. Reuse and extend it rather than pulling stock clips.
+  Graphics cover the body of the reel; the face appears at the hook, at the
+  script's turns ("Why?", "Here's what to do", "Just move!") and at the CTA.
+- Layout per graphic: title y≈220–420, 3D subject y≈450–1180, captions y≈1250.
 
 ## 4. Motion and transitions
 - **Between sections, dip — never overlap.** The previous visual fades out completely,
@@ -60,6 +78,15 @@ Follow this for every reel edit; add new corrections here and in the SKILL.md Ch
 - Mix: voice ≈ −14 LUFS; music bed ≈ −24 LUFS (≈10 dB under), ducks a further −5 dB
   while he speaks; high-pass music at 70 Hz and dip ~2.5 kHz so speech stays clear.
   Final: −14 LUFS integrated, peaks ≤ −1 dBFS.
+- When he asks for **intense** music: driving 4-on-the-floor drop on the first
+  graphic, hard stop on the question line, risers into each drop, impacts on the
+  hook and the last line; bed sits ≈10–11 dB under the voice *after* ducking.
+- Sound effects: whoosh on every cut, pop/click on chips, ding on ✓, buzz on ✗,
+  typing clicks on the handle (see `instagram-reels.md` §4.7).
+
+## 5b. Instagram platform rules
+See `instagram-reels.md` (export specs, safe zones, ranking signals, retention
+checklist). Run that checklist on every reel.
 
 ## 6. Handle and branding
 - Current Instagram handle: **@transform.withpratik** (old: @get.fitwithpratik). Replace
