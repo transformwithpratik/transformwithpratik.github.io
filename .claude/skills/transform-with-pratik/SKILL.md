@@ -139,3 +139,4 @@ _Add decisions as `YYYY-MM-DD — WSx — decision`._
 - 2026-11-01 — v0.6: added reel editing playbook `references/reel-editing.md` and WS2 editing rules.
 - 2026-11-01 — v0.7: added `references/instagram-reels.md` (Instagram editing standards), the 3D motion-graphics + audio kit `scripts/reel3d/`, and take-checking / intense-music notes in the reel playbook (walk-after-meals reel).
 - 2026-11-01 — v0.8: WS3 updated for the platform upgrade (new repo layout, Supabase setup, content rules, remaining owner steps in SETUP-V3.md).
+- 2026-11-02 — correction — Pratik confirmed the Instagram handle is @transform.withpratik (brand snapshot already correct; the claude.ai Project copy of this file, which still said @get.fitwithpratik, was synced).
