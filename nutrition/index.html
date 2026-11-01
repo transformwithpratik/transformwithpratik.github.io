@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<!-- @head -->
+<!-- /@head -->
+<title>Nutrition hub: high-protein vegetarian recipes and guides | GetFitWithPratik</title>
+<meta name="description" content="High-protein vegetarian Indian recipes with calories and macros per serving, plus guides for office snacks, eating out, grocery shopping and nutrition basics.">
+</head>
+<body>
+<!-- @header -->
+<!-- /@header -->
+
+<main id="main">
+  <header class="page-head container">
+    <h1>Nutrition hub</h1>
+    <p class="lead">Vegetarian-first recipes built around protein, with calories and macros for every serving. Plus practical guides for office days, eating out and the weekly shop.</p>
+  </header>
+
+  <section class="container" aria-labelledby="guides-title" style="padding-bottom:56px">
+    <h2 id="guides-title" class="sr-only">Guides and downloads</h2>
+    <div class="lib-grid" data-guides>
+      <a class="card card-link lib-card" href="/nutrition/recipe-book"><span class="tag tag-lime">Download</span><h3>Vegetarian high-protein recipe book</h3><p class="muted small">Every recipe on printable pages.</p></a>
+      <a class="card card-link lib-card" href="/library/nutrition-fundamentals"><span class="tag">Guide</span><h3>Nutrition fundamentals</h3><p class="muted small">Calories, protein, fibre and building a plate.</p></a>
+      <a class="card card-link lib-card" href="/library/office-snack-guide"><span class="tag">Guide</span><h3>Healthy office snack guide</h3><p class="muted small">Desk-drawer and cafeteria options.</p></a>
+      <a class="card card-link lib-card" href="/library/weekly-grocery-list"><span class="tag tag-lime">Download</span><h3>Weekly grocery list</h3><p class="muted small">A printable shopping checklist.</p></a>
+      <a class="card card-link lib-card" href="/library/eating-out-guide"><span class="tag">Guide</span><h3>Eating-out guide</h3><p class="muted small">What to order on common Indian menus.</p></a>
+    </div>
+  </section>
+
+  <section class="section band" id="recipes" aria-labelledby="recipes-title">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:24px">
+        <h2 id="recipes-title">Recipes</h2>
+        <p>Macros are per serving. Filter by meal or goal, or search by ingredient.</p>
+      </div>
+      <div class="filters">
+        <div class="form-row" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))">
+          <div class="field" style="grid-column:span 2">
+            <label for="r-q" class="sr-only">Search recipes</label>
+            <input class="input" id="r-q" type="search" placeholder="Search: paneer, oats, dal..." data-q>
+          </div>
+          <div class="field">
+            <label for="r-diet" class="sr-only">Diet</label>
+            <select class="input" id="r-diet" data-diet>
+              <option value="">Any diet</option>
+              <option value="vegetarian">Vegetarian</option>
+              <option value="eggetarian">Eggetarian</option>
+              <option value="vegan">Vegan</option>
+              <option value="jain">Jain</option>
+              <option value="gluten_free">Gluten-free</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="r-sort" class="sr-only">Sort</label>
+            <select class="input" id="r-sort" data-sort>
+              <option value="">Recommended order</option>
+              <option value="protein">Most protein</option>
+              <option value="density">Most protein per calorie</option>
+              <option value="calories">Fewest calories</option>
+              <option value="time">Quickest</option>
+            </select>
+          </div>
+        </div>
+        <div class="chip-row" role="group" aria-label="Category" data-cats></div>
+        <div class="cluster" style="justify-content:space-between">
+          <p class="small muted" style="margin:0" data-count aria-live="polite"></p>
+          <button class="btn btn-quiet btn-sm" type="button" data-favs hidden aria-pressed="false">Show my saved recipes</button>
+        </div>
+      </div>
+      <div class="recipe-grid" data-recipes>
+        <div class="skeleton sk-block"></div><div class="skeleton sk-block"></div><div class="skeleton sk-block"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>Want a meal plan built for you?</h2>
+          <p>Clients get calorie and protein targets and a weekly meal plan with foods they already like, adjusted every check-in.</p>
+        </div>
+        <a class="btn" href="/book">Start your transformation</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- @footer -->
+<!-- /@footer -->
+<script type="module" src="/js/pages/nutrition.js?v=2026110101"></script>
+</body>
+</html>

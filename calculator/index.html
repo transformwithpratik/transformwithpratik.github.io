@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<!-- @head -->
+<!-- /@head -->
+<title>Calorie, Macro and Protein Calculator | GetFitWithPratik</title>
+<meta name="description" content="Free calorie and macro calculator using the Mifflin-St Jeor equation, plus protein, BMI (with Asian-Indian cut-offs), waist-to-height ratio and water calculators.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Calorie and macro calculator","url":"https://transformwithpratik.github.io/calculator","applicationCategory":"HealthApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}
+</script>
+</head>
+<body>
+<!-- @header -->
+<!-- /@header -->
+
+<main id="main">
+  <header class="page-head container">
+    <h1>Calorie and macro calculator</h1>
+    <p class="lead">Find your maintenance calories, a sensible target for your goal, and how much protein, carbs and fat to eat. Plus quick checks for BMI, waist size and water.</p>
+    <div class="cluster no-print" style="margin-top:20px">
+      <span class="small muted">Units</span>
+      <div class="segmented" role="group" aria-label="Units">
+        <button type="button" data-units="metric" aria-pressed="true">Metric (kg, cm)</button>
+        <button type="button" data-units="imperial" aria-pressed="false">Imperial (lb, ft)</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container" style="padding-bottom:80px">
+    <div class="tabs no-print" role="tablist" aria-label="Calculators" data-tabs>
+      <button role="tab" id="tab-calories" data-tab="calories" aria-controls="panel-calories" aria-selected="true">Calories and macros</button>
+      <button role="tab" id="tab-protein" data-tab="protein" aria-controls="panel-protein" aria-selected="false" tabindex="-1">Protein</button>
+      <button role="tab" id="tab-bmi" data-tab="bmi" aria-controls="panel-bmi" aria-selected="false" tabindex="-1">BMI</button>
+      <button role="tab" id="tab-whtr" data-tab="whtr" aria-controls="panel-whtr" aria-selected="false" tabindex="-1">Waist-to-height</button>
+      <button role="tab" id="tab-water" data-tab="water" aria-controls="panel-water" aria-selected="false" tabindex="-1">Water</button>
+    </div>
+
+    <!-- Calories and macros -->
+    <section id="panel-calories" role="tabpanel" aria-labelledby="tab-calories">
+      <div class="calc-layout">
+        <form class="form-card form" id="calcForm" novalidate>
+          <fieldset>
+            <legend>Sex <span class="muted small">(the equation differs for men and women)</span></legend>
+            <div class="choices stretch">
+              <label class="choice"><input type="radio" name="sex" value="male"><span>Male</span></label>
+              <label class="choice"><input type="radio" name="sex" value="female"><span>Female</span></label>
+            </div>
+            <p class="field-error" data-error-for="sex" id="err-sex"></p>
+          </fieldset>
+          <div class="form-row">
+            <div class="field">
+              <label for="c-age">Age</label>
+              <div class="input-group"><input class="input" id="c-age" name="age" type="number" inputmode="numeric" min="16" max="90" placeholder="e.g. 30"><span class="suffix">yrs</span></div>
+              <p class="field-error" data-error-for="age" id="err-age"></p>
+            </div>
+            <div class="field">
+              <label for="c-weight">Weight</label>
+              <div class="input-group"><input class="input" id="c-weight" name="weight" type="number" inputmode="decimal" step="0.1" placeholder="e.g. 75"><span class="suffix" data-unit-weight>kg</span></div>
+              <p class="field-error" data-error-for="weight" id="err-weight"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label for="c-height" data-height-label>Height</label>
+            <div data-height-metric><div class="input-group"><input class="input" id="c-height" name="height" type="number" inputmode="decimal" placeholder="e.g. 172"><span class="suffix">cm</span></div></div>
+            <div class="input-pair" data-height-imperial hidden>
+              <div class="input-group"><input class="input" name="height_ft" type="number" inputmode="numeric" placeholder="5" aria-label="Height in feet"><span class="suffix">ft</span></div>
+              <div class="input-group"><input class="input" name="height_in" type="number" inputmode="decimal" placeholder="8" aria-label="Height, extra inches"><span class="suffix">in</span></div>
+            </div>
+            <p class="field-error" data-error-for="height" id="err-height"></p>
+          </div>
+          <div class="field">
+            <label for="c-bf">Body fat <span class="muted">(optional)</span></label>
+            <div class="input-group"><input class="input" id="c-bf" name="bodyfat" type="number" inputmode="decimal" step="0.1" placeholder="Leave blank if you don't know"><span class="suffix">%</span></div>
+            <p class="hint">If you know it from a DEXA scan or a reliable test, we also show the Katch-McArdle estimate and fine-tune protein.</p>
+            <p class="field-error" data-error-for="bodyfat" id="err-bodyfat"></p>
+          </div>
+          <div class="field">
+            <label for="c-activity">Activity level</label>
+            <select class="input" id="c-activity" name="activity"></select>
+            <p class="hint">Most people with desk jobs who train 3 to 4 times a week are "Light" or "Moderate". When unsure, pick the lower one.</p>
+          </div>
+          <fieldset>
+            <legend>Goal</legend>
+            <div class="choices stretch">
+              <label class="choice"><input type="radio" name="goal" value="lose"><span>Lose fat</span></label>
+              <label class="choice"><input type="radio" name="goal" value="lose_slow"><span>Lose fat slowly</span></label>
+              <label class="choice"><input type="radio" name="goal" value="maintain"><span>Maintain</span></label>
+              <label class="choice"><input type="radio" name="goal" value="gain"><span>Build muscle</span></label>
+            </div>
+            <p class="field-error" data-error-for="goal" id="err-goal"></p>
+          </fieldset>
+          <button class="btn btn-primary btn-block" type="submit">Calculate my numbers</button>
+        </form>
+
+        <aside class="calc-result" aria-live="polite" data-result>
+          <p class="result-placeholder">Fill in your details and press <b>Calculate my numbers</b>. Your results appear here and update as you change any value.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Protein -->
+    <section id="panel-protein" role="tabpanel" aria-labelledby="tab-protein" hidden>
+      <div class="calc-layout">
+        <form class="form-card form" id="proteinForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="p-weight">Weight</label>
+              <div class="input-group"><input class="input" id="p-weight" name="weight" type="number" inputmode="decimal" step="0.1" placeholder="e.g. 70"><span class="suffix" data-unit-weight>kg</span></div>
+              <p class="field-error" data-error-for="weight" id="perr-weight"></p>
+            </div>
+            <div class="field">
+              <label for="p-height">Height <span class="muted">(optional)</span></label>
+              <div data-height-metric><div class="input-group"><input class="input" id="p-height" name="height" type="number" inputmode="decimal" placeholder="e.g. 170"><span class="suffix">cm</span></div></div>
+              <div class="input-pair" data-height-imperial hidden>
+                <div class="input-group"><input class="input" name="height_ft" type="number" placeholder="5" aria-label="Height in feet"><span class="suffix">ft</span></div>
+                <div class="input-group"><input class="input" name="height_in" type="number" placeholder="7" aria-label="Height, extra inches"><span class="suffix">in</span></div>
+              </div>
+              <p class="hint">Used to cap the target if your BMI is above 25.</p>
+            </div>
+          </div>
+          <fieldset>
+            <legend>Goal</legend>
+            <div class="choices stretch">
+              <label class="choice"><input type="radio" name="goal" value="lose" checked><span>Lose fat</span></label>
+              <label class="choice"><input type="radio" name="goal" value="maintain"><span>Maintain</span></label>
+              <label class="choice"><input type="radio" name="goal" value="gain"><span>Build muscle</span></label>
+            </div>
+          </fieldset>
+          <label class="check"><input type="checkbox" name="trains" checked> I do strength training at least twice a week</label>
+          <button class="btn btn-primary btn-block" type="submit">Calculate protein</button>
+        </form>
+        <aside class="calc-result" aria-live="polite" data-protein-result>
+          <p class="result-placeholder">Enter your weight to see a daily protein range and how to split it across meals.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- BMI -->
+    <section id="panel-bmi" role="tabpanel" aria-labelledby="tab-bmi" hidden>
+      <div class="calc-layout">
+        <form class="form-card form" id="bmiForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="b-weight">Weight</label>
+              <div class="input-group"><input class="input" id="b-weight" name="weight" type="number" inputmode="decimal" step="0.1" placeholder="e.g. 70"><span class="suffix" data-unit-weight>kg</span></div>
+              <p class="field-error" data-error-for="weight" id="berr-weight"></p>
+            </div>
+            <div class="field">
+              <label for="b-height">Height</label>
+              <div data-height-metric><div class="input-group"><input class="input" id="b-height" name="height" type="number" inputmode="decimal" placeholder="e.g. 170"><span class="suffix">cm</span></div></div>
+              <div class="input-pair" data-height-imperial hidden>
+                <div class="input-group"><input class="input" name="height_ft" type="number" placeholder="5" aria-label="Height in feet"><span class="suffix">ft</span></div>
+                <div class="input-group"><input class="input" name="height_in" type="number" placeholder="7" aria-label="Height, extra inches"><span class="suffix">in</span></div>
+              </div>
+              <p class="field-error" data-error-for="height" id="berr-height"></p>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Calculate BMI</button>
+          <p class="small muted">BMI is a quick screening number. It cannot tell muscle from fat, so a muscular person can score "overweight". Pair it with your waist-to-height ratio.</p>
+        </form>
+        <aside class="calc-result" aria-live="polite" data-bmi-result>
+          <p class="result-placeholder">Enter your height and weight to see your BMI against both the WHO cut-offs and the lower cut-offs recommended for Asian Indians.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Waist-to-height -->
+    <section id="panel-whtr" role="tabpanel" aria-labelledby="tab-whtr" hidden>
+      <div class="calc-layout">
+        <form class="form-card form" id="whtrForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="w-waist">Waist</label>
+              <div class="input-group"><input class="input" id="w-waist" name="waist" type="number" inputmode="decimal" step="0.1" placeholder="e.g. 86"><span class="suffix" data-unit-length>cm</span></div>
+              <p class="field-error" data-error-for="waist" id="werr-waist"></p>
+            </div>
+            <div class="field">
+              <label for="w-height">Height</label>
+              <div data-height-metric><div class="input-group"><input class="input" id="w-height" name="height" type="number" inputmode="decimal" placeholder="e.g. 172"><span class="suffix">cm</span></div></div>
+              <div class="input-pair" data-height-imperial hidden>
+                <div class="input-group"><input class="input" name="height_ft" type="number" placeholder="5" aria-label="Height in feet"><span class="suffix">ft</span></div>
+                <div class="input-group"><input class="input" name="height_in" type="number" placeholder="8" aria-label="Height, extra inches"><span class="suffix">in</span></div>
+              </div>
+              <p class="field-error" data-error-for="height" id="werr-height"></p>
+            </div>
+          </div>
+          <p class="small muted">How to measure: stand relaxed, breathe out normally, and measure halfway between the bottom of your ribs and the top of your hip bone. Keep the tape level and snug, not tight.</p>
+          <button class="btn btn-primary btn-block" type="submit">Calculate ratio</button>
+        </form>
+        <aside class="calc-result" aria-live="polite" data-whtr-result>
+          <p class="result-placeholder">A simple rule of thumb: keep your waist to less than half your height.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Water -->
+    <section id="panel-water" role="tabpanel" aria-labelledby="tab-water" hidden>
+      <div class="calc-layout">
+        <form class="form-card form" id="waterForm" novalidate>
+          <fieldset>
+            <legend>Sex</legend>
+            <div class="choices stretch">
+              <label class="choice"><input type="radio" name="sex" value="male" checked><span>Male</span></label>
+              <label class="choice"><input type="radio" name="sex" value="female"><span>Female</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="wa-ex">Exercise today</label>
+            <div class="input-group"><input class="input" id="wa-ex" name="exercise" type="number" inputmode="numeric" min="0" max="300" value="0"><span class="suffix">min</span></div>
+          </div>
+          <label class="check"><input type="checkbox" name="hot"> It is hot or humid, or I sweat a lot</label>
+          <button class="btn btn-primary btn-block" type="submit">Estimate water</button>
+        </form>
+        <aside class="calc-result" aria-live="polite" data-water-result>
+          <p class="result-placeholder">A rough daily target for drinks. Food provides some water too.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="prose" style="margin-top:64px" aria-labelledby="how-title">
+      <h2 id="how-title">How these numbers are calculated</h2>
+      <p><b>Calories.</b> Your resting energy use (BMR) comes from the Mifflin-St Jeor equation, which is the most accurate of the common formulas for adults in validation studies. It is multiplied by an activity factor to estimate maintenance calories (TDEE). Fat loss uses a 20 percent deficit (10 percent for "slowly"); muscle gain uses a 10 percent surplus. Fat-loss targets are never set below your BMR, 1,500 kcal for men or 1,200 kcal for women.</p>
+      <p><b>Protein.</b> 1.6 to 2.2 g per kg of body weight per day covers what research shows for people who strength train. We use the top of that range during fat loss to help keep muscle. If your BMI is above 25, the calculation uses the weight you would have at a BMI of 25, so targets stay realistic.</p>
+      <p><b>Fat and carbs.</b> Fat is set at about 25 percent of calories (never below 0.6 g per kg). Carbohydrates fill the rest.</p>
+      <p><b>Expected change.</b> We use roughly 7,700 kcal per kg of body weight. Real progress is not a straight line: water, salt and hormones move the scale day to day, so judge the trend over two to three weeks.</p>
+      <p>These are starting points, not prescriptions. Track your weight and adjust by 100 to 200 kcal if the trend does not match your goal after a few weeks.</p>
+      <div class="sources">
+        <p><b>Sources</b></p>
+        <ol>
+          <li>Mifflin MD, St Jeor ST, et al. A new predictive equation for resting energy expenditure in healthy individuals. Am J Clin Nutr. 1990;51(2):241-247.</li>
+          <li>Jäger R, et al. International Society of Sports Nutrition position stand: protein and exercise. J Int Soc Sports Nutr. 2017;14:20.</li>
+          <li>Morton RW, et al. Protein supplementation and resistance training-induced gains in muscle mass and strength: a systematic review and meta-analysis. Br J Sports Med. 2018;52(6):376-384.</li>
+          <li>WHO Expert Consultation. Appropriate body-mass index for Asian populations. Lancet. 2004;363:157-163; Misra A, et al. Consensus statement for diagnosis of obesity in Asian Indians. J Assoc Physicians India. 2009;57:163-170.</li>
+          <li>Ashwell M, Gunn P, Gibson S. Waist-to-height ratio is a better screening tool than waist circumference and BMI. Obes Rev. 2012;13(3):275-286; NICE guidance on overweight and obesity (waist-to-height bands).</li>
+          <li>EFSA Panel on Dietetic Products, Nutrition and Allergies. Scientific opinion on dietary reference values for water. EFSA Journal. 2010;8(3):1459.</li>
+        </ol>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- @footer -->
+<!-- /@footer -->
+<script type="module" src="/js/pages/calculator.js?v=2026110101"></script>
+</body>
+</html>

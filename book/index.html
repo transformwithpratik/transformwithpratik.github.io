@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<!-- @head -->
+<!-- /@head -->
+<title>Start your transformation | GetFitWithPratik</title>
+<meta name="description" content="Tell Pratik about your goal, schedule and food preferences. Two short steps, then a personal reply within 24 hours to set up your consult call.">
+</head>
+<body>
+<!-- @header -->
+<!-- /@header -->
+
+<main id="main">
+  <div class="container" style="padding-block:clamp(32px,6vw,72px) 96px">
+    <div class="split wide-left" style="align-items:start">
+      <div>
+        <div data-form-view>
+          <h1 style="font-size:var(--t-h2)">Start your transformation</h1>
+          <p class="lead muted" style="max-width:56ch">Two short steps. I read every enquiry myself and reply within 24 hours on WhatsApp or email to set up a consult call.</p>
+
+          <form class="form-card form" id="leadForm" novalidate style="margin-top:28px">
+            <div class="stepper" aria-hidden="true"><span class="on" data-step-bar="1"></span><span data-step-bar="2"></span></div>
+            <p class="small muted" style="margin:-12px 0 4px" data-step-label>Step 1 of 2: About you</p>
+            <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+
+            <div class="form" data-step="1">
+              <div class="field">
+                <label for="l-name">Full name <span class="req">*</span></label>
+                <input class="input" id="l-name" name="name" autocomplete="name" required maxlength="100">
+                <p class="field-error" data-error-for="name" id="e-name"></p>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label for="l-email">Email <span class="req">*</span></label>
+                  <input class="input" id="l-email" name="email" type="email" autocomplete="email" required maxlength="200">
+                  <p class="field-error" data-error-for="email" id="e-email"></p>
+                </div>
+                <div class="field">
+                  <label for="l-wa">WhatsApp number <span class="req">*</span></label>
+                  <input class="input" id="l-wa" name="whatsapp" type="tel" autocomplete="tel" placeholder="+91 98765 43210" required maxlength="20">
+                  <p class="field-error" data-error-for="whatsapp" id="e-whatsapp"></p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label for="l-age">Age <span class="req">*</span></label>
+                  <div class="input-group"><input class="input" id="l-age" name="age" type="number" inputmode="numeric" min="16" max="90" required><span class="suffix">yrs</span></div>
+                  <p class="field-error" data-error-for="age" id="e-age"></p>
+                </div>
+                <div class="field">
+                  <label for="l-height">Height <span class="req">*</span></label>
+                  <div class="input-group"><input class="input" id="l-height" name="height_cm" type="number" inputmode="decimal" min="120" max="230" required><span class="suffix">cm</span></div>
+                  <p class="field-error" data-error-for="height_cm" id="e-height_cm"></p>
+                </div>
+                <div class="field">
+                  <label for="l-weight">Weight <span class="req">*</span></label>
+                  <div class="input-group"><input class="input" id="l-weight" name="weight_kg" type="number" inputmode="decimal" step="0.1" min="30" max="300" required><span class="suffix">kg</span></div>
+                  <p class="field-error" data-error-for="weight_kg" id="e-weight_kg"></p>
+                </div>
+              </div>
+              <fieldset>
+                <legend>Main goal <span class="req">*</span></legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="goal" value="fat_loss"><span>Lose fat</span></label>
+                  <label class="choice"><input type="radio" name="goal" value="muscle_gain"><span>Build muscle</span></label>
+                  <label class="choice"><input type="radio" name="goal" value="recomposition"><span>Lose fat and build muscle</span></label>
+                  <label class="choice"><input type="radio" name="goal" value="strength"><span>Get stronger</span></label>
+                  <label class="choice"><input type="radio" name="goal" value="general_fitness"><span>Get fitter overall</span></label>
+                </div>
+                <p class="field-error" data-error-for="goal" id="e-goal"></p>
+              </fieldset>
+              <div class="form-actions">
+                <span class="small muted">Takes about 2 minutes</span>
+                <button class="btn btn-primary" type="button" data-next>Continue</button>
+              </div>
+            </div>
+
+            <div class="form" data-step="2" hidden>
+              <div class="form-row">
+                <div class="field">
+                  <label for="l-target">Target weight <span class="muted">(optional)</span></label>
+                  <div class="input-group"><input class="input" id="l-target" name="target_weight_kg" type="number" inputmode="decimal" step="0.1"><span class="suffix">kg</span></div>
+                  <p class="field-error" data-error-for="target_weight_kg" id="e-target_weight_kg"></p>
+                </div>
+                <div class="field">
+                  <label for="l-start">When would you like to start?</label>
+                  <input class="input" id="l-start" name="start_date" type="date">
+                  <p class="field-error" data-error-for="start_date" id="e-start_date"></p>
+                </div>
+              </div>
+              <fieldset>
+                <legend>Training experience</legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="experience" value="beginner"><span>New or returning after a long break</span></label>
+                  <label class="choice"><input type="radio" name="experience" value="intermediate"><span>Train on and off</span></label>
+                  <label class="choice"><input type="radio" name="experience" value="advanced"><span>Train consistently for 2+ years</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Where will you train?</legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="workout_location" value="gym"><span>Gym</span></label>
+                  <label class="choice"><input type="radio" name="workout_location" value="home"><span>Home</span></label>
+                  <label class="choice"><input type="radio" name="workout_location" value="both"><span>Both</span></label>
+                  <label class="choice"><input type="radio" name="workout_location" value="outdoors"><span>Outdoors</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>Food preference</legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="diet_preference" value="vegetarian"><span>Vegetarian</span></label>
+                  <label class="choice"><input type="radio" name="diet_preference" value="eggetarian"><span>Eggetarian</span></label>
+                  <label class="choice"><input type="radio" name="diet_preference" value="non_vegetarian"><span>Non-vegetarian</span></label>
+                  <label class="choice"><input type="radio" name="diet_preference" value="vegan"><span>Vegan</span></label>
+                  <label class="choice"><input type="radio" name="diet_preference" value="jain"><span>Jain</span></label>
+                </div>
+              </fieldset>
+              <div class="field">
+                <label for="l-allergies">Food allergies or intolerances</label>
+                <input class="input" id="l-allergies" name="allergies" maxlength="300" placeholder="e.g. lactose, peanuts. Leave blank if none.">
+                <p class="field-error" data-error-for="allergies" id="e-allergies"></p>
+              </div>
+              <div class="form-row">
+                <div class="field">
+                  <label for="l-work">Work schedule</label>
+                  <input class="input" id="l-work" name="work_schedule" maxlength="300" placeholder="e.g. 10 to 7, WFH Fridays, US calls till 11 pm">
+                </div>
+                <div class="field">
+                  <label for="l-avail">When can you work out?</label>
+                  <input class="input" id="l-avail" name="availability" maxlength="300" placeholder="e.g. 7 am on weekdays, 45 minutes">
+                </div>
+              </div>
+              <div class="field">
+                <label for="l-challenge">What has got in the way before?</label>
+                <textarea class="input" id="l-challenge" name="biggest_challenge" maxlength="1000" placeholder="Late nights, travel, cravings, not knowing what to eat..."></textarea>
+                <p class="field-error" data-error-for="biggest_challenge" id="e-biggest_challenge"></p>
+              </div>
+              <div class="field">
+                <label for="l-medical">Injuries or medical conditions</label>
+                <textarea class="input" id="l-medical" name="medical_notes" maxlength="1000" placeholder="e.g. lower back pain, thyroid, diabetes, recent surgery. Leave blank if none."></textarea>
+                <p class="hint">This helps me plan safely. For some conditions I will ask you to get your doctor's clearance first.</p>
+              </div>
+              <div class="field">
+                <label for="l-plan">Coaching plan you are interested in</label>
+                <select class="input" id="l-plan" name="plan_interest">
+                  <option value="">Not sure yet</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="l-msg">Anything else?</label>
+                <textarea class="input" id="l-msg" name="message" maxlength="2000"></textarea>
+              </div>
+              <label class="check"><input type="checkbox" name="consent" id="l-consent"> <span>I agree that Pratik can contact me on WhatsApp or email about coaching, and store these details as described in the <a href="/privacy" target="_blank">privacy notice</a>.</span></label>
+              <p class="field-error" data-error-for="consent" id="e-consent"></p>
+              <p class="field-error" data-error-for="form" id="e-form" role="alert"></p>
+              <div class="form-actions">
+                <button class="btn btn-quiet" type="button" data-back>Back</button>
+                <button class="btn btn-primary" type="submit">Send my details</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div data-success-view hidden tabindex="-1">
+          <span class="tag tag-lime">Received</span>
+          <h1 style="font-size:var(--t-h2);margin-top:14px">Thanks, <span data-first-name></span>. Your details are with me.</h1>
+          <p class="lead muted" style="max-width:56ch">I will read them and reply within 24 hours to set up a short consult call. Here is what happens next.</p>
+          <ol class="steps" style="margin-top:28px">
+            <li style="border-color:var(--line)"><h3>I review your details</h3><p class="muted">Your goal, schedule, food preferences and anything that needs care.</p></li>
+            <li style="border-color:var(--line)"><h3>We talk</h3><p class="muted">A short call to understand your week and answer your questions. No pressure to sign up.</p></li>
+            <li style="border-color:var(--line)"><h3>You get your plan</h3><p class="muted">If coaching is a good fit, you get access to the client portal and your personal plan.</p></li>
+          </ol>
+          <div class="cluster" style="margin-top:28px">
+            <a class="btn btn-primary" data-wa-cta hidden target="_blank" rel="noopener">Message me on WhatsApp</a>
+            <a class="btn btn-ghost" href="/calculator">Try the calorie calculator</a>
+            <a class="btn btn-quiet" href="/nutrition">Browse recipes</a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="stack" style="--stack:20px">
+        <div class="card card-flat">
+          <h2 style="font-size:1.25rem">What you get as a client</h2>
+          <ul class="ticks">
+            <li>A training plan for your equipment and time</li>
+            <li>Calorie and protein targets with a meal plan</li>
+            <li>The client portal for daily logs and progress photos</li>
+            <li>A weekly check-in with personal feedback</li>
+          </ul>
+        </div>
+        <div class="card card-flat">
+          <h2 style="font-size:1.25rem">Prefer to talk first?</h2>
+          <p class="muted">Email <a href="mailto:transformwithpratik@gmail.com" data-contact="email"><span data-contact-text="email">transformwithpratik@gmail.com</span></a><span data-wa-side hidden> or <a data-contact="whatsapp" href="#">message on WhatsApp</a></span>.</p>
+        </div>
+        <p class="small muted">Your details are only used to reply to your enquiry and plan your coaching. They are never sold or shared.</p>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<!-- @footer -->
+<!-- /@footer -->
+<script type="module" src="/js/pages/book.js?v=2026110101"></script>
+</body>
+</html>

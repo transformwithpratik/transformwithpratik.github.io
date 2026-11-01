@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<!-- @head -->
+<!-- /@head -->
+<title>Leave feedback | GetFitWithPratik</title>
+<meta name="description" content="Share honest feedback on coaching or content. You can stay anonymous, and nothing is published without your permission and a review first.">
+</head>
+<body>
+<!-- @header -->
+<!-- /@header -->
+
+<main id="main">
+  <div class="container narrow" style="padding-block:clamp(32px,6vw,72px) 96px">
+    <div data-form-view>
+      <h1 style="font-size:var(--t-h2)">Leave feedback</h1>
+      <p class="lead muted">Current client, past client or someone who follows the content: honest feedback helps me coach better. You can stay anonymous.</p>
+      <form class="form-card form" id="feedbackForm" novalidate style="margin-top:28px">
+        <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <fieldset>
+          <legend>How would you rate your experience? <span class="req">*</span></legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="rating" value="5"><span>5, excellent</span></label>
+            <label class="choice"><input type="radio" name="rating" value="4"><span>4, good</span></label>
+            <label class="choice"><input type="radio" name="rating" value="3"><span>3, okay</span></label>
+            <label class="choice"><input type="radio" name="rating" value="2"><span>2, poor</span></label>
+            <label class="choice"><input type="radio" name="rating" value="1"><span>1, bad</span></label>
+          </div>
+          <p class="field-error" data-error-for="rating" id="f-rating"></p>
+        </fieldset>
+        <div class="field">
+          <label for="f-body">Your feedback <span class="req">*</span></label>
+          <textarea class="input" id="f-body" name="feedback" maxlength="2000" required placeholder="What worked, what did not, what could be better?"></textarea>
+          <p class="field-error" data-error-for="feedback" id="f-feedback"></p>
+        </div>
+        <div class="field">
+          <label for="f-rel">How do you know me?</label>
+          <select class="input" id="f-rel" name="relationship">
+            <option value="">Choose one</option>
+            <option value="current_client">Current client</option>
+            <option value="past_client">Past client</option>
+            <option value="follower">Follow the content</option>
+            <option value="friend_family">Friend or family</option>
+          </select>
+          <p class="field-error" data-error-for="relationship" id="f-relationship"></p>
+        </div>
+        <label class="check"><input type="checkbox" name="is_anonymous" id="f-anon"> <span>Keep me anonymous</span></label>
+        <div class="form-row" data-identity>
+          <div class="field">
+            <label for="f-name">Name <span class="muted">(optional)</span></label>
+            <input class="input" id="f-name" name="name" autocomplete="name" maxlength="80">
+            <p class="field-error" data-error-for="name" id="f-name-err"></p>
+          </div>
+          <div class="field">
+            <label for="f-email">Email <span class="muted">(optional, only if you want a reply)</span></label>
+            <input class="input" id="f-email" name="email" type="email" autocomplete="email" maxlength="200">
+            <p class="field-error" data-error-for="email" id="f-email-err"></p>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" name="consent_public"> <span>You can publish this as a review on the website. Only your first name and last initial are shown (or "Anonymous"), and I review every review before it goes up.</span></label>
+        <p class="field-error" data-error-for="form" id="f-form" role="alert"></p>
+        <button class="btn btn-primary" type="submit">Send feedback</button>
+      </form>
+    </div>
+    <div data-success-view hidden tabindex="-1">
+      <span class="tag tag-lime">Received</span>
+      <h1 style="font-size:var(--t-h2);margin-top:14px">Thank you for the feedback.</h1>
+      <p class="lead muted">I read every response. If you left your email and asked a question, I will reply personally.</p>
+      <p class="cluster" style="margin-top:24px"><a class="btn btn-ghost" href="/">Back to home</a><a class="btn btn-quiet" href="/library">Browse the guides</a></p>
+    </div>
+  </div>
+</main>
+
+<!-- @footer -->
+<!-- /@footer -->
+<script type="module" src="/js/pages/feedback.js?v=2026110101"></script>
+</body>
+</html>
