@@ -1,0 +1,18 @@
+# Netlify: permanent redirects from the old .html URLs
+/index.html                 /                    301
+/pages/book.html            /book/               301
+/pages/calculator.html      /calculator/         301
+/pages/feedback.html        /feedback/           301
+/pages/transformations.html /transformations/    301
+/pages/admin.html           /admin/              301
+/pages/admin-login.html     /portal/login/       301
+/portal/login.html          /portal/login/       301
+/portal/signup.html         /portal/register/    301
+/portal/dashboard.html      /portal/dashboard/   301
+/portal/log.html            /portal/logs/        301
+/portal/weekly.html         /portal/checkins/    301
+/portal/plan.html           /portal/plan/        301
+/portal/files.html          /portal/library/     301
+/portal/history.html        /portal/progress/    301
+/nutrition/recipes/*        /nutrition/recipe/?slug=:splat  200
+/transformations/*          /transformations/story/?slug=:splat  200

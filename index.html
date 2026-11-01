@@ -1,329 +1,335 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-IN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GET FIT WITH PRATIK — Coaching, Nutrition & Real Results</title>
-<meta name="description" content="Personalized fitness coaching, nutrition planning, and real transformations. Train smart with Pratik.">
-<link rel="stylesheet" href="css/style.css">
+<!-- @head -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#171A18">
+<link rel="canonical" href="https://transformwithpratik.github.io/">
+<meta property="og:site_name" content="GetFitWithPratik">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_IN">
+<meta property="og:url" content="https://transformwithpratik.github.io/">
+<meta property="og:title" content="GetFitWithPratik | Fitness coaching for busy professionals">
+<meta property="og:description" content="Online fitness coaching for busy professionals in India: strength training you can repeat, vegetarian-friendly nutrition and weekly check-ins. Coached by Pratik Jain.">
+<meta property="og:image" content="https://transformwithpratik.github.io/assets/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GetFitWithPratik | Fitness coaching for busy professionals">
+<meta name="twitter:description" content="Online fitness coaching for busy professionals in India: strength training you can repeat, vegetarian-friendly nutrition and weekly check-ins. Coached by Pratik Jain.">
+<meta name="twitter:image" content="https://transformwithpratik.github.io/assets/og-default.png">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="/css/site.css?v=2026110101">
+<!-- /@head -->
+<title>GetFitWithPratik | Fitness coaching for busy professionals</title>
+<meta name="description" content="Online fitness coaching for busy professionals in India: strength training you can repeat, vegetarian-friendly nutrition and weekly check-ins. Coached by Pratik Jain.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://transformwithpratik.github.io/#business",
+      "name": "GetFitWithPratik",
+      "url": "https://transformwithpratik.github.io/",
+      "email": "transformwithpratik@gmail.com",
+      "description": "Online fitness coaching for busy professionals: strength training, vegetarian-friendly nutrition and weekly check-ins.",
+      "areaServed": "IN",
+      "founder": { "@id": "https://transformwithpratik.github.io/#pratik" },
+      "sameAs": ["https://www.instagram.com/transform.withpratik/"]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://transformwithpratik.github.io/#pratik",
+      "name": "Pratik Jain",
+      "jobTitle": "Fitness coach",
+      "url": "https://transformwithpratik.github.io/about",
+      "sameAs": ["https://www.instagram.com/transform.withpratik/"]
+    },
+    {
+      "@type": "WebSite",
+      "name": "GetFitWithPratik",
+      "url": "https://transformwithpratik.github.io/"
+    }
+  ]
+}
+</script>
 </head>
-<body>
-
-<!-- ===== NAV ===== -->
-<nav class="nav">
-  <div class="nav-container">
-    <a href="index.html" class="logo"><span class="logo-mark">GFP</span>GETFITWITHPRATIK</a>
-    <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="pages/transformations.html">Transformations</a></li>
-      <li><a href="pages/calculator.html">Calorie Calc</a></li>
-      <li><a href="pages/feedback.html">Feedback</a></li>
-      <li><a href="portal/login.html">Client Login</a></li>
-      <li><a href="pages/book.html" class="nav-cta">Book a Session →</a></li>
+<body data-header-theme="dark">
+<!-- @header -->
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="GetFitWithPratik home">
+      <svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#171A18"/><path d="M7 23.5l6-6.5 4.5 3.5L27 10" fill="none" stroke="#B8F36B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="27" cy="10" r="2.6" fill="#B8F36B"/></svg>
+      <span class="brand-name">GetFitWith<b>Pratik</b></span>
+    </a>
+    <nav aria-label="Main">
+      <ul class="nav-list">
+        <li><a href="/transformations">Transformations</a></li>
+        <li><a href="/calculator">Calculators</a></li>
+        <li><a href="/nutrition">Nutrition</a></li>
+        <li><a href="/workouts">Workouts</a></li>
+        <li><a href="/library">Library</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-quiet header-login" href="/portal/login" data-portal-link>Client login</a>
+      <a class="btn btn-primary header-cta" href="/book" aria-label="Start your transformation"><span class="cta-full">Start your transformation</span><span class="cta-short">Get started</span></a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" data-menu-open>
+        <span class="sr-only">Open menu</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobile-nav" hidden data-menu>
+    <div class="mobile-nav-top">
+      <a class="brand" href="/"><span class="brand-name">GetFitWith<b>Pratik</b></span></a>
+      <button class="menu-btn" type="button" data-menu-close>
+        <span class="sr-only">Close menu</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/transformations">Transformations</a></li>
+      <li><a href="/calculator">Calculators</a></li>
+      <li><a href="/nutrition">Nutrition</a></li>
+      <li><a href="/workouts">Workouts</a></li>
+      <li><a href="/library">Library</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
     </ul>
+    <a class="btn btn-primary btn-block" href="/book">Start your transformation</a>
+    <a class="btn btn-ghost btn-block" href="/portal/login" data-portal-link>Client login</a>
   </div>
-</nav>
+</header>
+<!-- /@header -->
 
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-bg-text">PRATIK</div>
-  <div class="hero-container">
-    <div>
-      <div class="hero-tag"><span class="dot"></span> Now Accepting New Clients · April 2026</div>
-      <h1>
-        Train <span class="strike">hard</span><br>
-        <span class="yellow">smart.</span><br>
-        Eat better.
-      </h1>
-      <p class="hero-sub">No fad diets. No crash plans. Just sustainable transformation built around YOUR life — coached personally by Pratik.</p>
-      <div class="hero-actions">
-        <a href="pages/book.html" class="btn btn-primary">Start Your Journey <span class="arrow">→</span></a>
-        <a href="pages/calculator.html" class="btn btn-outline">Calculate Your Calories</a>
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <svg class="trend" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="trendFill" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#B8F36B" stop-opacity="0.16"/>
+          <stop offset="1" stop-color="#B8F36B" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path class="trend-area" d="M0,360 C120,352 180,330 260,322 S400,330 470,300 S600,250 680,246 S820,210 900,168 S1060,120 1200,64 L1200,400 L0,400 Z"/>
+      <path class="trend-line" pathLength="1" d="M0,360 C120,352 180,330 260,322 S400,330 470,300 S600,250 680,246 S820,210 900,168 S1060,120 1200,64"/>
+    </svg>
+    <div class="container hero-grid">
+      <div>
+        <h1 id="hero-title">Fitness that fits a full&#8209;time job.</h1>
+        <p class="lead">Personal coaching for busy professionals. Strength training you can repeat, vegetarian-friendly nutrition, and a weekly check-in that shows what is working. Built around your calendar, not the other way round.</p>
+        <div class="cluster hero-actions">
+          <a class="btn btn-primary" href="/book">Start your transformation</a>
+          <a class="btn btn-ghost" href="/calculator">Calculate my calories</a>
+        </div>
+        <p class="small muted" style="margin-top:18px">Online coaching across India. <span data-contact-text="response_time">Replies within 24 hours</span>.</p>
       </div>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-card">
-        <div class="hero-card-label">// COACHING SNAPSHOT</div>
-        <h3>Built for results that last.</h3>
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <div class="num">200+</div>
-            <div class="lbl">Clients</div>
-          </div>
-          <div class="hero-stat">
-            <div class="num">5K+</div>
-            <div class="lbl">Kgs Lost</div>
-          </div>
-          <div class="hero-stat">
-            <div class="num">98%</div>
-            <div class="lbl">Stick Rate</div>
-          </div>
+      <div data-hero-side>
+        <div class="hero-card">
+          <h2>How coaching works</h2>
+          <ol class="mini-steps">
+            <li><div><b>Consult call</b><span>Your goal, schedule and food preferences</span></div></li>
+            <li><div><b>Your plan</b><span>Targets, training and meals that fit your week</span></div></li>
+            <li><div><b>Daily logs</b><span>Two minutes in the client portal</span></div></li>
+            <li><div><b>Weekly review</b><span>Feedback and adjustments from Pratik</span></div></li>
+          </ol>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== TICKER ===== -->
-<div class="ticker">
-  <div class="ticker-track">
-    <span>STRENGTH <span class="star">★</span> NUTRITION <span class="star">★</span> MINDSET <span class="star">★</span> CONSISTENCY <span class="star">★</span> RESULTS <span class="star">★</span> ACCOUNTABILITY <span class="star">★</span></span>
-    <span>STRENGTH <span class="star">★</span> NUTRITION <span class="star">★</span> MINDSET <span class="star">★</span> CONSISTENCY <span class="star">★</span> RESULTS <span class="star">★</span> ACCOUNTABILITY <span class="star">★</span></span>
-  </div>
-</div>
-
-<!-- ===== JOURNEY ===== -->
-<section class="section journey">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <div class="section-eyebrow">My Story</div>
-        <h2 class="section-title">From <span class="yellow">struggle</span> to coach.</h2>
+  <section class="section" aria-labelledby="for-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="for-title">Built for people whose week is already full.</h2>
+        <p>Most programmes assume you have unlimited time and a cook at home. This one starts from your real constraints.</p>
       </div>
-      <p class="section-desc">I've walked the path you're on. The years of failed diets, gym anxiety, and inconsistent results taught me what actually works.</p>
-    </div>
-
-    <div class="journey-grid">
-      <div class="journey-img reveal">
-        <div class="journey-img-frame">
-          <!-- Replace src with your photo when ready -->
-        </div>
-        <div class="journey-badge">
-          <span class="big">8+</span>
-          <span class="small">YEARS COACHING</span>
-        </div>
-      </div>
-
-      <div class="journey-content reveal">
-        <h3>I'm Pratik — and I get it.</h3>
-        <p>I started lifting in college weighing 95kg with zero clue what I was doing. Crash diets, broscience, "magic" supplements — I tried it all and burned out fast.</p>
-        <p>What changed everything was learning the science: progressive overload, calorie tracking, recovery, and most importantly — building a system I could stick to forever.</p>
-        <p>Today, I help busy professionals, students, and parents do exactly that: lose fat, build strength, and reclaim their energy without giving up the foods or life they love.</p>
-
-        <div class="journey-stats">
-          <div class="journey-stat"><div class="n">35kg</div><div class="l">My own loss</div></div>
-          <div class="journey-stat"><div class="n">200+</div><div class="l">Clients coached</div></div>
-          <div class="journey-stat"><div class="n">5★</div><div class="l">Avg rating</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== TRANSFORMATIONS ===== -->
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <div class="section-eyebrow">Real Results</div>
-        <h2 class="section-title">Client <span class="yellow">transformations.</span></h2>
-      </div>
-      <p class="section-desc">If they could do it, you can too. Every single one started exactly where you are now.</p>
-    </div>
-
-    <div class="transform-grid" id="homeTransforms">
-      <!-- Populated by JS, with sensible defaults -->
-    </div>
-
-    <div style="text-align:center; margin-top: 3rem;">
-      <a href="pages/transformations.html" class="btn btn-outline">View All Transformations →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== OFFERINGS ===== -->
-<section class="section" style="background: var(--black-soft);">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <div class="section-eyebrow">How It Works</div>
-        <h2 class="section-title">My coaching <span class="yellow">style.</span></h2>
-      </div>
-      <p class="section-desc">Coaching designed for sustainable lifestyle change — not 30-day quick fixes you'll drop by week three.</p>
-    </div>
-
-    <div class="offerings">
-      <div class="offering reveal">
-        <div class="offering-num">01</div>
-        <h4>Personalized Programming</h4>
-        <p>Workouts built around your schedule, equipment access, injuries, and current strength level. Updated every 4-6 weeks.</p>
-      </div>
-      <div class="offering reveal">
-        <div class="offering-num">02</div>
-        <h4>Flexible Nutrition</h4>
-        <p>Macro-based plans with foods you actually like to eat. No banned foods, no eliminating entire food groups.</p>
-      </div>
-      <div class="offering reveal">
-        <div class="offering-num">03</div>
-        <h4>Weekly Check-ins</h4>
-        <p>Detailed progress reviews, photo analysis, weight & measurement tracking, and adjustments based on YOUR data.</p>
-      </div>
-      <div class="offering reveal">
-        <div class="offering-num">04</div>
-        <h4>24/7 WhatsApp Support</h4>
-        <p>Stuck on form? Confused at a restaurant? Travel disrupting your routine? I'm one message away.</p>
-      </div>
-      <div class="offering reveal">
-        <div class="offering-num">05</div>
-        <h4>Mindset Coaching</h4>
-        <p>The mental side is half the battle. We tackle motivation, identity shifts, and the inner work that makes change permanent.</p>
-      </div>
-      <div class="offering reveal">
-        <div class="offering-num">06</div>
-        <h4>Recipe Library</h4>
-        <p>50+ macro-friendly Indian and global recipes that fit your plan and don't taste like cardboard.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== TESTIMONIALS ===== -->
-<section class="section">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <div class="section-eyebrow">Client Words</div>
-        <h2 class="section-title">What people <span class="yellow">say.</span></h2>
-      </div>
-      <p class="section-desc">Real reviews from people who put in the work and saw their lives change.</p>
-    </div>
-
-    <div class="testimonials-grid" id="homeTestimonials">
-      <!-- Populated by JS -->
-    </div>
-  </div>
-</section>
-
-<!-- ===== CTA BANNER ===== -->
-<section class="cta-banner">
-  <div class="cta-banner-content">
-    <h2>Ready to actually<br>commit this time?</h2>
-    <a href="pages/book.html" class="btn btn-primary">Book Your Strategy Call →</a>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <h3>GETFITWITHPRATIK</h3>
-      <p>Sustainable fitness coaching for people who are done with quick fixes and ready to build something that lasts.</p>
-      <div class="socials" id="footerSocials">
-        <a href="https://instagram.com/getfitwithpratik" class="social-link" aria-label="Instagram" target="_blank">IG</a>
-        <a href="https://youtube.com/@getfitwithpratik" class="social-link" aria-label="YouTube" target="_blank">YT</a>
-        <a href="https://wa.me/919999999999" class="social-link" aria-label="WhatsApp" target="_blank">WA</a>
-        <a href="mailto:hello@getfitwithpratik.com" class="social-link" aria-label="Email">@</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h5>Navigate</h5>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="pages/transformations.html">Transformations</a></li>
-        <li><a href="pages/calculator.html">Calorie Calculator</a></li>
-        <li><a href="pages/book.html">Book a Session</a></li>
+      <ul class="pain-list">
+        <li><b>You have started over more times than you can count.</b><span>Monday plans that collapse by Thursday are a planning problem, not a willpower problem. We build a routine that survives deadlines, late calls and travel.</span></li>
+        <li><b>You sit for nine hours a day.</b><span>Short strength sessions, more daily steps and a few desk habits do more for you than an occasional heroic workout.</span></li>
+        <li><b>You are vegetarian and protein feels impossible.</b><span>Meal plans are built from dal, paneer, curd, soy, sprouts and the food you already eat, with a clear daily protein target.</span></li>
+        <li><b>You cannot tell what is actually working.</b><span>Weekly check-ins track your weight trend, measurements, training and sleep, so every change to your plan is based on your own data.</span></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <h5>Connect</h5>
-      <ul>
-        <li><a href="pages/feedback.html">Leave Feedback</a></li>
-        <li><a href="https://instagram.com/getfitwithpratik" target="_blank">Instagram</a></li>
-        <li><a href="https://wa.me/919999999999" target="_blank">WhatsApp</a></li>
-        <li><a href="mailto:hello@getfitwithpratik.com">Email Pratik</a></li>
-      </ul>
+  </section>
+
+  <section class="section dark" id="coaching" aria-labelledby="method-title">
+    <div class="container split">
+      <div class="section-head">
+        <span class="kicker">The method</span>
+        <h2 id="method-title">Structured, measurable, and adjusted every week.</h2>
+        <p>No crash diets and no banned foods. A plan built on the basics that hold up in research, tracked simply, and changed when your data says so.</p>
+        <p><a class="btn btn-primary" href="/book">Start your transformation</a></p>
+      </div>
+      <ol class="steps">
+        <li><h3>Consult call</h3><p>A short call about your goal, schedule, food preferences, injuries and what has got in the way before.</p></li>
+        <li><h3>Your plan</h3><p>Calorie and protein targets, a training plan for your equipment and time, and a meal plan with Indian vegetarian options.</p></li>
+        <li><h3>Track in the portal</h3><p>Log food, workouts, steps, water and sleep from your phone. Most days it takes two or three minutes.</p></li>
+        <li><h3>Weekly check-in</h3><p>Send your weight, measurements and how the week went. Pratik reviews it and replies with feedback.</p></li>
+        <li><h3>Adjust and progress</h3><p>Targets and training change based on your results, so progress keeps coming after the first few weeks.</p></li>
+      </ol>
     </div>
-    <div class="footer-col">
-      <h5>Schedule</h5>
-      <ul id="footerSchedule">
-        <li>Mon–Fri: 6 AM – 9 PM</li>
-        <li>Sat: 7 AM – 2 PM</li>
-        <li>Sun: Closed</li>
-      </ul>
+  </section>
+
+  <section class="section" aria-labelledby="results-title" data-results hidden>
+    <div class="container">
+      <div class="section-head">
+        <h2 id="results-title">Client results</h2>
+        <p>Shared with each client's written permission. Timelines and numbers are their own.</p>
+      </div>
+      <div class="tf-grid" data-results-list></div>
+      <p style="margin-top:28px"><a class="btn btn-ghost" href="/transformations">See all transformations</a></p>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <div>© 2026 GetFitWithPratik. All rights reserved.</div>
-    <div><a href="pages/admin-login.html">Admin →</a></div>
+  </section>
+
+  <section class="section band" aria-labelledby="coach-title">
+    <div class="container" data-coach-wrap>
+      <figure class="hero-photo" data-coach-photo hidden style="margin:0;max-width:440px"></figure>
+      <div data-coach-text style="max-width:720px">
+        <span class="kicker">Your coach</span>
+        <h2 id="coach-title" data-coach-name>Pratik Jain</h2>
+        <p class="lead muted" data-coach-title>Software engineer and certified fitness coach</p>
+        <div class="prose" data-coach-story>
+          <div class="skeleton sk-line"></div><div class="skeleton sk-line"></div><div class="skeleton sk-line" style="width:70%"></div>
+        </div>
+        <p class="cluster" data-coach-credentials style="margin-top:20px"></p>
+        <p style="margin-top:24px"><a class="btn btn-ghost" href="/about">More about Pratik</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="plans" aria-labelledby="plans-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="plans-title">Coaching plans</h2>
+        <p>Every plan includes a personal training plan, nutrition targets, the client portal and weekly check-ins. Pick a length that matches your goal.</p>
+      </div>
+      <div class="plans" data-plans>
+        <div class="skeleton sk-block"></div><div class="skeleton sk-block"></div><div class="skeleton sk-block"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" aria-labelledby="reviews-title" data-reviews hidden>
+    <div class="container">
+      <div class="section-head">
+        <h2 id="reviews-title">What clients say</h2>
+        <p>Reviews are published only after the person agrees to share them.</p>
+      </div>
+      <div class="grid grid-3" data-reviews-list></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="free-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="free-title">Free tools you can use today</h2>
+        <p>Start with your numbers and a few recipes. If you want a plan built for you, coaching is one form away.</p>
+      </div>
+      <div class="grid grid-3">
+        <a class="card card-link" href="/calculator">
+          <h3>Calorie and macro calculator</h3>
+          <p class="muted">Your maintenance calories, a target for your goal, and protein, carbs and fat in grams. Plus BMI, waist-to-height and water.</p>
+        </a>
+        <a class="card card-link" href="/nutrition">
+          <h3>Vegetarian high-protein recipes</h3>
+          <p class="muted">Chillas, bhurji, pulao, wraps and snacks with calories and protein per serving. Filter by meal or goal.</p>
+        </a>
+        <a class="card card-link" href="/library">
+          <h3>Guides for desk workers</h3>
+          <p class="muted">Office snacks, eating out, sleep, supplements and travel workouts, written plainly and backed by research.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" id="faq" aria-labelledby="faq-title">
+    <div class="container split">
+      <div class="section-head">
+        <h2 id="faq-title">Questions people ask first</h2>
+        <p>Something else on your mind? <a href="/contact">Get in touch</a>.</p>
+      </div>
+      <div class="faq" data-faq></div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>Ready to start?</h2>
+          <p>Tell me about your goal and your week. I read every enquiry myself and reply within 24 hours.</p>
+        </div>
+        <a class="btn" href="/book">Start your transformation</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- @footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a class="brand" href="/"><span class="brand-name">GetFitWith<b>Pratik</b></span></a>
+        <p style="margin-top:14px">Coaching for busy professionals: strength training, vegetarian-friendly nutrition and weekly check-ins that fit a full-time job.</p>
+        <p class="cluster" style="--gap:16px">
+          <a href="#" data-contact="instagram" hidden>Instagram</a>
+          <a href="#" data-contact="whatsapp" hidden>WhatsApp</a>
+          <a href="#" data-contact="youtube" hidden>YouTube</a>
+          <a href="mailto:transformwithpratik@gmail.com" data-contact="email">Email</a>
+        </p>
+      </div>
+      <div>
+        <h2>Free tools</h2>
+        <ul>
+          <li><a href="/calculator">Calorie and macro calculator</a></li>
+          <li><a href="/calculator#protein">Protein calculator</a></li>
+          <li><a href="/nutrition">Nutrition hub and recipes</a></li>
+          <li><a href="/workouts">Exercise library</a></li>
+          <li><a href="/library">Guides</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Coaching</h2>
+        <ul>
+          <li><a href="/book">Start your transformation</a></li>
+          <li><a href="/transformations">Transformations</a></li>
+          <li><a href="/about">About Pratik</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="/feedback">Leave feedback</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Clients</h2>
+        <ul>
+          <li><a href="/portal/login">Client login</a></li>
+          <li><a href="/portal/register">Create an account</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span data-year>2026</span> GetFitWithPratik</span>
+      <p class="disclaimer">The information on this site is general education, not medical advice. Talk to your doctor before starting a new diet or exercise plan, especially if you have a health condition, are pregnant or take medication.</p>
+    </div>
   </div>
 </footer>
-
-<script src="js/main.js"></script>
-<script>
-// ============================================
-// Populate transformations & testimonials with admin data + defaults
-// ============================================
-const defaultTransforms = [
-  { name: 'Rohan K.', meta: '12 weeks · 14kg lost', initial: 'R' },
-  { name: 'Priya S.', meta: '16 weeks · 18kg lost', initial: 'P' },
-  { name: 'Arjun M.', meta: '24 weeks · 22kg lost', initial: 'A' },
-  { name: 'Neha T.', meta: '10 weeks · 9kg lost', initial: 'N' },
-  { name: 'Karan V.', meta: '20 weeks · 16kg lost', initial: 'K' },
-  { name: 'Anjali R.', meta: '14 weeks · 12kg lost', initial: 'A' }
-];
-
-const defaultTestimonials = [
-  { name: 'Rohan K.', role: 'Engineer · Lost 14 kg', text: 'Pratik changed my entire relationship with food. No more guilt, no more restriction — just a plan I actually enjoy following. Down 14kg and stronger than ever.' },
-  { name: 'Priya S.', role: 'Doctor · Lost 18 kg', text: 'After two pregnancies I thought my body was just "different" forever. 4 months in and I\'m back to my college weight with way more energy than I had then.' },
-  { name: 'Arjun M.', role: 'Student · Gained 8 kg muscle', text: 'I was the skinny guy my whole life. Coach Pratik dialed in my training and got me eating properly. Finally see muscle in the mirror.' }
-];
-
-const transforms = Store.get('transformations', defaultTransforms).slice(0, 6);
-const testimonials = Store.get('testimonials', defaultTestimonials).slice(0, 3);
-
-document.getElementById('homeTransforms').innerHTML = transforms.map(t => `
-  <div class="transform-card reveal">
-    <div class="transform-img">
-      <span class="badge">${t.meta || ''}</span>
-      ${t.image ? `<img src="${t.image}" alt="${t.name}">` : (t.initial || (t.name||'?')[0])}
-    </div>
-    <div class="transform-info">
-      <h4>${t.name || 'Anonymous'}</h4>
-      <p>${t.meta || 'Transformation'}</p>
-    </div>
-  </div>
-`).join('');
-
-document.getElementById('homeTestimonials').innerHTML = testimonials.map(t => `
-  <div class="testimonial reveal">
-    <div class="testimonial-text">${t.text}</div>
-    <div class="testimonial-author">
-      <div class="testimonial-avatar">${(t.name||'?')[0]}</div>
-      <div>
-        <div class="name">${t.name}</div>
-        <div class="role">${t.role || ''}</div>
-      </div>
-    </div>
-  </div>
-`).join('');
-
-// Populate footer socials & schedule from admin data if available
-const socials = Store.get('socials', null);
-if (socials) {
-  const map = { instagram: 'IG', youtube: 'YT', whatsapp: 'WA', email: '@' };
-  document.getElementById('footerSocials').innerHTML = Object.entries(socials)
-    .filter(([k, v]) => v)
-    .map(([k, v]) => `<a href="${k === 'email' ? 'mailto:' + v : v}" class="social-link" target="_blank">${map[k] || k.toUpperCase().slice(0,2)}</a>`)
-    .join('');
-}
-
-const schedule = Store.get('schedule', null);
-if (schedule && schedule.length) {
-  document.getElementById('footerSchedule').innerHTML = schedule
-    .map(s => `<li>${s.day}: ${s.hours || 'Closed'}</li>`).join('');
-}
-
-// Re-trigger reveal observer for newly inserted elements
-document.querySelectorAll('.reveal').forEach(el => {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  obs.observe(el);
-});
-</script>
-
+<div class="toasts" aria-live="polite" data-toasts></div>
+<!-- /@footer -->
+<script type="module" src="/js/pages/home.js?v=2026110101"></script>
 </body>
 </html>

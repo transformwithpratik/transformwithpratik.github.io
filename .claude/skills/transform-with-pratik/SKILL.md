@@ -95,13 +95,13 @@ style, visuals, transitions, music mix, thumbnail, QA), `references/instagram-re
 - Status: _blood-flow reel v4 delivered; V1 "walk after meals" v1 edited 2026-11-01 (3D graphics, intense music)_
 
 ### WS3 — Website (Vercel)
-- Repo layout (as of 2026-10-20): `index.html`, `css/`, `js/` (main, portal, supabase-client), `pages/` (calculator, book, transformations, feedback, admin), `portal/` (client login/signup, dashboard, plan, log, weekly, history, files), `supabase/schema.sql`. A Supabase-backed client portal already exists — extend it rather than rebuild.
-- Inspect existing site before changing anything; preserve the calorie calculator logic, fix its page.
-- Tasks: clean metadata (title, description, OG/Twitter cards, JSON-LD), refresh look & feel, deploy to Vercel, Google Sign-In, fix calculator page, add client tools (e.g. TDEE/macro calculator, protein planner, progress tracker, enquiry/application form).
-- SEO: one primary keyword per page, fast mobile load, embed reels/YouTube, link from Instagram bio.
-- Repo conventions: keep a `CLAUDE.md` at repo root pointing to this skill.
+- Repo layout (as of 2026-11-01, platform upgrade, PR `platform-upgrade`): folder-per-page clean URLs (`/calculator/`, `/book/`, `/transformations/`, `/feedback/`, `/nutrition/`, `/library/`, `/workouts/`, `/about/`, `/contact/`, `/privacy/`), client portal `portal/*/`, coach dashboard `admin/` (hash routes), `css/site.css` (public) + `css/app.css` (portal/admin, dark), `js/lib|pages|portal|admin/`, shared `partials/` synced by `scripts/sync-partials.mjs`, `supabase/migrations/` (source of truth for the DB; `schema.sql` is legacy), `supabase/functions/` (send-email, delete-account), tests in `tests/` (`npm test`, `node tests/e2e/run.mjs`). Setup and owner-only steps: `SETUP-V3.md`.
+- Supabase project `trerqtscrsrlcfsnfetn`: RLS on every table, roles client/coach/admin, new sign-ups pending until approved, private photo/plan buckets with signed URLs, audit log, email outbox → `send-email` edge function (needs RESEND_API_KEY or BREVO_API_KEY secret), daily reminders gated by Site settings (off by default).
+- Design system: charcoal #171A18 / #242925, lime #B8F36B, off-white #F5F5F0, muted #898F87; Archivo. Site brand name in the UI is GetFitWithPratik.
+- Content rules on the site: no unverifiable stats (old "200+ clients", "98%" etc. removed); transformations need recorded written consent; reviews need consent + approval; coach stats/credentials are editable in admin Site settings.
 - Personal apps: `apps/lean-bulk-daily/` — Pratik's installable daily checklist PWA (local storage only, no sign-in yet; Google sign-in could reuse the Supabase setup later). Self-contained; don't link it from the main nav unless asked. Plate-photo macro logging calls Gemini (default `gemini-3.6-flash`) or Claude directly from the browser with the user's own API key, stored only on their device and excluded from backups. Never commit a key. End-of-day macro check reminder is in-app; true background push would need a server (e.g. Supabase cron + Web Push).
-- Status: _audit done (see docs/workstreams/ws3-website.md); next: brand decision, Supabase safety check, calculator fix_
+- Still to do: Supabase Auth URLs + custom SMTP, email provider key, Google OAuth, WhatsApp number/prices/photo in Site settings, then switch on reminders (all in SETUP-V3.md); Vercel move; analytics.
+- Status: _platform upgrade built and browser-tested (fake backend); DB changes live; PR open for review_
 
 ### WS4 — YouTube launch
 - Decide: channel name (consistent with IG handle decision), positioning, format mix (long-form explainers + Shorts repurposed from reels), upload cadence, thumbnail style.
@@ -115,6 +115,7 @@ style, visuals, transitions, music mix, thumbnail, QA), `references/instagram-re
 _Add decisions as `YYYY-MM-DD — WSx — decision`._
 - 2026-10-30 — WS2 — Instagram handle is now @transform.withpratik.
 - 2026-11-01 — WS2 — reel editing playbook adopted (`references/reel-editing.md`).
+- 2026-11-01 — WS3 — platform upgrade: Supabase-backed leads, reviews, transformations, portal and coach dashboard; emails via outbox + edge function; reminders off until launch; optional data-retention job not applied (owner decision).
 
 ## 4. Open questions
 - Brand name: site says "GetFitWithPratik", Project says "Transform with Pratik" — which one?
@@ -134,3 +135,4 @@ _Add decisions as `YYYY-MM-DD — WSx — decision`._
 - 2026-11-01 — correction — when rebuilding a sharp intro, transplant only caption letters, never background pixels (fixed broken pixels in the intro).
 - 2026-11-01 — v0.6: added reel editing playbook `references/reel-editing.md` and WS2 editing rules.
 - 2026-11-01 — v0.7: added `references/instagram-reels.md` (Instagram editing standards), the 3D motion-graphics + audio kit `scripts/reel3d/`, and take-checking / intense-music notes in the reel playbook (walk-after-meals reel).
+- 2026-11-01 — v0.8: WS3 updated for the platform upgrade (new repo layout, Supabase setup, content rules, remaining owner steps in SETUP-V3.md).

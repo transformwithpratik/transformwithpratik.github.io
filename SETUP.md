@@ -1,5 +1,7 @@
 # SETUP — Connect Email & Database
 
+> **Superseded.** This describes the first version. Use [SETUP-V3.md](./SETUP-V3.md).
+
 This guide walks you through 4 things, takes about 10 minutes total, and you only do it once.
 
 When you're done:

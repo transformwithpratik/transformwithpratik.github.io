@@ -1,0 +1,13 @@
+{
+  "name": "getfitwithpratik",
+  "private": true,
+  "type": "module",
+  "description": "GetFitWithPratik website, client portal and coach dashboard. Static files plus Supabase.",
+  "scripts": {
+    "build": "node scripts/content/build-seed.mjs && node scripts/build-recipe-pages.mjs && node scripts/build-guides.mjs && node scripts/build-portal-pages.mjs && node scripts/sync-partials.mjs",
+    "build:offline": "node scripts/build-recipe-pages.mjs --offline && node scripts/build-guides.mjs && node scripts/build-portal-pages.mjs && node scripts/sync-partials.mjs",
+    "test": "node --test tests/calc.test.mjs",
+    "serve": "python3 -m http.server 8080",
+    "test:e2e": "node tests/e2e/run.mjs"
+  }
+}

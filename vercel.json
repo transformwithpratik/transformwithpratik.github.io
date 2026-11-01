@@ -1,0 +1,27 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/pages/book.html", "destination": "/book/", "permanent": true },
+    { "source": "/pages/calculator.html", "destination": "/calculator/", "permanent": true },
+    { "source": "/pages/feedback.html", "destination": "/feedback/", "permanent": true },
+    { "source": "/pages/transformations.html", "destination": "/transformations/", "permanent": true },
+    { "source": "/pages/admin.html", "destination": "/admin/", "permanent": true },
+    { "source": "/pages/admin-login.html", "destination": "/portal/login/", "permanent": true },
+    { "source": "/portal/login.html", "destination": "/portal/login/", "permanent": true },
+    { "source": "/portal/signup.html", "destination": "/portal/register/", "permanent": true },
+    { "source": "/portal/dashboard.html", "destination": "/portal/dashboard/", "permanent": true },
+    { "source": "/portal/log.html", "destination": "/portal/logs/", "permanent": true },
+    { "source": "/portal/weekly.html", "destination": "/portal/checkins/", "permanent": true },
+    { "source": "/portal/plan.html", "destination": "/portal/plan/", "permanent": true },
+    { "source": "/portal/files.html", "destination": "/portal/library/", "permanent": true },
+    { "source": "/portal/history.html", "destination": "/portal/progress/", "permanent": true }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+      { "key": "Permissions-Policy", "value": "camera=(self), microphone=(), geolocation=()" }
+    ] }
+  ]
+}

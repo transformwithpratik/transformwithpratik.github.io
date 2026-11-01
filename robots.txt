@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /portal/
+Disallow: /admin/
+
+Sitemap: https://transformwithpratik.github.io/sitemap.xml

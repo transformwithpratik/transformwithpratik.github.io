@@ -1,131 +1,69 @@
-# GetFitWithPratik 🔥
+# GetFitWithPratik
 
-A complete fitness coaching website + client portal for **Pratik** (Bengaluru).
-Yellow/black brutalist aesthetic, no frameworks, deploys anywhere static.
+Website, client portal and coach dashboard for Pratik's online fitness coaching
+(Transform with Pratik). Static HTML, CSS and JavaScript on GitHub Pages, with Supabase for
+the database, sign-in, file storage and email.
 
-## Architecture
+**Setup and the steps only you can do: [SETUP-V3.md](./SETUP-V3.md).**
 
-```
-🌐 Public site (marketing)
-   ├── Homepage, transformations, calorie calculator
-   ├── Booking form  → 3-way sync: Supabase + Email + Google Sheets
-   └── Feedback form → 3-way sync: Supabase + Email + Google Sheets
+## What's here
 
-🔐 Client Portal (/portal/*)
-   ├── Sign up / Sign in           (Supabase Auth)
-   ├── Dashboard                   (plan targets + today's status)
-   ├── Daily Log                   (macros, steps, workout, custom fields)
-   ├── Weekly Check-in             (weight + 3 progress photos)
-   ├── Plan Viewer                 (read-only + PDF download)
-   ├── Files                       (PDFs pushed by admin)
-   └── History                     (full log history with filters)
+Public site
+- Home, About, Contact, Privacy
+- `/calculator`: calories and macros (Mifflin-St Jeor, optional Katch-McArdle), protein, BMI
+  (with Asian-Indian cut-offs), waist-to-height, water. Metric or imperial, save as PDF.
+- `/book`: two-step enquiry form. Saved to the database, emails Pratik and the enquirer,
+  offers a WhatsApp shortcut.
+- `/transformations`: filterable gallery and story pages (published only with recorded
+  consent).
+- `/feedback`: reviews with an anonymous option; published only after approval and consent.
+- `/nutrition`: searchable vegetarian-first recipes with macros, pre-rendered recipe pages,
+  printable recipe book. `/library`: printable guides with sources. `/workouts`: exercise
+  library with cues, mistakes and swaps.
 
-🛠️  Admin Dashboard (/pages/admin.html)
-   ├── Overview stats
-   ├── Clients list                (sign up via portal, you assign plans)
-   ├── Client Detail page:
-   │   ├── Plan editor (macros, workout, diet, supplements, custom fields)
-   │   ├── Daily logs viewer
-   │   ├── Weekly check-ins viewer
-   │   ├── Photo gallery (all progress photos)
-   │   ├── Files pusher (upload PDFs to this client)
-   │   └── Export All as CSV
-   ├── Bookings & Feedback         (with CSV export)
-   ├── Transformations             (homepage gallery)
-   ├── Testimonials                (homepage quotes)
-   ├── Schedule                    (availability hours)
-   └── Socials                     (IG, YT, WhatsApp links)
-```
+Client portal (`/portal/`)
+- Email/password sign-in (Google sign-in once enabled), email confirmation, password reset.
+- New accounts wait for coach approval. Statuses: pending, active, inactive, completed,
+  rejected.
+- Dashboard with targets, daily checklist, weight trend, calories and habit history.
+- Food and workout logs, saved foods, progress records and private photos, weekly
+  check-ins with coach feedback, plan view, resources, profile, data export and account
+  deletion.
 
-## Tech Stack
+Coach dashboard (`/admin/`)
+- Overview, leads pipeline with notes and conversion, clients (plans, check-ins, logs,
+  progress, files, notes, payments), check-in review queue, payments and renewals.
+- Content: recipes, exercises, resources and PDFs, transformations, reviews.
+- Site settings (contact, coach profile, plans, FAQ, reminders), email log, activity log.
+- Roles: client, coach, admin. Enforced by row level security in the database, not just in
+  the browser.
 
-- **Frontend:** Pure HTML/CSS/Vanilla JS — no build step, no framework
-- **Backend:** Supabase (Postgres + Auth + Storage)
-- **Hosting:** Any static host — Netlify recommended
-- **Optional:** Web3Forms (email alerts) + Google Apps Script (Sheets backup)
-
-## Quick Start
-
-**👉 Follow [SETUP-V2.md](./SETUP-V2.md) for the complete setup walkthrough.**
-
-Short version:
-1. Create a free Supabase project, run `supabase/schema.sql` in SQL Editor
-2. Paste your Supabase URL + anon key into `js/supabase-client.js`
-3. Sign up at `/portal/signup.html`, then promote yourself to admin via Supabase Table Editor
-4. Deploy by drag-dropping the folder onto **app.netlify.com/drop**
-
-## File Structure
+## Layout
 
 ```
-getfitwithpratik/
-├── index.html                  # Homepage
-├── README.md                   # This file
-├── SETUP-V2.md                 # Full setup guide (start here!)
-├── SETUP.md                    # Legacy v1 setup (Web3Forms only)
-│
-├── css/
-│   ├── style.css               # Main theme (yellow/black brutalist)
-│   └── portal.css              # Portal-specific styles
-│
-├── js/
-│   ├── main.js                 # Public site interactivity
-│   ├── supabase-client.js      # Supabase wrapper (CONFIG goes here)
-│   └── portal.js               # Portal shared logic (sidebar, auth)
-│
-├── pages/
-│   ├── book.html               # Booking form
-│   ├── calculator.html         # Calorie/macro calculator
-│   ├── feedback.html           # Feedback form
-│   ├── transformations.html    # Public gallery
-│   ├── admin-login.html        # Legacy admin login (still works)
-│   └── admin.html              # Admin dashboard (Supabase-backed)
-│
-├── portal/                     # Client portal
-│   ├── login.html
-│   ├── signup.html
-│   ├── dashboard.html
-│   ├── log.html                # Daily logging
-│   ├── weekly.html             # Weight + photos
-│   ├── plan.html               # Plan viewer
-│   ├── files.html              # PDF downloads
-│   └── history.html            # Full log history
-│
-├── supabase/
-│   └── schema.sql              # Run this in Supabase SQL Editor
-│
-└── assets/                     # Images, etc.
+index.html, about/, book/, calculator/, ...   public pages (folder per clean URL)
+portal/, admin/                               app shells (generated by scripts/build-portal-pages.mjs)
+css/site.css, css/app.css                     design system: public site, portal/admin
+js/config.js                                  Supabase URL and public anon key
+js/lib/                                       shared helpers (escaping, REST, auth, charts, calculators)
+js/pages/, js/portal/, js/admin/              page scripts
+partials/                                     shared <head>, header, footer (synced into pages)
+scripts/                                      page builders and content sources
+supabase/migrations/                          database schema, applied in order
+supabase/functions/                           edge functions: send-email, delete-account
+tests/                                        calculator unit tests, browser tests
+apps/lean-bulk-daily/                         separate app, untouched
 ```
 
-## Common Tasks
+`supabase/schema.sql`, `SETUP.md` and `SETUP-V2.md` describe the previous version and are
+kept for history. The old Web3Forms and Google Sheets hooks were never configured (their
+keys were empty), so nothing that was working depended on them.
 
-### Onboard a new client
-1. Client pays you offline
-2. You share: `yoursite.com/portal/signup.html`
-3. Client signs up
-4. You log in → Clients tab → **Manage** that client → fill in plan → Save
+## Commands
 
-### Export a client's complete history as CSV
-Admin → Clients → **Manage** → **Export All as CSV** button (top right)
-
-### Add a custom logging field for a specific client
-(e.g. "Water intake" for a hydration-focused client)
-Admin → Clients → **Manage** → Scroll to "Custom Logging Fields" → **+ Add Custom Field**
-
-### Push a PDF to a client
-Admin → Clients → **Manage** → **Files** tab → fill title + description + upload
-
-### Edit homepage transformations / testimonials
-Admin → Transformations or Testimonials tab → add/delete from there
-
-## Free Tier Capacity
-
-Comfortable for **50–100 active clients** before any paid tier is needed.
-See SETUP-V2.md "Free Tier Limits" section for exact numbers.
-
-## Support
-
-Most issues are config typos. Open browser DevTools (F12) → Console — Supabase errors are usually clear about what's wrong.
-
----
-
-**Built for Pratik · `letsgetfitwithpratik@gmail.com` · 2026**
+```bash
+npm run serve            # local server on :8080
+npm test                 # calculator unit tests
+node tests/e2e/run.mjs   # browser tests at phone and desktop widths
+npm run build            # rebuild generated pages and sync partials
+```
