@@ -99,9 +99,12 @@ style, visuals, transitions, music mix, thumbnail, QA), `references/instagram-re
 - Supabase project `trerqtscrsrlcfsnfetn`: RLS on every table, roles client/coach/admin, new sign-ups pending until approved, private photo/plan buckets with signed URLs, audit log, email outbox → `send-email` edge function (needs RESEND_API_KEY or BREVO_API_KEY secret), daily reminders gated by Site settings (off by default).
 - Design system: charcoal #171A18 / #242925, lime #B8F36B, off-white #F5F5F0, muted #898F87; Archivo. Site brand name in the UI is GetFitWithPratik.
 - Content rules on the site: no unverifiable stats (old "200+ clients", "98%" etc. removed); transformations need recorded written consent; reviews need consent + approval; coach stats/credentials are editable in admin Site settings.
+- Inspect existing pages before changing them; extend the portal and calculator rather than replace them.
+- SEO: one primary keyword per page, fast mobile load, embed reels/YouTube, link from Instagram bio.
+- Repo conventions: keep a `CLAUDE.md` at repo root pointing to this skill.
 - Personal apps: `apps/lean-bulk-daily/` — Pratik's installable daily checklist PWA (local storage only, no sign-in yet; Google sign-in could reuse the Supabase setup later). Self-contained; don't link it from the main nav unless asked. Plate-photo macro logging calls Gemini (default `gemini-3.6-flash`) or Claude directly from the browser with the user's own API key, stored only on their device and excluded from backups. Never commit a key. End-of-day macro check reminder is in-app; true background push would need a server (e.g. Supabase cron + Web Push).
 - Still to do: Supabase Auth URLs + custom SMTP, email provider key, Google OAuth, WhatsApp number/prices/photo in Site settings, then switch on reminders (all in SETUP-V3.md); Vercel move; analytics.
-- Status: _platform upgrade built and browser-tested (fake backend); DB changes live; PR open for review_
+- Status: _platform upgrade built and browser-tested (fake backend); DB changes live; PR #1 open for review_
 
 ### WS4 — YouTube launch
 - Decide: channel name (consistent with IG handle decision), positioning, format mix (long-form explainers + Shorts repurposed from reels), upload cadence, thumbnail style.
