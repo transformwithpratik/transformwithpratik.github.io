@@ -20,8 +20,9 @@ export function setPageMeta({ title, description, path, image, jsonLd }) {
   if (path) {
     let link = document.head.querySelector('link[rel="canonical"]');
     if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.appendChild(link); }
-    link.href = SITE + path;
-    meta('property', 'og:url', SITE + path);
+    const url = SITE + path + (path.endsWith('/') || path.includes('?') ? '' : '/');
+    link.href = url;
+    meta('property', 'og:url', url);
     const robots = document.head.querySelector('meta[name="robots"]');
     if (robots) robots.remove();
   }

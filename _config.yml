@@ -1,0 +1,17 @@
+# GitHub Pages (Jekyll) settings: publish the site as-is, but not the internal folders.
+# Do not add a .nojekyll file: without Jekyll, the .claude/ folder would be published too.
+exclude:
+  - supabase
+  - scripts
+  - tests
+  - partials
+  - docs
+  - README.md
+  - SETUP.md
+  - SETUP-V2.md
+  - SETUP-V3.md
+  - CLAUDE.md
+  - site.config.json
+  - vercel.json
+  - package.json
+  - node_modules

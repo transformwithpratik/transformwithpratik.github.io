@@ -2,14 +2,17 @@
 // lineChart: weight and strength trends. barChart: daily totals against a target.
 import { esc, fmtDate, fmtNum } from './util.js';
 
-const W = 640; const H = 240; const P = { t: 16, r: 16, b: 32, l: 44 };
+const H = 240; const P = { t: 16, r: 16, b: 32, l: 44 };
+// Draw at the container's real width so text and dots are not stretched.
+const widthOf = (el) => Math.max(280, Math.min(1200, Math.round(el.getBoundingClientRect().width || 640)));
 
-function niceTicks(min, max, count = 4) {
+function niceTicks(min, max, count = 4, integer = false) {
   if (min === max) { min -= 1; max += 1; }
   const span = max - min;
   const step0 = span / count;
   const mag = 10 ** Math.floor(Math.log10(step0));
-  const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= step0) || step0;
+  let step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= step0) || step0;
+  if (integer) step = Math.max(1, Math.ceil(step));
   const lo = Math.floor(min / step) * step;
   const hi = Math.ceil(max / step) * step;
   const ticks = [];
@@ -23,6 +26,7 @@ function emptyState(el, text) {
 
 // series: [{ name, points: [{x: 'YYYY-MM-DD', y: number}], className }]
 export function lineChart(el, series, { unit = '', emptyText = 'No data yet.', label = 'Trend chart', goal = null } = {}) {
+  const W = widthOf(el);
   const all = series.flatMap((s) => s.points).filter((p) => p.y != null && !Number.isNaN(p.y));
   if (all.length === 0) return emptyState(el, emptyText);
   const xs = [...new Set(all.map((p) => p.x))].sort();
@@ -49,15 +53,16 @@ export function lineChart(el, series, { unit = '', emptyText = 'No data yet.', l
     return `<rect class="hit" x="${sx(x) - 8}" y="${P.t}" width="16" height="${H - P.t - P.b}" data-tip="${esc(tip)}" tabindex="-1"/>`;
   }).join('');
   const legend = series.length > 1 ? `<div class="chart-legend">${series.map((s, i) => `<span class="lg s${i}"><i></i>${esc(s.name)}</span>`).join('')}</div>` : '';
-  el.innerHTML = `${legend}<div class="chart-box"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}" preserveAspectRatio="none">${grid}${goalLine}${paths}${xlab}${hits}</svg><div class="chart-tip" hidden></div></div>`;
+  el.innerHTML = `${legend}<div class="chart-box"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}" preserveAspectRatio="xMidYMid meet">${grid}${goalLine}${paths}${xlab}${hits}</svg><div class="chart-tip" hidden></div></div>`;
   wireTips(el);
 }
 
 // bars: [{x: 'YYYY-MM-DD', y: number}]
-export function barChart(el, bars, { target = null, unit = '', emptyText = 'No data yet.', label = 'Bar chart' } = {}) {
+export function barChart(el, bars, { target = null, unit = '', emptyText = 'No data yet.', label = 'Bar chart', integer = false, xFormat = { day: 'numeric', month: 'short' } } = {}) {
+  const W = widthOf(el);
   if (!bars.length || bars.every((b) => !b.y)) return emptyState(el, emptyText);
   const max = Math.max(...bars.map((b) => b.y || 0), target || 0);
-  const { hi, ticks } = niceTicks(0, max);
+  const { hi, ticks } = niceTicks(0, max, 4, integer);
   const n = bars.length;
   const bw = (W - P.l - P.r) / n;
   const sy = (y) => P.t + (1 - y / (hi || 1)) * (H - P.t - P.b);
@@ -68,10 +73,11 @@ export function barChart(el, bars, { target = null, unit = '', emptyText = 'No d
     const tip = `${fmtDate(b.x)}: ${fmtNum(b.y)}${unit}${target ? ` of ${fmtNum(target)}${unit}` : ''}`;
     return `<rect class="bar ${over ? 'over' : ''}" x="${x}" y="${y}" width="${w}" height="${Math.max(0, H - P.b - y)}" rx="3" data-tip="${esc(tip)}"/>`;
   }).join('');
-  const every = Math.ceil(n / 7);
-  const xlab = bars.map((b, i) => (i % every === 0 || i === n - 1 ? `<text class="tick" x="${P.l + i * bw + bw / 2}" y="${H - 8}" text-anchor="middle">${esc(fmtDate(b.x, { day: 'numeric', month: 'short' }))}</text>` : '')).join('');
+  const every = Math.ceil(n / Math.max(2, Math.floor((W - P.l - P.r) / 64)));
+  // Anchor labels on the most recent bar so it is always labelled and labels never collide.
+  const xlab = bars.map((b, i) => ((n - 1 - i) % every === 0 ? `<text class="tick" x="${P.l + i * bw + bw / 2}" y="${H - 8}" text-anchor="middle">${esc(fmtDate(b.x, xFormat))}</text>` : '')).join('');
   const tl = target ? `<line class="goal" x1="${P.l}" x2="${W - P.r}" y1="${sy(target)}" y2="${sy(target)}"/>` : '';
-  el.innerHTML = `<div class="chart-box"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}" preserveAspectRatio="none">${grid}${rects}${tl}${xlab}</svg><div class="chart-tip" hidden></div></div>`;
+  el.innerHTML = `<div class="chart-box"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}" preserveAspectRatio="xMidYMid meet">${grid}${rects}${tl}${xlab}</svg><div class="chart-tip" hidden></div></div>`;
   wireTips(el);
 }
 

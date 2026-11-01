@@ -54,7 +54,10 @@ client tools.
 > calculator fix) on a branch and open a PR.
 
 ## Status
-Audit done. Next: decisions + tasks 2–3.
+Platform upgrade built (branch `platform-upgrade`): new public site, calculators, booking and
+feedback flows, nutrition hub, client portal, coach dashboard, Supabase schema/RLS/edge
+functions (live). Next: owner setup steps in SETUP-V3.md, then Vercel and analytics.
 
 ## Log
 - 2026-10-20 — workstream created; initial audit recorded.
+- 2026-11-01 — platform upgrade: Supabase security hotfix and new schema applied live; site rebuilt; browser tests added; see SETUP-V3.md.

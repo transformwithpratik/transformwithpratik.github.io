@@ -16,7 +16,7 @@ export function html(strings, ...vals) {
   vals.forEach((v, i) => { out += render(v) + strings[i + 1]; });
   return new Raw(out);
 }
-export const setHTML = (el, content) => { if (el) el.innerHTML = String(content); };
+export const setHTML = (el, content) => { if (el) el.innerHTML = Array.isArray(content) ? render(content) : String(content ?? ''); };
 
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];

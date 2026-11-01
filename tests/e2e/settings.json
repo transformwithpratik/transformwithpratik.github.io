@@ -1,0 +1,7 @@
+{
+  "coach": {"name": "Pratik Jain", "stats": [], "story": ["I spend my days as a software engineer and the rest of my time training and coaching.", "My coaching is built on the basics that hold up in research.", "Most of my clients are busy professionals who have tried to get fit before."], "title": "Software engineer and certified fitness coach", "photo_url": "", "credentials": ["Certified fitness coach"]},
+  "contact": {"city": "Bengaluru", "email": "transformwithpratik@gmail.com", "youtube": "", "whatsapp": "919999999999", "instagram": "https://www.instagram.com/transform.withpratik/", "response_time": "Replies within 24 hours", "instagram_handle": "@transform.withpratik"},
+  "faq": [{"q": "Who is this coaching for?", "a": "Working professionals."}, {"q": "Do I need a gym?", "a": "No."}],
+  "notifications": {"reminders_enabled": false, "copy_coach_on_own_actions": true},
+  "plans": [{"name": "1-Month Trial", "price": "", "summary": "Try coaching.", "duration": "4 weeks", "features": ["Personal training plan", "Weekly check-in"], "highlight": false}, {"name": "3-Month Standard", "price": "", "summary": "Build the habits.", "duration": "12 weeks", "features": ["Everything in the trial", "Meal plan"], "highlight": true}, {"name": "6-Month Deep Transformation", "price": "", "summary": "Bigger goals.", "duration": "24 weeks", "features": ["Everything in Standard"], "highlight": false}]
+}

@@ -6,7 +6,7 @@ export function transformationCard(t) {
   const before = publicFileUrl('transformations', t.before_image_url);
   const after = publicFileUrl('transformations', t.after_image_url);
   const change = t.start_weight_kg && t.end_weight_kg ? Math.round((t.end_weight_kg - t.start_weight_kg) * 10) / 10 : null;
-  return html`<a class="tf-card" href="/transformations/${t.slug}">
+  return html`<a class="tf-card" href="/transformations/story/?slug=${t.slug}">
     ${before || after ? html`<div class="tf-pics">
       <figure>${before ? html`<img src="${before}" alt="${t.client_display_name} before" loading="lazy">` : ''}<figcaption>Before</figcaption></figure>
       <figure>${after ? html`<img src="${after}" alt="${t.client_display_name} after" loading="lazy">` : ''}<figcaption>After</figcaption></figure>

@@ -1,5 +1,7 @@
 # GetFitWithPratik — Full Setup Guide (v2)
 
+> **Superseded.** This describes the previous version. Use [SETUP-V3.md](./SETUP-V3.md).
+
 This is the **client portal version**. It replaces V1 entirely.
 Follow these steps in order. **Total time: ~30 minutes.**
 

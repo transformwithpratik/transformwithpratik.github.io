@@ -20,7 +20,7 @@ async function load() {
     const related = cat ? (await select('recipes', `select=id,slug,title,calories,protein_g,prep_minutes,cook_minutes,diet_tags,image_url&is_published=eq.true&categories=cs.{${cat}}&slug=neq.${encodeURIComponent(slug)}&limit=3`)) : [];
     setHTML(box, recipeDetail(recipe, related || []));
     if (!box.dataset.prerendered) {
-      setPageMeta({ title: `${recipe.title}: ${Math.round(recipe.protein_g)} g protein recipe | GetFitWithPratik`, description: recipe.summary, path: `/nutrition/recipes/${recipe.slug}`, jsonLd: recipeJsonLd(recipe) });
+      setPageMeta({ title: `${recipe.title}: ${Math.round(recipe.protein_g)} g protein recipe | GetFitWithPratik`, description: recipe.summary, path: `/nutrition/recipe/?slug=${encodeURIComponent(recipe.slug)}`, jsonLd: recipeJsonLd(recipe) });
     }
   } catch (err) {
     if (!box.dataset.prerendered) setHTML(box, html`<div class="notice danger">Could not load this recipe. ${err.message}</div>`);
@@ -29,7 +29,7 @@ async function load() {
 }
 
 function notFound() {
-  setHTML(box, html`<p class="crumbs"><a href="/nutrition">Nutrition hub</a></p><div class="empty"><h3>Recipe not found</h3><p>It may have been renamed or removed. <a href="/nutrition#recipes">Browse all recipes</a>.</p></div>`);
+  setHTML(box, html`<p class="crumbs"><a href="/nutrition">Nutrition hub</a></p><div class="empty"><h1>Recipe not found</h1><p>It may have been renamed or removed. <a href="/nutrition#recipes">Browse all recipes</a>.</p></div>`);
 }
 
 async function wire() {

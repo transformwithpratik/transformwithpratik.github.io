@@ -8,7 +8,7 @@ const box = $('[data-story]');
 const slug = slugFromLocation('transformations');
 
 function notFound() {
-  setHTML(box, html`<p class="crumbs"><a href="/transformations">Transformations</a></p><div class="empty"><h3>This story is not available</h3><p>It may have been removed at the client's request. <a href="/transformations">See all transformations</a>.</p></div>`);
+  setHTML(box, html`<p class="crumbs"><a href="/transformations">Transformations</a></p><div class="empty"><h1>This story is not available</h1><p>It may have been removed at the client's request. <a href="/transformations">See all transformations</a>.</p></div>`);
 }
 
 if (!slug || slug === 'story') notFound();
@@ -28,7 +28,7 @@ function render(t) {
   const after = publicFileUrl('transformations', t.after_image_url);
   const change = t.start_weight_kg && t.end_weight_kg ? Math.round((t.end_weight_kg - t.start_weight_kg) * 10) / 10 : null;
   const title = `${t.headline || `${t.client_display_name}'s transformation`} | GetFitWithPratik`;
-  setPageMeta({ title, description: (t.summary || t.goal || '').slice(0, 155), path: `/transformations/${t.slug}`, image: after || before });
+  setPageMeta({ title, description: (t.summary || t.goal || '').slice(0, 155), path: `/transformations/story/?slug=${encodeURIComponent(t.slug)}`, image: after || before });
   setHTML(box, html`
     <p class="crumbs"><a href="/transformations">Transformations</a> / ${t.client_display_name}</p>
     <span class="tag">${label('tf', t.goal_category)}</span>

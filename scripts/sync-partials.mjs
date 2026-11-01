@@ -32,14 +32,17 @@ function walk(dir, out = []) {
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const pageUrl = (rel) => {
   let u = '/' + rel.split(sep).join('/');
+  const isDir = /(^|\/)index\.html$/.test(u);
   u = u.replace(/index\.html$/, '').replace(/\.html$/, '');
   if (u.length > 1) u = u.replace(/\/$/, '');
+  // GitHub Pages serves folders at /path/ (it redirects /path to /path/), so canonical URLs keep the slash.
+  if (cfg.trailingSlash && isDir && u !== '/') u += '/';
   return u;
 };
 
 function headBlock(html, rel) {
   const url = pageUrl(rel);
-  const isApp = /^\/(portal|admin)(\/|$)/.test(url);
+  const isApp = /^\/(portal|admin)(\/|$)/.test(url) && !/http-equiv="refresh"/.test(html);
   const isStub = /http-equiv="refresh"/.test(html);
   const isNoindex = /name="x-noindex"/.test(html);
   const title = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || 'GetFitWithPratik';
@@ -105,7 +108,7 @@ for (const file of pages) {
 }
 
 const recipeSlugs = JSON.parse(readFileSync(join(root, 'scripts', 'content', 'recipe-slugs.json'), 'utf8'));
-for (const s of recipeSlugs) sitemap.push(`/nutrition/recipes/${s}`);
+for (const s of recipeSlugs) sitemap.push(`/nutrition/recipes/${s}${cfg.trailingSlash ? '/' : ''}`);
 const today = new Date().toISOString().slice(0, 10);
 const xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
   .concat([...new Set(sitemap)].sort().map((u) => `  <url><loc>${SITE}${u === '/' ? '/' : u}</loc><lastmod>${today}</lastmod></url>`))

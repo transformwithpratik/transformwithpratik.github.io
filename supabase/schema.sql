@@ -1,3 +1,5 @@
+-- SUPERSEDED: kept for history. The live schema is built by supabase/migrations/ (applied in order).
+-- Do not run this file against the live project.
 -- ============================================================
 -- GETFITWITHPRATIK — Supabase Schema
 -- Run this entire file in Supabase SQL Editor on first setup.

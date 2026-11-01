@@ -1,6 +1,6 @@
 import { $, $$, html, setHTML, showErrors, clearErrors, fmtNum, initTabs, toast } from '../lib/util.js';
 import { initSite } from '../lib/site.js';
-import { ACTIVITY, GOALS, calorieTargets, proteinRange, bmi, whtr, waterEstimate, kgFromLb, cmFromFtIn, CM_PER_IN } from '../lib/calc.js';
+import { ACTIVITY, GOALS, calorieTargets, proteinRange, bmi, whtr, waterEstimate, kgFromLb, cmFromFtIn, CM_PER_IN, LB_PER_KG } from '../lib/calc.js';
 
 initSite();
 
@@ -15,9 +15,32 @@ function applyUnits() {
   $$('[data-height-metric]').forEach((el) => { el.hidden = imp; });
   $$('[data-height-imperial]').forEach((el) => { el.hidden = !imp; });
 }
+// Convert what has already been typed, so 82 kg becomes 181 lb instead of being read as 82 lb.
+function convertEntered(toImperial) {
+  const round = (n, d = 1) => String(Math.round(n * 10 ** d) / 10 ** d);
+  for (const form of $$('form')) {
+    const els = form.elements;
+    const w = els.weight;
+    if (w?.value) w.value = toImperial ? round(Number(w.value) * LB_PER_KG, 0) : round(kgFromLb(Number(w.value)));
+    for (const el of form.querySelectorAll('input')) {
+      if (el.value && el.closest('.input-group')?.querySelector('[data-unit-length]')) el.value = toImperial ? round(Number(el.value) / CM_PER_IN) : round(Number(el.value) * CM_PER_IN, 0);
+    }
+    if (toImperial && els.height?.value) {
+      const totalIn = Number(els.height.value) / CM_PER_IN;
+      let ft = Math.floor(totalIn / 12); let inch = Math.round(totalIn - ft * 12);
+      if (inch === 12) { ft += 1; inch = 0; }
+      if (els.height_ft) els.height_ft.value = String(ft);
+      if (els.height_in) els.height_in.value = String(inch);
+    } else if (!toImperial && els.height_ft?.value && els.height) {
+      els.height.value = round(cmFromFtIn(els.height_ft.value, els.height_in?.value), 0);
+    }
+  }
+}
 $$('[data-units]').forEach((b) => b.addEventListener('click', () => {
+  if (b.dataset.units === units) return;
   units = b.dataset.units;
   try { localStorage.setItem('gfp-units', units); } catch { /* ignore */ }
+  convertEntered(units === 'imperial');
   applyUnits();
   recalcAll();
 }));

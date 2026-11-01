@@ -15,6 +15,7 @@ if (photo) {
   const fig = $('[data-coach-photo]');
   setHTML(fig, photo);
   fig.hidden = false;
+  $('[data-coach-wrap]').classList.add('split');
   const side = $('[data-hero-side]');
   setHTML(side, html`<figure class="hero-photo" style="margin:0">${photo}<figcaption>${coach.name || 'Pratik Jain'} · ${coach.title || ''}</figcaption></figure>`);
 }
